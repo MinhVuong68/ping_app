@@ -1,11 +1,10 @@
-import React from "react"
-import { Text, View } from "react-native"
+import React from 'react';
+import {Text, View} from 'react-native';
 const ApplicationNavigator = () => {
-    return(
-        <View>
-            <Text>lll</Text>
-        </View>
-    )
-}
-
-export default ApplicationNavigator
+  return (
+    <View>
+      <Text>lll</Text>
+    </View>
+  );
+};
+export default ApplicationNavigator;

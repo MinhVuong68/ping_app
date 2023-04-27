@@ -1,11 +1,12 @@
+import React from 'react';
 import {Text, View} from 'react-native';
 
 const SIntro = () => {
-    return(
-        <View>
-            <Text>SIntro</Text>
-        </View>
-    )
-}
+  return (
+    <View>
+      <Text>SIntro</Text>
+    </View>
+  );
+};
 
-export default SIntro
+export default SIntro;
