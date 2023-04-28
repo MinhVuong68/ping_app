@@ -4,7 +4,7 @@
  *
  * @format
  */
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import ApplicationNavigator from './navigators/Application';
 import SplashScreen from 'react-native-splash-screen';
 function App(): JSX.Element {
