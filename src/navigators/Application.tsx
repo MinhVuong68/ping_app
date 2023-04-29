@@ -1,10 +1,17 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SIntro, SLogin } from '../containers';
+
+const Stack = createStackNavigator();
 const ApplicationNavigator = () => {
   return (
-    <View>
-      <Text>lll</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="SIntro" component={SIntro} />
+        <Stack.Screen name="SLogin" component={SLogin} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 export default ApplicationNavigator;
