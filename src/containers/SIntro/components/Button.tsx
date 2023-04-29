@@ -10,7 +10,7 @@ interface IbuttonProps {
 
 const Button = ({ title = '', onPress, style = {}, styleTitle= {} }: IbuttonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container,style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container,style]} activeOpacity={0.8}>
       <Text style={[styles.text,styleTitle]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -18,15 +18,15 @@ const Button = ({ title = '', onPress, style = {}, styleTitle= {} }: IbuttonProp
 
 const styles = StyleSheet.create({
   container: {
-    width: '60%',
+    width: '58%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
   },
   text: {
-    fontSize: 16,
-    fontWeight: 'normal',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
 
