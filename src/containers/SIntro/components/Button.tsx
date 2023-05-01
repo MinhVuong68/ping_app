@@ -5,13 +5,21 @@ interface IbuttonProps {
   title: string;
   onPress: () => any;
   style?: any;
-  styleTitle?: any
+  styleTitle?: any;
 }
 
-const Button = ({ title = '', onPress, style = {}, styleTitle= {} }: IbuttonProps) => {
+const Button = ({
+  title = '',
+  onPress,
+  style = {},
+  styleTitle = {},
+}: IbuttonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container,style]} activeOpacity={0.8}>
-      <Text style={[styles.text,styleTitle]}>{title}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, style]}
+      activeOpacity={0.8}>
+      <Text style={[styles.text, styleTitle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
