@@ -1,12 +1,24 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import { SIntro, SLogin } from '../containers';
+import { StatusBar } from 'react-native';
+import { Colors } from '../theme';
 
 const Stack = createStackNavigator();
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Colors.white
+  },
+};
 const ApplicationNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
+      <StatusBar backgroundColor={Colors.primary}/>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="SIntro" component={SIntro} />
         <Stack.Screen name="SLogin" component={SLogin} />

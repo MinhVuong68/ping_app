@@ -5,6 +5,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import Button from './components/Button';
 import Intro from './components/Intro';
 import styles from './styles/SIntroStyle';
+import { Colors, Layout } from '../../theme';
 
 const screenSizeWidth = Dimensions.get('window').width;
 
@@ -15,7 +16,7 @@ type CarouselItemType = {
 };
 const SIntro = () => {
   const [, setCurrentPage] = useState(1);
-
+  
   const images: Array<CarouselItemType> = [
     {
       imgLink: require('../../assets/images/intro1.png'),
@@ -43,10 +44,7 @@ const SIntro = () => {
   };
   return (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: '#ffffff',
-      }}>
+      style={[Layout.full]}>
       <Text
         style={{
           textAlign: 'center',
@@ -80,14 +78,14 @@ const SIntro = () => {
         <Button
           title="ĐĂNG NHẬP"
           onPress={() => {}}
-          style={{ backgroundColor: '#41b1fe', marginBottom: 15 }}
-          styleTitle={{ color: '#fff' }}
+          style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
+          styleTitle={{ color: Colors.white }}
         />
         <Button
           title="ĐĂNG KÝ"
           onPress={() => {}}
-          style={{ backgroundColor: '#f3f4f8' }}
-          styleTitle={{ color: '#000' }}
+          style={{ backgroundColor: Colors.secondary }}
+          styleTitle={{ color: Colors.text }}
         />
       </View>
     </View>

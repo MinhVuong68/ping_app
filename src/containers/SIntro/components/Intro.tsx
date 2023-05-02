@@ -2,13 +2,15 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { View, Image, Text, StyleSheet } from 'react-native';
 
+import { Colors, Layout } from '../../../theme';
+
 interface IIntroProps {
   imgLink: any;
   title: string;
   content: string;
 }
 
-const windowWidth = Dimensions.get('window').width;
+const screenSizeWidth = Dimensions.get('window').width;
 
 const Intro = ({
   imgLink = require('../../../assets/images/intro1.png'),
@@ -16,7 +18,7 @@ const Intro = ({
   content = '',
 }: IIntroProps) => {
   return (
-    <View style={styles.imageView}>
+    <View style={Layout.center}>
       <Image style={styles.image} source={imgLink} />
       <View style={styles.contentView}>
         <Text style={styles.title}>{title}</Text>
@@ -27,12 +29,8 @@ const Intro = ({
 };
 
 const styles = StyleSheet.create({
-  imageView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   image: {
-    width: windowWidth,
+    width: screenSizeWidth,
   },
   contentView: {
     position: 'absolute',
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
     bottom: 170,
   },
   title: {
-    color: '#000',
+    color: Colors.text,
     fontSize: 18,
     fontWeight: '500',
     marginBottom: 5,
