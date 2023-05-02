@@ -18,7 +18,7 @@ const MyTheme = {
 const ApplicationNavigator = () => {
   return (
     <NavigationContainer theme={MyTheme}>
-      <StatusBar backgroundColor={Colors.primary}/>
+      <StatusBar backgroundColor={Colors.statusBar}/>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="SIntro" component={SIntro} />
         <Stack.Screen name="SLogin" component={SLogin} />

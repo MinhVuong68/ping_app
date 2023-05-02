@@ -1,4 +1,5 @@
 const Color = {
+    statusBar: '#0273fc',
     white: '#ffffff',
     text: '#212529',
     primary: '#41b1fe',
