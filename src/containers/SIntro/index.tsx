@@ -6,6 +6,7 @@ import Button from './components/Button';
 import Intro from './components/Intro';
 import styles from './styles/SIntroStyle';
 import { Colors, Layout } from '../../theme';
+import Languaes from './components/Languages';
 
 const screenSizeWidth = Dimensions.get('window').width;
 
@@ -16,7 +17,7 @@ type CarouselItemType = {
 };
 const SIntro = () => {
   const [, setCurrentPage] = useState(1);
-  
+
   const images: Array<CarouselItemType> = [
     {
       imgLink: require('../../assets/images/intro1.png'),
@@ -43,24 +44,15 @@ const SIntro = () => {
     );
   };
   return (
-    <View
-      style={[Layout.full]}>
-      <Text
-        style={{
-          textAlign: 'center',
-          marginTop: 10,
-          fontSize: 34,
-          color: '#0273fc',
-        }}>
-        Ping
-      </Text>
+    <View style={[Layout.full]}>
+      <Text style={styles.txtHeader}>Ping</Text>
       <View style={styles.viewIntro}>
         <Carousel
           data={images}
           renderItem={_renderItem}
           loop
           width={screenSizeWidth}
-          // height={width / 2}
+          //height={width / 2}
           autoPlay={true}
           autoPlayInterval={2000}
           enableSnap={true}
@@ -88,6 +80,7 @@ const SIntro = () => {
           styleTitle={{ color: Colors.text }}
         />
       </View>
+      <Languaes/>
     </View>
   );
 };

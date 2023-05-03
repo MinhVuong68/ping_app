@@ -7,5 +7,10 @@ export default StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  rowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

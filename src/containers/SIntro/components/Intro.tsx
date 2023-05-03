@@ -34,9 +34,8 @@ const styles = StyleSheet.create({
   },
   contentView: {
     position: 'absolute',
-    justifyContent: 'center',
     alignItems: 'center',
-    bottom: 170,
+    bottom: 150,
   },
   title: {
     color: Colors.text,
