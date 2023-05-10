@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Dimensions, Image, Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import Button from './components/Button';
 import Intro from './components/Intro';
 import styles from './styles/SIntroStyle';
 import { Colors, Layout } from '../../theme';
-import Languaes from './components/Languages';
+import Languages from './components/Languages';
 
 const screenSizeWidth = Dimensions.get('window').width;
 
@@ -80,7 +80,7 @@ const SIntro = () => {
           styleTitle={{ color: Colors.text }}
         />
       </View>
-      <Languaes/>
+      <Languages/>
     </View>
   );
 };

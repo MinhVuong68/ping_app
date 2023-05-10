@@ -1,10 +1,10 @@
 import React from 'react'
 import { View,Text,StyleSheet } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Layout } from '../../../theme'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Color from '../../../theme/Colors'
-const Languaes = () => {
+const Languages = () => {
     return (
         <View style={[Layout.rowCenter,styles.container]}>
             <TouchableOpacity style={styles.optionLanguage} activeOpacity={0.1}>
@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
         paddingBottom: 20
     },
     optionLanguage: {
-        marginHorizontal: 20,
+        marginHorizontal: 18,
         borderBottomWidth: 2,
         paddingBottom: 3,
         borderBottomColor: Color.black,
     }
 })
-export default Languaes
+export default Languages
