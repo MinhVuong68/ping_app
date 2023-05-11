@@ -12,5 +12,13 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  rowVCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowHCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 });
