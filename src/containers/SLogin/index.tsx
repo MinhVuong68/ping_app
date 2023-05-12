@@ -5,7 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Layout } from '../../theme';
-import { Header, Input } from '../../components';
+import { Header, Input, InputPassword } from '../../components';
 import styles from './styles/SLoginStyle';
 import Color from '../../theme/Colors';
 
@@ -24,9 +24,9 @@ const SLogin = () => {
           <Input
             input={{ placeholder: 'Số điện thoại', keyboardType: 'numeric' }}
           />
-          <Input
-            input={{ placeholder: 'Mật khẩu',secureTextEntry: true }}
-            icon={<Entypo name="eye" size={22} color="#ccc" />}
+          <InputPassword
+            viewPassword
+            input={{placeholder: 'Mật khẩu'}}
           />
           <Pressable style={styles.btnForgotPassword}>
             <Text style={styles.txtForgotPassword}>Lấy lại mật khẩu</Text>

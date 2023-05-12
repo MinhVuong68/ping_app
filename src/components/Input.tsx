@@ -25,7 +25,7 @@ const Input = (props: InputProps) => {
     style = {},
   } = props;
   return (
-    <View style={[styles.input,style]}>
+    <View style={[styles.input, style]}>
       <TextInput
         style={styles.txtInput}
         {...input}
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   txtInput: {
     fontSize: 16,
-    width: '90%'
+    width: '90%',
   },
 });
 
