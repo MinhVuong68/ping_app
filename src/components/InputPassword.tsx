@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 import Color from '../theme/Colors';
+import Icon from './Icon';
 
 type InputProps = TextInputProps & {
   viewPassword?: boolean;
@@ -36,9 +36,9 @@ const InputPassword = (props: InputProps) => {
       {viewPassword && (
         <Pressable onPress={handleShowPassword}>
           {showPassword ? (
-            <Entypo name="eye" size={22} color="#ccc" />
+            <Icon type="Entypo" name="eye" size={22} color="#ccc"/>
           ) : (
-            <Entypo name="eye-with-line" size={22} color="#ccc" />
+            <Icon type="Entypo" name="eye-with-line" size={22} color="#ccc"/>
           )}
         </Pressable>
       )}
