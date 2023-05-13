@@ -78,7 +78,7 @@ const SIntro = () => {
         />
         <Button
           title="ĐĂNG KÝ"
-          onPress={() => {}}
+          onPress={() => {navigate('SRegitration')}}
           style={{ backgroundColor: Colors.secondary }}
           styleTitle={{ color: Colors.text }}
         />

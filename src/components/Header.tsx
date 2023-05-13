@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 
 import Color from '../theme/Colors';
@@ -15,7 +14,6 @@ const Header = ({ title = '' }: InputProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        {/* <AntDesign name="arrowleft" color="#fff" size={25} /> */}
         <Icon type="AntDesign" name="arrowleft" color={Color.white} size={25}/>
       </TouchableOpacity>
       <Text style={styles.txtTitle}>{title}</Text>

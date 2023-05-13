@@ -36,9 +36,9 @@ const InputPassword = (props: InputProps) => {
       {viewPassword && (
         <Pressable onPress={handleShowPassword}>
           {showPassword ? (
-            <Icon type="Entypo" name="eye" size={22} color="#ccc"/>
+            <Icon type="Entypo" name="eye" size={22} color="#ccc" />
           ) : (
-            <Icon type="Entypo" name="eye-with-line" size={22} color="#ccc"/>
+            <Icon type="Entypo" name="eye-with-line" size={22} color="#ccc" />
           )}
         </Pressable>
       )}

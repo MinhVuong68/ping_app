@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Layout } from '../../theme';
+import { Header } from '../../components';
 const SSignup = () => {
   return (
-    <View>
-      <Text>Scren Signup</Text>
+    <View style={Layout.full}>
+      <Header title="Tạo tài khoản"/>
     </View>
   );
 };
