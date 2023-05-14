@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, View, Pressable } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Layout } from '../../theme';
-import { Header, Icon, Input, InputPassword } from '../../components';
+import { Header, Input, InputPassword } from '../../components';
 import styles from './styles/SLoginStyle';
-import Color from '../../theme/Colors';
+import Button from './components/Button';
 
 const SLogin = () => {
   return (
@@ -26,26 +25,8 @@ const SLogin = () => {
             <Text style={styles.txtForgotPassword}>Lấy lại mật khẩu</Text>
           </Pressable>
         </View>
-        <View style={{ alignItems: 'flex-end' }}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={{
-              width: 50,
-              height: 50,
-              marginRight: 10,
-              marginBottom: 10,
-              borderRadius: 50,
-              backgroundColor: Color.primary,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon
-              type="AntDesign"
-              name="arrowright"
-              size={22}
-              color={Color.white}
-            />
-          </TouchableOpacity>
+        <View style={styles.viewButtonGo}>
+          <Button />
         </View>
       </View>
     </View>

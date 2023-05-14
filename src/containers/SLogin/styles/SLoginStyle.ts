@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   viewFormLogin: {
     flex: 1,
     padding: 10,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   subHeader: {
     height: 40,
@@ -18,12 +18,17 @@ const styles = StyleSheet.create({
     color: Color.text,
   },
   btnForgotPassword: {
-    marginTop: 15
+    marginTop: 15,
   },
   txtForgotPassword: {
     color: Color.primary,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
+  viewButtonGo: {
+    alignItems: 'flex-end',
+    marginRight: 10,
+    marginBottom: 10,
+  },
 });
 
 export default styles;
