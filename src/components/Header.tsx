@@ -7,17 +7,32 @@ import Icon from './Icon';
 
 interface InputProps {
   title: string;
+  subHeader?: string;
 }
 
-const Header = ({ title = '' }: InputProps) => {
+const Header = ({ title = '', subHeader = '' }: InputProps) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon type="AntDesign" name="arrowleft" color={Color.white} size={25}/>
-      </TouchableOpacity>
-      <Text style={styles.txtTitle}>{title}</Text>
-    </View>
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon
+            type="AntDesign"
+            name="arrowleft"
+            color={Color.white}
+            size={25}
+          />
+        </TouchableOpacity>
+        <Text style={styles.txtTitle}>{title}</Text>
+      </View>
+      {!!subHeader && (
+        <View style={styles.subHeader}>
+          <Text style={styles.txtSubHeader}>
+            {subHeader}
+          </Text>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -34,6 +49,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 10,
+  },
+  subHeader: {
+    height: 40,
+    backgroundColor: '#f2f3f5',
+    paddingHorizontal: 14,
+    justifyContent: 'center',
+  },
+  txtSubHeader: {
+    fontSize: 13,
+    color: Color.text,
   },
 });
 

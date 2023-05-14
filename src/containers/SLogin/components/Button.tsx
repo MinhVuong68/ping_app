@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
   btn: {
     width: 50,
     height: 50,
-    // marginRight: 10,
-    // marginBottom: 10,
     borderRadius: 50,
     backgroundColor: Color.primary,
     justifyContent: 'center',

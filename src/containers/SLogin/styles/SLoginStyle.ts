@@ -7,16 +7,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'space-between',
   },
-  subHeader: {
-    height: 40,
-    backgroundColor: '#f2f3f5',
-    paddingHorizontal: 14,
-    justifyContent: 'center',
-  },
-  txtSubHeader: {
-    fontSize: 13,
-    color: Color.text,
-  },
   btnForgotPassword: {
     marginTop: 15,
   },

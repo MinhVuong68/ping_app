@@ -9,12 +9,7 @@ import Button from './components/Button';
 const SLogin = () => {
   return (
     <View style={Layout.full}>
-      <Header title="Đăng nhập" />
-      <View style={styles.subHeader}>
-        <Text style={styles.txtSubHeader}>
-          Vui lòng nhập số điện thoại và mật khẩu để đăng nhập
-        </Text>
-      </View>
+      <Header title="Đăng nhập" subHeader='Vui lòng nhập số điện thoại và mật khẩu để đăng nhập'/>
       <View style={styles.viewFormLogin}>
         <View>
           <Input
