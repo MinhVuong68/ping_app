@@ -9,10 +9,14 @@ import Button from './components/Button';
 const SLogin = () => {
   return (
     <View style={Layout.full}>
-      <Header title="Đăng nhập" subHeader='Vui lòng nhập số điện thoại và mật khẩu để đăng nhập'/>
+      <Header
+        title="Đăng nhập"
+        subHeader="Vui lòng nhập số điện thoại và mật khẩu để đăng nhập"
+      />
       <View style={styles.viewFormLogin}>
         <View>
           <Input
+            cleanTextBtn
             input={{ placeholder: 'Số điện thoại', keyboardType: 'numeric' }}
           />
           <InputPassword viewPassword input={{ placeholder: 'Mật khẩu' }} />

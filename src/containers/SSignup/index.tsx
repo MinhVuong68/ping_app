@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+
 import { Layout } from '../../theme';
 import { Header } from '../../components';
 const SSignup = () => {

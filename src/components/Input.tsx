@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   TextInput,
   View,
@@ -8,30 +8,45 @@ import {
 } from 'react-native';
 
 import Color from '../theme/Colors';
+import { Pressable } from 'react-native';
+import Icon from './Icon';
 
 type InputProps = TextInputProps & {
-  icon?: any;
+  cleanTextBtn?: boolean;
   onChangeValue?: (value: string) => {};
   value?: any;
   input?: TextInputProps;
   style?: ViewStyle;
 };
 const Input = (props: InputProps) => {
+  //const [showCleanText,setShowCleanText] = useState(false)
+  const [txtIpt, setTxtIpt] = useState('')
   const {
-    icon = null,
     onChangeValue,
     value = '',
     input = {},
     style = {},
+    cleanTextBtn,
   } = props;
+  console.log(txtIpt);
+  
+  const handleCleanText = () => {
+    setTxtIpt('')
+  };
   return (
     <View style={[styles.input, style]}>
       <TextInput
+        value={txtIpt}
         style={styles.txtInput}
         {...input}
         cursorColor={Color.primary}
+        onChangeText={(value) => setTxtIpt(value)}
       />
-      {!!icon && icon}
+      {cleanTextBtn && !!txtIpt && (
+        <Pressable onPress={handleCleanText}>
+          <Icon type="AntDesign" name="closecircle" size={20} color="#ccc" />
+        </Pressable>
+      )}
     </View>
   );
 };
