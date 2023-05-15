@@ -21,7 +21,7 @@ const SEnterName = () => {
             }}
           />
         </View>
-        <View style={{alignItems: 'flex-end'}}>
+        <View style={[Layout.alignItemsEnd,styles.viewButtonGo]}>
           <Button onPress={() => navigate('SPhoneNumber')}/>
         </View>
       </View>

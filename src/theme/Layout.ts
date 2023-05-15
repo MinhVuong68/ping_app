@@ -20,5 +20,8 @@ export default StyleSheet.create({
   rowHCenter: {
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  alignItemsEnd: {
+    alignItems: 'flex-end'
   }
 });

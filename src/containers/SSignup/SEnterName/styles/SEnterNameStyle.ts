@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingTop: 20,
     justifyContent: 'space-between'
   },
   label: {
@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     color: Color.text,
     fontWeight: 'bold',
   },
+  viewButtonGo: {
+    marginRight: 10,
+    marginBottom: 10,
+  }
 });
 
 export default styles;
