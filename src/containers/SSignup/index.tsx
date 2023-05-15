@@ -1,13 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
 
-import { Layout } from '../../theme';
-import { Header } from '../../components';
+import SEnterName from './SEnterName';
 const SSignup = () => {
   return (
-    <View style={Layout.full}>
-      <Header title="Tạo tài khoản"/>
-    </View>
+    <SEnterName/>
   );
 };
 

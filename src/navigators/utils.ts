@@ -4,6 +4,7 @@ type RootStackParamList = {
   SIntro: undefined;
   SLogin: undefined;
   SRegitration: undefined;
+  SPhoneNumber: undefined
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();

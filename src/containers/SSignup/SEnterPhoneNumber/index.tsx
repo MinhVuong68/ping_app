@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { Layout } from '../../../theme';
+import { Header } from '../../../components';
 
 const SEnterPhoneNumber = () => {
   return (
-    <View>
-      <Text>this is screen enter phone number</Text>
+    <View style={Layout.full}>
+      <Header title="Tạo tài khoản" subHeader='Nhập số điện thoại của bạn để tạo tài khoản mới'/>
     </View>
   );
 };
