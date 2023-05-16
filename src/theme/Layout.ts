@@ -8,6 +8,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  row: {
+    flexDirection: 'row'
+  },
   rowCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
