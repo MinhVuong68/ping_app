@@ -9,7 +9,7 @@ const SignUpNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false, animationEnabled: false }}>
             <Stack.Screen name="SSignup" component={SSignup}/>
-            <Stack.Screen name="SPhoneNumber" component={SEnterPhoneNumber}/>
+            <Stack.Screen name="SEnterPhoneNumber" component={SEnterPhoneNumber}/>
         </Stack.Navigator>
     )
 }

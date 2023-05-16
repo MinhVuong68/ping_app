@@ -2,11 +2,12 @@ import React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SIntro, SLogin } from '../containers';
+import { SIntro } from '../containers';
 import { StatusBar } from 'react-native';
 import { Colors } from '../theme';
 import { navigationRef } from './utils';
 import SignUpNavigator from './Registration';
+import LoginNavigator from './Login';
 
 
 const Stack = createStackNavigator();
@@ -24,7 +25,7 @@ const ApplicationNavigator = () => {
       <StatusBar backgroundColor={Colors.statusBar}/>
       <Stack.Navigator screenOptions={{ headerShown: false, animationEnabled: false }} >
         <Stack.Screen name="SIntro" component={SIntro} />
-        <Stack.Screen name="SLogin" component={SLogin}/>
+        <Stack.Screen name="SLogin" component={LoginNavigator}/>
         <Stack.Screen name="SRegitration" component={SignUpNavigator} />
       </Stack.Navigator>
     </NavigationContainer>

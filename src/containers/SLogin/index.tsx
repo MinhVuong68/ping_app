@@ -5,6 +5,7 @@ import { Layout } from '../../theme';
 import { Header, Input, InputPassword, Loading } from '../../components';
 import styles from './styles/SLoginStyle';
 import Button from './components/Button';
+import { navigate } from '../../navigators/utils';
 
 const SLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ const SLogin = () => {
             input={{ placeholder: 'Số điện thoại', keyboardType: 'numeric' }}
           />
           <InputPassword viewPassword input={{ placeholder: 'Mật khẩu' }} />
-          <Pressable style={styles.btnForgotPassword}>
+          <Pressable style={styles.btnForgotPassword} onPress={() => navigate('SForgotPassword')}>
             <Text style={styles.txtForgotPassword}>Lấy lại mật khẩu</Text>
           </Pressable>
         </View>

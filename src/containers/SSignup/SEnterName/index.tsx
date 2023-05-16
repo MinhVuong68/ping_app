@@ -22,7 +22,7 @@ const SEnterName = () => {
           />
         </View>
         <View style={[Layout.alignItemsEnd,styles.viewButtonGo]}>
-          <Button onPress={() => navigate('SPhoneNumber')}/>
+          <Button onPress={() => navigate('SEnterPhoneNumber')}/>
         </View>
       </View>
     </View>
