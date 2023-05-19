@@ -8,11 +8,17 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import ApplicationNavigator from './navigators/Application';
 import SplashScreen from 'react-native-splash-screen';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 function App(): JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-  return <ApplicationNavigator />;
+  return (
+    <Provider store={store}>
+      <ApplicationNavigator />
+    </Provider>
+  );
 }
 
 export default App;

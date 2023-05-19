@@ -5,8 +5,12 @@ import { Layout } from '../../../theme';
 import { Header, Icon, InputOTP } from '../../../components';
 import styles from './styles/SEnterOTPStyle';
 import Color from '../../../theme/Colors';
+import store from '../../../redux/store';
 
 const SEnterOTP = () => {
+  const handlea = () => {
+    console.log(store.getState().otp.otp);
+  };
   return (
     <View style={Layout.full}>
       <Header

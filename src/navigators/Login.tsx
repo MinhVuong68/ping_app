@@ -9,7 +9,7 @@ const Stack = createStackNavigator()
 const LoginNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false, animationEnabled: false }}>
-            <Stack.Screen name="SLogin" component={SLogin}/>
+            <Stack.Screen name="SSignin" component={SLogin}/>
             <Stack.Screen name="SForgotPassword" component={SForgotPassword}/>
             <Stack.Screen name="SEnterOTP" component={SEnterOTP}/>
         </Stack.Navigator>
