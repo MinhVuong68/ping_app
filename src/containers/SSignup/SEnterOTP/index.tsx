@@ -6,7 +6,7 @@ import { Header, Icon, InputOTP } from '../../../components';
 import styles from './styles/SEnterOTPStyle';
 import Color from '../../../theme/Colors';
 import store from '../../../redux/store';
-import Button from '../components/Button';
+import Button from '../../SLogin/components/Button';
 
 const SEnterOTP = () => {
   const handlea = () => {
