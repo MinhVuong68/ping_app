@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Alert } from 'react-native';
 
@@ -9,9 +9,13 @@ import { navigate } from '../../../navigators/utils';
 import Button from '../components/Button';
 
 const SForgotPassword = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [valid, setValid] = useState(false);
+  console.log(valid);
+  
   const createTwoButtonAlert = () =>
     Alert.alert(
-      'Xác nhận số điện thoại +84 899 306681',
+      `Xác nhận số điện thoại ${phoneNumber}`,
       'Mã kích hoạt sẽ được gửi tới số điện thoại này',
       [
         {
@@ -37,10 +41,21 @@ const SForgotPassword = () => {
               placeholder: 'Nhập số điện thoại',
             }}
             cleanTextBtn
+            validation={{
+              match: /^[0-9]{10}$/,
+              require: 'Số điện thoại không được để trống',
+              role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
+            }}
+            setValue={setPhoneNumber}
+            setFormError={setValid}
           />
         </View>
         <View style={[Layout.alignItemsEnd, styles.viewButtonGo]}>
-          <Button onPress={createTwoButtonAlert} />
+          {!!phoneNumber && valid ? (
+            <Button onPress={createTwoButtonAlert} />
+          ) : (
+            <Button disable={true} />
+          )}
         </View>
       </View>
     </View>

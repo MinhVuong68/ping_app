@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Text, View, Pressable } from 'react-native';
-import { useFormik } from 'formik'
-import * as Yup from 'yup';
 
 import { Layout } from '../../theme';
 import { Header, Input, InputPassword, Loading } from '../../components';
@@ -11,20 +9,12 @@ import { navigate } from '../../navigators/utils';
 
 const SLogin = () => {
   const [loading, setLoading] = useState(false);
-  const formik = useFormik({
-    initialValues: {
-        phoneNumber: '',
-        password: '',
-    },
-    validationSchema: Yup.object({
-        user: Yup.string().required('Số điện thoại không được để trống').matches(/^[0-9]{10}$/, 'Số điện thoại không hợp lệ'),
-        password: Yup.string().required("Mật khẩu không được để trống"),
-    }),
-    onSubmit: (values) => {
-    }
-  })
+  const [phoneNumber,setPhoneNumber] = useState('')
+  const [password,setPassword] = useState('')
+  const [valid,setValid] = useState(false)
   const onLogin = () => {
-    setLoading(true)
+    console.log({phoneNumber: phoneNumber, password: password});
+    setLoading(true);
   };
   return (
     <View style={Layout.full}>
@@ -38,17 +28,36 @@ const SLogin = () => {
           <Input
             cleanTextBtn
             input={{ placeholder: 'Số điện thoại', keyboardType: 'numeric' }}
-            error={formik.errors.phoneNumber}
-            value={formik.values.phoneNumber}
-            //onChangeValue={formik.handleChange}
+            validation={{
+              match: /^[0-9]{10}$/,
+              require: 'Số điện thoại không được để trống',
+              role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
+            }}
+            setValue={setPhoneNumber}
+            setFormError={setValid}
           />
-          <InputPassword viewPassword input={{ placeholder: 'Mật khẩu' }} />
-          <Pressable style={styles.btnForgotPassword} onPress={() => navigate('SForgotPassword')}>
+          <InputPassword
+            viewPassword
+            input={{ placeholder: 'Mật khẩu' }}
+            validation={{
+              //match: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+              require: 'Mật khẩu không được để trống',
+            }}
+            setValue={setPassword}
+            //setFormError={setValid}
+          />
+          <Pressable
+            style={styles.btnForgotPassword}
+            onPress={() => navigate('SForgotPassword')}>
             <Text style={styles.txtForgotPassword}>Lấy lại mật khẩu</Text>
           </Pressable>
         </View>
         <View style={styles.viewButtonGo}>
-          <Button onPress={onLogin} />
+          {!!phoneNumber && !!password && valid ? (
+            <Button onPress={onLogin}/>) : (
+            <Button onPress={onLogin} disable={true}/>
+          )}
+          
         </View>
       </View>
     </View>

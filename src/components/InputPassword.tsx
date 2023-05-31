@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  Text,
   TextInput,
   View,
   TextInputProps,
@@ -10,39 +11,78 @@ import {
 
 import Color from '../theme/Colors';
 import Icon from './Icon';
+import { Colors } from '../theme';
 
 type InputProps = TextInputProps & {
   viewPassword?: boolean;
+  validation?: any;
+  value?: string;
   onChangeValue?: (v: string) => {};
   input?: TextInputProps;
   style?: ViewStyle;
+  setValue?: any;
 };
 
 const InputPassword = (props: InputProps) => {
-  const { viewPassword = false, onChangeValue, input = {}, style = {} } = props;
+  const {
+    viewPassword = false,
+    value = '',
+    onChangeValue,
+    input = {},
+    style = {},
+    validation = {},
+    setValue = (v: string) => {},
+  } = props;
   const [showPassword, setShowPassword] = useState(true);
+  const [txtIpt, setTxtIpt] = useState<string | undefined>(value);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    if (txtIpt === '') {
+      setError(validation.require);
+      setValue(txtIpt);
+    } else if (!validation?.match?.test(txtIpt)) {
+      setError(validation.role);
+      setValue(txtIpt);
+    } else {
+      setValue(txtIpt);
+      setError('');
+    }
+  }, [txtIpt]);
+  const handleOnChangText = (value: string) => {
+    setTxtIpt(value);
+  };
   const handleShowPassword = () => {
     setShowPassword(prev => !prev);
   };
   return (
-    <View style={[styles.input, style]}>
-      <TextInput
-        secureTextEntry={showPassword}
-        style={styles.txtInput}
-        {...input}
-        cursorColor={Color.primary}
-      />
-      {viewPassword && (
-        <Pressable onPress={handleShowPassword}>
-          {showPassword ? (
-            <Icon type="Entypo" name="eye" size={22} color="#ccc" />
-          ) : (
-            <Icon type="Entypo" name="eye-with-line" size={22} color="#ccc" />
-          )}
-        </Pressable>
-      )}
-    </View>
+    <>
+      <View style={[styles.input, style]}>
+        <TextInput
+          value={txtIpt}
+          secureTextEntry={showPassword}
+          style={styles.txtInput}
+          {...input}
+          cursorColor={Color.primary}
+          onChangeText={handleOnChangText}
+        />
+        {viewPassword && (
+          <Pressable onPress={handleShowPassword}>
+            {showPassword ? (
+              <Icon type="Entypo" name="eye" size={22} color="#ccc" />
+            ) : (
+              <Icon type="Entypo" name="eye-with-line" size={22} color="#ccc" />
+            )}
+          </Pressable>
+        )}
+      </View>
+      {!!error && <Text style={styles.error}>{error}</Text>}
+    </>
   );
 };
 
@@ -60,6 +100,10 @@ const styles = StyleSheet.create({
   txtInput: {
     fontSize: 16,
     width: '90%',
+  },
+  error: {
+    fontSize: 14,
+    color: Colors.error,
   },
 });
 

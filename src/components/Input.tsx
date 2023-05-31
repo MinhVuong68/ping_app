@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   TextInput,
   View,
@@ -15,28 +15,52 @@ import { Colors } from '../theme';
 
 type InputProps = TextInputProps & {
   cleanTextBtn?: boolean;
+  validation?: any;
   onChangeValue?: (value: string) => {};
-  value?: any;
+  value?: string;
   input?: TextInputProps;
   style?: ViewStyle;
-  error?: string;
+  setValue?: any;
+  setFormError?: any;
 };
 const Input = (props: InputProps) => {
-  //const [showCleanText,setShowCleanText] = useState(false)
-  const [txtIpt, setTxtIpt] = useState('');
   const {
+    validation = {},
     onChangeValue,
     value = '',
     input = {},
     style = {},
-    error = '',
     cleanTextBtn,
+    setValue = (v: string) => {},
+    setFormError = (b: boolean) => {},
   } = props;
-  console.log(txtIpt);
-
+  const [txtIpt, setTxtIpt] = useState<string | undefined>(value);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    if (txtIpt === '') {
+      setError(validation.require);
+      setFormError(false);
+    } else if (!validation?.match?.test(txtIpt)) {
+      setFormError(false);
+      setError(validation.role);
+    } else {
+      setValue(txtIpt);
+      setFormError(true);
+      setError('');
+    }
+  }, [txtIpt]);
   const handleCleanText = () => {
     setTxtIpt('');
   };
+  const handleOnChangText = (value: string) => {
+    setTxtIpt(value);
+  };
+
   return (
     <>
       <View style={[styles.input, style]}>
@@ -45,7 +69,7 @@ const Input = (props: InputProps) => {
           style={styles.txtInput}
           {...input}
           cursorColor={Color.primary}
-          onChangeText={value => setTxtIpt(value)}
+          onChangeText={handleOnChangText}
         />
         {cleanTextBtn && !!txtIpt && (
           <Pressable onPress={handleCleanText}>
@@ -53,7 +77,7 @@ const Input = (props: InputProps) => {
           </Pressable>
         )}
       </View>
-      <Text style={styles.error}>Số điện thoại không hợp lệ</Text>
+      {!!error && <Text style={styles.error}>{error}</Text>}
     </>
   );
 };
@@ -75,8 +99,8 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: 14,
-    color: Colors.error
-  }
+    color: Colors.error,
+  },
 });
 
 export default Input;
