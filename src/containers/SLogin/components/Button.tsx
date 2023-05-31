@@ -1,17 +1,40 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useMemo } from 'react';
+import {
+  TouchableOpacity,
+  ViewStyle,
+  TextStyle,
+  StyleSheet,
+} from 'react-native';
 
 import Color from '../../../theme/Colors';
 import { Icon } from '../../../components';
-import { StyleSheet } from 'react-native';
 import { Colors } from '../../../theme';
 
-const Button = ({ onPress = () => {}, disable = false }) => {
+const Button = ({ onPress = () => {}, disable = false, type = '' }) => {
+  const customStyle: {
+    container?: ViewStyle;
+    text?: TextStyle;
+  } = useMemo(() => {
+    switch (type) {
+      case 'disable': {
+        return {
+          container: {
+            backgroundColor: '#ccc',
+          },
+          text: {
+            color: '#000',
+          },
+        };
+      }
+    }
+    return {};
+  }, [type]);
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      style={styles.btn}
+      style={[styles.btn,customStyle.container]}
       disabled={disable}>
       <Icon type="AntDesign" name="arrowright" size={22} color={Color.white} />
     </TouchableOpacity>

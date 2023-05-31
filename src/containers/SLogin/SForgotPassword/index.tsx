@@ -11,9 +11,8 @@ import Button from '../components/Button';
 const SForgotPassword = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState(false);
-  console.log(valid);
   
-  const createTwoButtonAlert = () =>
+  const onConfirm = () =>
     Alert.alert(
       `Xác nhận số điện thoại ${phoneNumber}`,
       'Mã kích hoạt sẽ được gửi tới số điện thoại này',
@@ -52,9 +51,9 @@ const SForgotPassword = () => {
         </View>
         <View style={[Layout.alignItemsEnd, styles.viewButtonGo]}>
           {!!phoneNumber && valid ? (
-            <Button onPress={createTwoButtonAlert} />
+            <Button onPress={onConfirm} />
           ) : (
-            <Button disable={true} />
+            <Button disable={true} type="disable" />
           )}
         </View>
       </View>

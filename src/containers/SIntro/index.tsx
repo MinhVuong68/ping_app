@@ -18,7 +18,7 @@ type CarouselItemType = {
   content: string;
 };
 const SIntro = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [, setCurrentPage] = useState(1);
 
   const images: Array<CarouselItemType> = [
@@ -72,18 +72,22 @@ const SIntro = () => {
       <View style={styles.viewBtnGroup}>
         <Button
           title="ĐĂNG NHẬP"
-          onPress={() => {navigate('SLogin')}}
+          onPress={() => {
+            navigate('SLogin');
+          }}
           style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
           styleTitle={{ color: Colors.white }}
         />
         <Button
           title="ĐĂNG KÝ"
-          onPress={() => {navigate('SRegitration')}}
+          onPress={() => {
+            navigate('SRegitration');
+          }}
           style={{ backgroundColor: Colors.secondary }}
           styleTitle={{ color: Colors.text }}
         />
       </View>
-      <Languages/>
+      {/* <Languages/> */}
     </View>
   );
 };

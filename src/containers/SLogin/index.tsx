@@ -44,7 +44,6 @@ const SLogin = () => {
               require: 'Mật khẩu không được để trống',
             }}
             setValue={setPassword}
-            //setFormError={setValid}
           />
           <Pressable
             style={styles.btnForgotPassword}
@@ -55,7 +54,7 @@ const SLogin = () => {
         <View style={styles.viewButtonGo}>
           {!!phoneNumber && !!password && valid ? (
             <Button onPress={onLogin}/>) : (
-            <Button onPress={onLogin} disable={true}/>
+            <Button onPress={onLogin} disable={true} type='disable'/>
           )}
           
         </View>
