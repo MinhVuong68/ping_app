@@ -13,12 +13,12 @@ const SEnterName = () => {
   const [name, setName] = useState('');
   const [valid, setValid] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onEnterName = () => {
-    dispatch(updateName(name))
-    navigate('SEnterPhoneNumber')
-  }
+    dispatch(updateName(name));
+    navigate('SEnterPhoneNumber');
+  };
 
   return (
     <View style={Layout.full}>
@@ -42,7 +42,7 @@ const SEnterName = () => {
         </View>
         <View style={[Layout.alignItemsEnd, styles.viewButtonGo]}>
           {!!name && valid ? (
-            <Button onPress={onEnterName}/>
+            <Button onPress={onEnterName} />
           ) : (
             <Button disable={true} type="disable" />
           )}

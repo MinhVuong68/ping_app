@@ -8,9 +8,16 @@ import Color from '../../../theme/Colors';
 import store from '../../../redux/store';
 import Button from '../../SLogin/components/Button';
 
-const SEnterOTP = () => {
-  const handlea = () => {
+const SEnterOTP = ({route}:any) => {
+  //const route = useRoute(); 
+  const confirmation = route.params;
+  const confirm = JSON.parse(confirmation);
+  //console.log(route);
+  //console.log(route.params?.confirmation());
+  const handlea = async () => {
     console.log(store.getState().otp.otp);
+    const result = await confirm.confirm(store.getState().otp.otp)
+    console.log('result'+ {result});
   };
   return (
     <View style={Layout.full}>
@@ -37,7 +44,7 @@ const SEnterOTP = () => {
           <InputOTP />
         </View>
         <View style={styles.viewButtonGo}>
-          <Button />
+          <Button onPress={handlea}/>
         </View>
       </View>
     </View>

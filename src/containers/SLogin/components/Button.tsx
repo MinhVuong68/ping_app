@@ -22,7 +22,7 @@ const Button = ({ onPress = () => {}, disable = false, type = '' }) => {
             backgroundColor: '#ccc',
           },
           text: {
-            color: '#000',
+            color: Colors.black,
           },
         };
       }

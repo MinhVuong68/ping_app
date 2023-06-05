@@ -56,7 +56,6 @@ const SLogin = () => {
             <Button onPress={onLogin}/>) : (
             <Button onPress={onLogin} disable={true} type='disable'/>
           )}
-          
         </View>
       </View>
     </View>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Layout } from '../../../theme';
@@ -9,16 +9,19 @@ import Button from '../../SLogin/components/Button';
 import { navigate } from '../../../navigators/utils';
 import store from '../../../redux/store';
 import { updatePhoneNumber } from '../../../redux/slices/userSlice';
+import firebaseConfig from '../../../configs/firebase.config';
 
 const SEnterPhoneNumber = () => {
+  const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [valid, setValid] = useState('');
 
+  const { auth } = firebaseConfig();
   const dispatch = useDispatch();
 
   const onGo = () => {
     Alert.alert(
-      'Xác nhận số điện thoại +84 899 306681',
+      `Xác nhận số điện thoại ${phoneNumber}`,
       'Mã kích hoạt sẽ được gửi tới số điện thoại này',
       [
         {
@@ -31,12 +34,34 @@ const SEnterPhoneNumber = () => {
     );
   };
 
-  const handleSendOTP = () => {
+  const handleSendOTP = async () => {
+    setLoading(true);
     dispatch(updatePhoneNumber(phoneNumber));
-    console.log(store.getState().user);
+    let p = '+84' + phoneNumber;
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(p);
+      //console.log(typeof confirmation);
+      //await confirmation.confirm('llll');
+      navigate('SEnterOTP', { confirmation: JSON.stringify(confirmation) });
+      //navigate('SEnterOTP',confirmation);
+      //navigation.navigate('SEnterOTP',{confirmation})
+      setLoading(false);
+    } catch (error: any) {
+      //console.log({error});
+      
+      setLoading(false);
+      if (error.code === 'auth/too-many-requests')
+        Alert.alert(
+          'Thông báo',
+          'Bạn đã yêu cầu gửi mã OTP quá nhiều lần\nVui lòng thử lại sau',
+        );
+    }
+    //console.log(store.getState().user);
   };
+
   return (
     <View style={Layout.full}>
+      <Loading isLoading={loading} backBtn={setLoading} />
       <Header
         title="Tạo tài khoản"
         subHeader="Nhập số điện thoại của bạn để tạo tài khoản mới"
@@ -49,7 +74,7 @@ const SEnterPhoneNumber = () => {
               placeholder: 'Nhập số điện thoại',
             }}
             validation={{
-              match: /^[0-9]{10}$/,
+              match: /^[0-9]{9}$/,
               require: 'Số điện thoại không được để trống',
               role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
             }}
