@@ -22,7 +22,7 @@ const SForgotPassword = () => {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        { text: 'Xác nhận', onPress: () => navigate('SEnterOTP') },
+        { text: 'Xác nhận', onPress: () => navigate('SEnterOTP',{phoneNumber: phoneNumber}) },
       ],
     );
 

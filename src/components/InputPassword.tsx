@@ -21,6 +21,7 @@ type InputProps = TextInputProps & {
   input?: TextInputProps;
   style?: ViewStyle;
   setValue?: any;
+  setFormError?: any;
 };
 
 const InputPassword = (props: InputProps) => {
@@ -32,6 +33,7 @@ const InputPassword = (props: InputProps) => {
     style = {},
     validation = {},
     setValue = (v: string) => {},
+    setFormError = (b: boolean) => {},
   } = props;
   const [showPassword, setShowPassword] = useState(true);
   const [txtIpt, setTxtIpt] = useState<string | undefined>(value);
@@ -46,11 +48,14 @@ const InputPassword = (props: InputProps) => {
     if (txtIpt === '') {
       setError(validation.require);
       setValue(txtIpt);
+      setFormError(false);
     } else if (!validation?.match?.test(txtIpt)) {
+      setFormError(false);
       setError(validation.role);
       setValue(txtIpt);
     } else {
       setValue(txtIpt);
+      setFormError(true);
       setError('');
     }
   }, [txtIpt]);

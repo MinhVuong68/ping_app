@@ -1,20 +1,43 @@
-import React, { useState } from 'react';
-import { Text, View, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Text, View, Pressable,Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Layout } from '../../theme';
 import { Header, Input, InputPassword, Loading } from '../../components';
 import styles from './styles/SLoginStyle';
 import Button from './components/Button';
 import { navigate } from '../../navigators/utils';
+import axiosClient from '../../configs/axiosClient';
+import store from '../../redux/store';
+import { login, setCurrentUser } from '../../redux/slices/userSlice';
 
 const SLogin = () => {
   const [loading, setLoading] = useState(false);
   const [phoneNumber,setPhoneNumber] = useState('')
   const [password,setPassword] = useState('')
   const [valid,setValid] = useState(false)
-  const onLogin = () => {
-    console.log({phoneNumber: phoneNumber, password: password});
+
+  const dispatch = useDispatch()
+
+
+  const onLogin = async () => {
+    //console.log({phoneNumber: phoneNumber, password: password});
+    const accoutLogin = {phoneNumber: phoneNumber, password: password}
     setLoading(true);
+    try {
+      const userLogin = await axiosClient.post('/customer/login',{
+        phoneNumber,
+        password
+      });
+      dispatch(setCurrentUser(userLogin))
+      //dispatch(login(accoutLogin))
+      navigate('MainNavigation');
+    } catch (error) {
+      setLoading(false)
+      Alert.alert("Thông báo","Tên đăng nhập hoặc mật khẩu không chính xác!");
+    }
+    
   };
   return (
     <View style={Layout.full}>

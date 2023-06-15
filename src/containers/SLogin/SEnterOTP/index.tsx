@@ -8,7 +8,8 @@ import Color from '../../../theme/Colors';
 import store from '../../../redux/store';
 import Button from '../components/Button';
 
-const SEnterOTP = () => {
+const SEnterOTP = ({route}: any) => {
+  const {phoneNumber} = route.params
   const handlea = () => {
     console.log(store.getState().otp.otp);
   };
@@ -28,7 +29,7 @@ const SEnterOTP = () => {
           />
           <View style={styles.viewNoti}>
             <Text style={styles.txtNoti}>
-              Đã gửi mã đến số điện thoại 0899306681
+              Đã gửi mã đến số điện thoại {phoneNumber}
             </Text>
             <Text style={styles.txtPlease}>
               Xin kiểm tra SMS và điền mã xác nhận bên dưới
