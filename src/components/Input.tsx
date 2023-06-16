@@ -14,6 +14,7 @@ import Icon from './Icon';
 import { Colors } from '../theme';
 
 type InputProps = TextInputProps & {
+  label?: string;
   cleanTextBtn?: boolean;
   validation?: any;
   onChangeValue?: (value: string) => {};
@@ -25,6 +26,7 @@ type InputProps = TextInputProps & {
 };
 const Input = (props: InputProps) => {
   const {
+    label = '',
     validation = {},
     onChangeValue,
     value = '',
@@ -63,6 +65,7 @@ const Input = (props: InputProps) => {
 
   return (
     <>
+      {label && <Text>{label}</Text>}
       <View style={[styles.input, style]}>
         <TextInput
           value={txtIpt}
@@ -92,6 +95,7 @@ const styles = StyleSheet.create({
     borderColor: '#2ecced',
     paddingHorizontal: 10,
     marginVertical: 4,
+    marginBottom: 5
   },
   txtInput: {
     fontSize: 16,

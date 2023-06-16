@@ -5,6 +5,7 @@ const initialState = {
     id: '',
     name: '',
     phoneNumber: '',
+    phoneContact: '',
     avatar: ''
 }
 interface AccoutLoginProps {
@@ -21,6 +22,7 @@ const userSlice = createSlice({
             state.name = action.payload.name,
             state.phoneNumber = action.payload.phoneNumber,
             state.avatar = action.payload.avatar
+            state.phoneContact = action.payload.phoneContact
         },
         updateName(state,action){
             state.name = action.payload

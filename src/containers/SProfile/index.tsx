@@ -105,7 +105,7 @@ const SProfile = () => {
           <ImageAvatar
             uri={currentUser.avatar}
           />
-          <Text style={{color: Colors.text,fontSize: 20}}>{currentUser.name}</Text>
+          <Text style={{color: Colors.text,fontSize: 20,fontWeight: 'bold'}}>{currentUser.name}</Text>
         </View>
         <FlatList
           data={options}
