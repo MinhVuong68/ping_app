@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { Colors } from '../../../theme';
+
 const styles = StyleSheet.create({
   viewIntro: {
     flex: 1,
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     fontSize: 34,
-    color: '#0273fc',
+    color: Colors.primary,
   },
 });
 

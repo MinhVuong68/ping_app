@@ -24,20 +24,20 @@ const SIntro = () => {
   const images: Array<CarouselItemType> = [
     {
       imgLink: require('../../assets/images/intro1.png'),
-      title: 'Trò chuyện mọi lúc mọi nơi',
-      content: 'Trò chuyện thật đã và chất lượng mọi lúc, mọi nơi',
+      title: 'Giao hàng nhanh chóng',
+      content: 'Hãy để chúng tôi mang đến cho bạn trải nghiệm giao hàng nhanh chóng nhất!',
     },
     {
       imgLink: require('../../assets/images/intro2.png'),
-      title: 'Gọi video ổn định',
+      title: 'Giao hàng tận nơi',
       content:
-        'Trò chuyện thật đã và chất lượng video ổn định, mọi lúc mọi nơi',
+        'Không cần lo lắng về việc nhận hàng, chúng tôi sẽ đến tận nơi mang đến sự tiện lợi cho bạn!',
     },
     {
       imgLink: require('../../assets/images/intro3.png'),
-      title: 'Gửi ảnh nhanh chống',
+      title: 'Giao hàng mọi nơi',
       content:
-        'Trao đổi hình ảnh chất lượng cao với bạn bè và người thân thật nhanh chóng và dễ dàng',
+        'Chinh phục mọi khoảng cách - Giao hàng đến mọi ngõ ngách, không giới hạn!',
     },
   ];
 
@@ -59,6 +59,7 @@ const SIntro = () => {
           autoPlay={true}
           autoPlayInterval={2000}
           enableSnap={true}
+          autoPlayReverse
           onSnapToItem={(slideIndex: number) => {
             setCurrentPage(slideIndex);
           }}

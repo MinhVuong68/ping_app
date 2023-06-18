@@ -31,6 +31,7 @@ const SBooking2 = () => {
             {vehicles.map((item: ItemVehicleProps) => {
               return (
                 <ItemVehicle
+                key={item.id}
                   id={item.id}
                   nameVehicle={item.nameVehicle}
                   imageVehicle={item.imageVehicle}
