@@ -117,8 +117,8 @@ const SEditProfile = () => {
       </View>
       <View style={Layout.rowCenter}>
         <Button
-          title="Thay đổi"
-          style={{ backgroundColor: '#1b92fc' }}
+          title="Cập nhật"
+          style={{ backgroundColor: '#FE5F01' }}
           styleTitle={{ fontSize: 18, color: Colors.white }}
           onPress={onChange}
         />

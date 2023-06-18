@@ -1,28 +1,34 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { SHome, SOrder, SProfile } from '../containers'
+import { SHome, SNotification, SOrder, SProfile } from '../containers'
 import { Icon } from '../components';
 import { Colors } from '../theme';
 import ProfileNavigator from './Profile';
+import HomeNavigator from './Home';
 
 const Tab = createBottomTabNavigator()
 const MainNavigator = () => {
 
     const tabbarbottom = [
         {
-            name: "SHome",
-            component: SHome,
+            name: "Home",
+            component: HomeNavigator,
             tabBarLabel: "Trang chủ"
         },
         {
             name: "SOrder",
             component: SOrder,
-            tabBarLabel: "Đơn"
+            tabBarLabel: "Đơn hàng"
+        },
+        {
+            name: "SNotification",
+            component: SNotification,
+            tabBarLabel: "Thông báo"
         },
         {
             name: "Profile",
             component: ProfileNavigator,
-            tabBarLabel: "Cá nhân"
+            tabBarLabel: "Tài khoản"
         }
     ]
 
@@ -37,8 +43,10 @@ const MainNavigator = () => {
             let iconName = "home"
             if(screenName == "SOrder") {
                 iconName = "dashboard"
-            } else if (screenName==='Profile'){
+            } else if (screenName =='Profile'){
                 iconName = "user"
+            } else if (screenName == "SNotification"){
+                iconName = "bells"
             }
             return <Icon
                 type='AntDesign'

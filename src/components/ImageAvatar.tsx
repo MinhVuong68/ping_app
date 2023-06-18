@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Colors } from '../theme';
 
-const DEFAULT_IMAGE_WIDTH = 100;
+const DEFAULT_IMAGE_WIDTH = 90;
 
 interface ImageAvartarProps {
   uri: string;
@@ -14,7 +14,7 @@ const ImageAvartar = ({ uri, size, onPress }: ImageAvartarProps) => {
   let containerWidth = DEFAULT_IMAGE_WIDTH;
   switch (size) {
     case 'small':
-      containerWidth *= 0.8;
+      containerWidth *= 0.6;
       break;
     case 'large':
       containerWidth *= 2;
@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: Colors.primary,
     overflow: 'hidden'
   },
   imageAvatar: {

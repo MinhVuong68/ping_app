@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
     color: Colors.text,
   },
   viewInfo: {
-    minHeight: 130,
-    paddingVertical: 10,
+    minHeight: 92,
+    paddingLeft: 10,
+    flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 4,
+    borderBottomWidth: 2,
     borderBottomColor: Colors.borderBottom,
   },
 });

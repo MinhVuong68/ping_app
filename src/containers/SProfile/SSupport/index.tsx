@@ -7,7 +7,7 @@ import { Header } from "../../../components"
 const SSupport = () => {
     return (
         <View style={Layout.full}>
-            <Header title="Hỗ trợ" subHeader="Hãy đưa ra ý kiến của bạn về ứng dụng"/>
+            <Header title="Hỗ trợ"/>
         </View>
     )
 }

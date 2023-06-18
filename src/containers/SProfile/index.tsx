@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -16,8 +16,7 @@ import { navigate } from '../../navigators/utils';
 import styles from './styles/SProfileStyle';
 
 const SProfile = () => {
-
-  const currentUser = useSelector((state:any) => state.user)
+  const currentUser = useSelector((state: any) => state.user);
 
   const onLogout = () => {
     Alert.alert(
@@ -48,7 +47,7 @@ const SProfile = () => {
         color: Colors.primary,
       },
       title: 'Thông tin cá nhân',
-      onPress: () => navigate("SEditProfile"),
+      onPress: () => navigate('SEditProfile'),
     },
     {
       icon: {
@@ -58,7 +57,7 @@ const SProfile = () => {
         color: Colors.primary,
       },
       title: 'Hỗ trợ',
-      onPress: () => navigate('SSupport')
+      onPress: () => navigate('SSupport'),
     },
     {
       icon: {
@@ -100,29 +99,29 @@ const SProfile = () => {
   };
 
   return (
-      <SafeAreaView>
-        <View style={styles.viewInfo}>
-          <ImageAvatar
-            uri={currentUser.avatar}
-          />
-          <Text style={{color: Colors.text,fontSize: 20,fontWeight: 'bold'}}>{currentUser.name}</Text>
+    <SafeAreaView>
+      <View style={styles.viewInfo}>
+        <ImageAvatar size="small" uri={currentUser.avatar} />
+        <View style={{marginLeft: 12}}>
+          <Text
+            style={{ color: Colors.text, fontSize: 15, fontWeight: 'bold' }}>
+            {currentUser.name}
+          </Text>
+          <Text
+            style={{ color: Colors.text, fontSize: 15}}>
+            {currentUser.phoneContact}
+          </Text>
         </View>
-        <FlatList
-          data={options}
-          renderItem={({ item }) => (
-            <Option
-              icon={item.icon}
-              title={item.title}
-              onPress={item.onPress}
-            />
-          )}
-          //keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
-  
+      </View>
+      <FlatList
+        data={options}
+        renderItem={({ item }) => (
+          <Option icon={item.icon} title={item.title} onPress={item.onPress} />
+        )}
+        //keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
   );
 };
-
-
 
 export default SProfile;

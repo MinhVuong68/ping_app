@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: '#2ecced',
+    borderColor: Colors.borderIpt,
     paddingHorizontal: 10,
     marginVertical: 4,
   },

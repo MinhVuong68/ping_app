@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import Color from '../theme/Colors';
 import Icon from './Icon';
+import { Colors } from '../theme';
 
 interface InputProps {
   title: string;
@@ -19,7 +20,7 @@ const Header = ({ title = '', subHeader = '' }: InputProps) => {
           <Icon
             type="AntDesign"
             name="arrowleft"
-            color={Color.white}
+            color={Colors.primary}
             size={25}
           />
         </TouchableOpacity>
@@ -38,14 +39,16 @@ const Header = ({ title = '', subHeader = '' }: InputProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    backgroundColor: '#1b92fc',
+    height: 60,
+    backgroundColor: Colors.white,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
+    borderBottomWidth: 0.3,
+    borderBottomColor: Colors.borderBottom
   },
   txtTitle: {
-    color: Color.white,
+    color: Color.text,
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 10,

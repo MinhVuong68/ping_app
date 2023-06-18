@@ -23,8 +23,8 @@ const SEnterOTP = ({ route }: any) => {
   const handlea = async () => {
     const credential = auth.PhoneAuthProvider.credential(verificationId, store.getState().otp.otp);
     try {
-      await auth().signInWithCredential(credential);
       setLoading(true);
+      await auth().signInWithCredential(credential);
       try {
         const userLogin = await axiosClient.post('/customer/register',{
           name: store.getState().user.name,
@@ -35,7 +35,7 @@ const SEnterOTP = ({ route }: any) => {
         navigate('MainNavigation')
       } catch (error) {
         setLoading(false)
-        console.log(error);
+        console.log(error); 
       }
     } catch (error: any) {
       if (error?.code === 'auth/invalid-verification-code') {

@@ -16,6 +16,10 @@ type RootStackParamList = {
   SChangePassword: undefined;
   SEditProfile: undefined;
   SSupport: undefined
+  SNotification: undefined
+  SBooking1: undefined
+  SBooking2: undefined
+  SBooking3: undefined
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();

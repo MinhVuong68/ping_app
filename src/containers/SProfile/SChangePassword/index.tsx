@@ -84,7 +84,7 @@ const SChangePassword = () => {
         <Button
           title="Thay đổi"
           onPress={onChangePassword}
-          style={{ backgroundColor: '#1b92fc' }}
+          style={{ backgroundColor: Colors.primary }}
           styleTitle={{ fontSize: 18, color: Colors.white }}
         />
       </View>
