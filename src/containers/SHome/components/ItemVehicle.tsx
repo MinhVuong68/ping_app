@@ -26,14 +26,15 @@ const ItemVehicle = ({
   width,
   height,
 }: ItemVehicleProps) => {
-
   const handleChooseVehicle = () => {
-    navigate('SBooking3')
-  }
+    navigate('SBooking3');
+  };
 
   return (
     <>
-      <TouchableOpacity style={styles.viewVehicleItem} onPress={handleChooseVehicle}>
+      <TouchableOpacity
+        style={styles.viewVehicleItem}
+        onPress={handleChooseVehicle}>
         <Image source={{ uri: imageVehicle }} style={styles.imgVehicle} />
         <View style={styles.viewVehiclesInfo}>
           <Text

@@ -28,9 +28,7 @@ const Header = ({ title = '', subHeader = '' }: InputProps) => {
       </View>
       {!!subHeader && (
         <View style={styles.subHeader}>
-          <Text style={styles.txtSubHeader}>
-            {subHeader}
-          </Text>
+          <Text style={styles.txtSubHeader}>{subHeader}</Text>
         </View>
       )}
     </>
@@ -45,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     borderBottomWidth: 0.3,
-    borderBottomColor: Colors.borderBottom
+    borderBottomColor: Colors.borderBottom,
   },
   txtTitle: {
     color: Color.text,

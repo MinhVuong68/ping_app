@@ -24,6 +24,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  col: {
+    flexDirection: 'column'
+  },
   colVCenter: {
     flexDirection: 'column',
     alignItems: 'center'

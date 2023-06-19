@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Header } from '../../../components';
-import { Fonts, Layout } from '../../../theme';
+import { Header } from '../../../../components';
+import { Fonts, Layout } from '../../../../theme';
 import { ScrollView } from 'react-native-gesture-handler';
-import ItemVehicle, { ItemVehicleProps } from '../components/ItemVehicle';
-import axiosClient from '../../../configs/axiosClient';
+import ItemVehicle, { ItemVehicleProps } from '../../components/ItemVehicle';
+import axiosClient from '../../../../configs/axiosClient';
 
 const SBooking2 = () => {
   const [vehicles, setVehicles] = useState<any>([]);
@@ -31,7 +31,7 @@ const SBooking2 = () => {
             {vehicles.map((item: ItemVehicleProps) => {
               return (
                 <ItemVehicle
-                key={item.id}
+                  key={item.id}
                   id={item.id}
                   nameVehicle={item.nameVehicle}
                   imageVehicle={item.imageVehicle}

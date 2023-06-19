@@ -1,10 +1,10 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, Dimensions } from 'react-native';
 
-import { Colors, Fonts, Layout } from '../../../theme';
-import { Header, Icon, Input } from '../../../components';
-import Button from '../../SIntro/components/Button';
-import { navigate } from '../../../navigators/utils';
+import { Colors, Fonts, Layout } from '../../../../theme';
+import { Header, Icon, Input } from '../../../../components';
+import Button from '../../../SIntro/components/Button';
+import { navigate } from '../../../../navigators/utils';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 const SBooking1 = () => {
@@ -48,7 +48,9 @@ const SBooking1 = () => {
           <View style={Layout.rowCenter}>
             <Button
               title="Tiếp tục"
-              onPress={() => {navigate('SBooking2')}}
+              onPress={() => {
+                navigate('SBooking2');
+              }}
               style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
               styleTitle={{ color: Colors.white }}
             />
