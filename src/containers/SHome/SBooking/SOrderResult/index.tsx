@@ -54,7 +54,7 @@ const SOrderResult = () => {
             name: 'published-with-changes',
             color: Colors.primary,
           }}
-          text="Quay lại điểm giao hàng"
+          text="Quay lại điểm nhận hàng"
         />
         <ItemPayment/>
         
@@ -62,7 +62,7 @@ const SOrderResult = () => {
       <View style={Layout.rowCenter}>
       <Button
           title="Đặt đơn"
-          onPress={() => {navigate('SListDeliver')}}
+          onPress={() => {navigate('SHome')}}
           style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
           styleTitle={{ color: Colors.white }}
         />

@@ -8,7 +8,7 @@ import NotOrderAvailable from '../components/NotOrderAvailable';
 const SDeliverd = () => {
   return (
     <View style={Layout.full}>
-      <View style={styles.contents}>
+      {/* <View style={styles.contents}>
         <ScrollView>
           <CardOrder />
           <CardOrder />
@@ -18,7 +18,8 @@ const SDeliverd = () => {
           <CardOrder />
           <CardOrder />
         </ScrollView>
-      </View>
+      </View> */}
+      <NotOrderAvailable />
     </View>
   );
 };

@@ -51,7 +51,7 @@ const SOrderReview = () => {
             name: 'published-with-changes',
             color: Colors.primary,
           }}
-          text="Quay lại điểm giao hàng"
+          text="Quay lại điểm nhận hàng"
         />
       </View>
     </View>

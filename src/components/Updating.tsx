@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
+import { Fonts, Layout } from '../theme';
 
-import { Fonts, Layout } from '../../../theme';
 
-const NotOrderAvailable = () => {
+const Updating = () => {
   return (
     <View style={[Layout.full, styles.container]}>
       <Image
         style={styles.img}
-        source={require('../../../assets/images/not-order-available.png')}
+        source={require('../assets/images/updating.png')}
       />
-      <Text style={Fonts.textLargeBold}>Chưa có đơn hàng ở trạng thái này</Text>
+      <Text style={Fonts.textLargeBold}>Chưc năng hiện tại đang cập nhật</Text>
     </View>
   );
 };
@@ -22,9 +22,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   img: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
+    marginBottom: 15
   },
 });
 
-export default NotOrderAvailable;
+export default Updating;

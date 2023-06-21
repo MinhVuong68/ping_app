@@ -24,6 +24,12 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  rowEnd: {
+    //flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   col: {
     flexDirection: 'column'
   },

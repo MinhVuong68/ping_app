@@ -3,9 +3,10 @@ import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 
 import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
+import { navigate } from '../../../navigators/utils';
 const CardOrder = () => {
   return (
-    <TouchableOpacity activeOpacity={0.4} style={styles.container}>
+    <TouchableOpacity activeOpacity={0.4} style={styles.container} onPress={() => navigate('SOrderDetail')}>
       <View>
         <Text>23-05-2023 | 05:06</Text>
         <View style={styles.viewLocation}>

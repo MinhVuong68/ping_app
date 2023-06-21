@@ -1,43 +1,39 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Image, FlatList } from 'react-native';
 
 import Button from '../SIntro/components/Button';
 import { navigate } from '../../navigators/utils';
 import { Colors, Layout } from '../../theme';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
+
 const SHome = () => {
+  const imagesIntroHome = [
+    require('../../assets/images/home2.jpg'),
+    require('../../assets/images/home3.jpg'),
+    require('../../assets/images/home1.jpg'),
+  ];
+
   return (
     <View style={[Layout.colVCenter, styles.container]}>
-        <View
-          style={{
-            width: WIDTH_SCREEN * 0.9,
-            height: 200,
-            backgroundColor: '#ccc',
-            marginBottom: 12,
-          }}></View>
-
-      <View
-        style={{
-          width: WIDTH_SCREEN * 0.9,
-          height: 200,
-          backgroundColor: '#ccc',
-          marginBottom: 12,
-        }}></View>
-      <View
-        style={{
-          width: WIDTH_SCREEN * 0.9,
-          height: 200,
-          backgroundColor: '#ccc',
-          marginBottom: 12,
-        }}></View>
+      <FlatList
+        data={imagesIntroHome}
+        renderItem={({ item }) => {
+          return (
+            <View style={styles.viewImage}>
+              <Image source={item} style={styles.image} />
+            </View>
+          );
+        }}
+        //keyExtractor={item => item.id}
+      />
 
       <Button
         title="Lên đơn hàng"
         onPress={() => {
           navigate('SBooking1');
         }}
-        style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
+        style={{ backgroundColor: Colors.primary }}
         styleTitle={{ color: Colors.white }}
       />
     </View>
@@ -47,6 +43,19 @@ const SHome = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
+  },
+  viewImage: {
+    width: WIDTH_SCREEN * 0.9,
+    height: 200,
+    backgroundColor: '#ccc',
+    marginBottom: 12,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

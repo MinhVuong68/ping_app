@@ -4,13 +4,13 @@ type RootStackParamList = {
   SIntro: undefined;
   SLogin: undefined;
   SRegitration: undefined;
-  MainNavigation: undefined;
   SEnterPhoneNumber: undefined;
   SForgotPassword: undefined;
   SEnterOTP: undefined;
   
-  
-  Profile: undefined;
+  //MainNavigation: undefined;
+
+  //Profile: undefined;
   SProfile: undefined;
   SChangePassword: undefined;
   SSupport: undefined
@@ -26,9 +26,12 @@ type RootStackParamList = {
   SListDeliver: undefined
   SOrderResult: undefined
 
+  //Order: undefined
   SOrder: undefined;
   SDelivering: undefined;
   SDeliverd: undefined
+  SOrderDetail: undefined
+  SDeliveryTracking: undefined;
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();

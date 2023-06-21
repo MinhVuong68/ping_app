@@ -5,6 +5,7 @@ import { Icon } from '../components';
 import { Colors } from '../theme';
 import ProfileNavigator from './Profile';
 import HomeNavigator from './Home';
+import OrderNavigator from './Order';
 
 const Tab = createBottomTabNavigator()
 const MainNavigator = () => {
@@ -16,8 +17,8 @@ const MainNavigator = () => {
             tabBarLabel: "Trang chủ"
         },
         {
-            name: "SOrder",
-            component: SOrder,
+            name: "Order",
+            component: OrderNavigator,
             tabBarLabel: "Đơn hàng"
         },
         {
@@ -41,7 +42,7 @@ const MainNavigator = () => {
         tabBarIcon: ({focused,color,size}:any) => {
             let screenName = route.name
             let iconName = "home"
-            if(screenName == "SOrder") {
+            if(screenName == "Order") {
                 iconName = "dashboard"
             } else if (screenName =='Profile'){
                 iconName = "user"
