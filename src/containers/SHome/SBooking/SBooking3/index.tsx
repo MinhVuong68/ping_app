@@ -15,7 +15,7 @@ const SBooking3 = () => {
     <View style={Layout.full}>
       <Header title="Bổ sung chi tiết" />
       <View style={styles.content}>
-        <Input label="Số lượng gói hàng:" input={{ keyboardType: 'numeric' }} />
+        {/* <Input label="Số lượng gói hàng:" input={{ keyboardType: 'numeric' }} /> */}
         <Input label="Ghi chú:" input={{ multiline: true, numberOfLines: 5 }} />
         <Input label="Mã giảm giá (Nếu có):" />
         <View style={[Layout.rowVCenter, { marginBottom: 10 }]}>
@@ -29,19 +29,6 @@ const SBooking3 = () => {
           />
           <Text style={Fonts.textRegular}>Quay lại điểm giao hàng</Text>
         </View>
-
-        <Text style={[Fonts.textRegularBold, { marginBottom: 10 }]}>
-          Tải ảnh lên:
-        </Text>
-        <Pressable style={styles.btnAdd}>
-          <Text style={styles.descTxtBtn}>Thêm ảnh</Text>
-          <Icon
-            type="Entypo"
-            name="images"
-            size={20}
-            color={Colors.borderBottom}
-          />
-        </Pressable>
       </View>
       <View style={Layout.colVCenter}>
         <Button

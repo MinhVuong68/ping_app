@@ -6,3 +6,4 @@ export { default as Loading } from './Loading';
 export { default as InputOTP } from './InputOTP';
 export { default as ImageAvatar } from './ImageAvatar';
 export { default as Updating } from './Updating';
+export { default as InputAddressAutoComplete } from './InputAddressAutocomplete'

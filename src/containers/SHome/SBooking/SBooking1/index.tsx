@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View, Text, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
-import { Header, Icon, Input } from '../../../../components';
+import { Header, Icon, Input, InputAddressAutoComplete } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
+
+export type CoordinateType = {
+  latitude: number,
+  longitude: number
+}
+
+export type AddressType = {
+  address: string,
+  coordinates: CoordinateType
+}
+
+
 const SBooking1 = () => {
+  const currentUser = useSelector((state: any) => state.user);
+
+  //Information of the sending point
+  const [addressSender,setAddressSender] = useState<AddressType|undefined>(undefined)
+  const [nameSender, setNameSender] = useState(currentUser.name);
+  const [phoneContactSender,setPhoneContactSender] = useState(currentUser.phoneContact)
+
+  //Information of the receiving point
+  const [addressReceiver,setAddressReceiver] = useState<AddressType|undefined>(undefined)
+  const [nameReceiver, setNameReceiver] = useState('');
+  const [phoneContactReceiver,setPhoneContactReceiver] = useState('')
+  
+
+  console.log('sender',addressSender);
+  
   return (
     <>
       <Header title="Thông tin đơn hàng" />
@@ -25,9 +53,27 @@ const SBooking1 = () => {
                 Địa điểm nhận hàng
               </Text>
             </View>
-            <Input label="Họ tên người gửi:" />
-            <Input label="Số điện thoại người gửi:" />
-            <Input label="Địa chỉ:" />
+            <Input
+              label="Họ tên người gửi:"
+              value={nameSender}
+              setValue={setNameSender}
+              validation={{
+                match: /^[\p{L} ]{2,}$/u,
+                require: 'Tên không được để trống',
+                role: 'Tên phải có ít nhất 2 ký tự',
+              }}
+            />
+            <Input label="Số điện thoại người gửi:"
+              value={phoneContactSender}
+              setValue={setPhoneContactSender}
+              validation={{
+                match: /^[0-9]{10}$/,
+                require: 'Số điện thoại không được để trống',
+                role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
+              }}
+            />
+            {/* <Input label="Địa chỉ:" style={{}}/> */}
+            <InputAddressAutoComplete label="Địa chỉ:" setValue={setAddressSender} value={addressSender?.address}/>
           </View>
           <View style={[styles.viewChooseAddess]}>
             <View style={[Layout.row, { marginBottom: 10 }]}>
@@ -41,9 +87,27 @@ const SBooking1 = () => {
                 Địa điểm giao hàng
               </Text>
             </View>
-            <Input label="Họ tên người nhận:" />
-            <Input label="Số điện thoại người nhận:" />
-            <Input label="Địa chỉ:" />
+            <Input
+              label="Họ tên người nhận:"
+              value={nameReceiver}
+              setValue={setNameReceiver}
+              validation={{
+                match: /^[\p{L} ]{2,}$/u,
+                require: 'Tên không được để trống',
+                role: 'Tên phải có ít nhất 2 ký tự',
+              }}
+            />
+            <Input label="Số điện thoại người nhận:"
+              value={phoneContactReceiver}
+              setValue={setPhoneContactReceiver}
+              validation={{
+                match: /^[0-9]{10}$/,
+                require: 'Số điện thoại không được để trống',
+                role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
+              }}
+            />
+            {/* <Input label="Địa chỉ:" /> */}
+            <InputAddressAutoComplete label="Địa chỉ:"/>
           </View>
           <View style={Layout.rowCenter}>
             <Button
