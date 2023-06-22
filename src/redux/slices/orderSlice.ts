@@ -1,0 +1,66 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { OrderType } from '../type';
+
+const initialState: OrderType = {
+customerId: '',
+  nameSender: '',
+  phoneSender: '',
+  locationSender: {
+    address: '',
+    coordinate: {
+      latitude: null,
+      longitude: null,
+    },
+  },
+  nameReceiver: '',
+  phoneReceiver: '',
+  locationReceiver: {
+    address: '',
+    coordinate: {
+      latitude: null,
+      longitude: null,
+    },
+  },
+  vehicleId: null,
+  note: '',
+  discountCode: '',
+  rollBack: false,
+  driverId: null,
+};
+
+const orderSlice = createSlice({
+  name: 'order',
+  initialState: initialState,
+  reducers: {
+    setInfoOrder(state, action) {
+        state.customerId = action.payload.customerId,
+      (state.nameSender = action.payload.nameSender),
+      (state.phoneSender = action.payload.phoneSender),
+        (state.locationSender.address = action.payload.locationSender.address),
+        (state.locationSender.coordinate.latitude =
+          action.payload.locationSender.coordinate.latitude),
+        (state.locationSender.coordinate.longitude =
+          action.payload.locationSender.coordinate.longitude),
+        (state.nameReceiver = action.payload.nameReceiver),
+        (state.phoneReceiver = action.payload.phoneReceiver),
+        (state.locationReceiver.address =
+          action.payload.locationReceiver.address),
+        (state.locationReceiver.coordinate.latitude =
+          action.payload.locationReceiver.coordinate.latitude),
+        (state.locationReceiver.coordinate.longitude =
+          action.payload.locationReceiver.coordinate.longitude);
+    },
+    setVehicle(state,action){
+      state.vehicleId = action.payload.vehicleId
+    },
+    setAdditionalOrder(state,action) {
+      state.note = action.payload.note,
+      state.discountCode = action.payload.discountCode,
+      state.rollBack = action.payload.rollBack
+    }
+  },
+});
+
+export const { setInfoOrder,setVehicle,setAdditionalOrder } = orderSlice.actions
+
+export default orderSlice.reducer;

@@ -4,6 +4,8 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
 import { navigate } from '../../../navigators/utils';
+import { useDispatch } from 'react-redux';
+import { setVehicle } from '../../../redux/slices/orderSlice';
 
 export interface ItemVehicleProps {
   id: number;
@@ -26,7 +28,12 @@ const ItemVehicle = ({
   width,
   height,
 }: ItemVehicleProps) => {
+
+  const dispatch = useDispatch()
   const handleChooseVehicle = () => {
+    dispatch(setVehicle({
+      vehicleId: id
+    }))
     navigate('SBooking3');
   };
 

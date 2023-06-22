@@ -1,23 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
 import { Header, Icon, Input } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
+import { setAdditionalOrder } from '../../../../redux/slices/orderSlice';
 
 const SBooking3 = () => {
+
+  const dispatch = useDispatch()
+
+  const [note, setNote] = useState('Không');
+  const [discountCode, setDiscountCode] = useState('');
   const [toggleCheckBoxGoBackLocation, setToggleCheckBoxGoBackLocation] =
     useState(false);
 
+    useEffect(() => {
+      dispatch(setAdditionalOrder({
+        note: note,
+        discountCode: discountCode,
+        rollBack: toggleCheckBoxGoBackLocation,
+      }))
+    },[note,discountCode,toggleCheckBoxGoBackLocation])
+    
+    const orderksk = useSelector((state: any) => state.order);
+  console.log(orderksk);
+    
   return (
     <View style={Layout.full}>
       <Header title="Bổ sung chi tiết" />
       <View style={styles.content}>
         {/* <Input label="Số lượng gói hàng:" input={{ keyboardType: 'numeric' }} /> */}
-        <Input label="Ghi chú:" input={{ multiline: true, numberOfLines: 5 }} />
-        <Input label="Mã giảm giá (Nếu có):" />
+        <Input
+          label="Ghi chú:"
+          input={{ multiline: true, numberOfLines: 5 }}
+          value={note}
+          setValue={setNote}
+            validation={{
+              match: /^[\p{L} ]*$/u
+            }}
+        />
+        <Input
+          label="Mã giảm giá (Nếu có):"
+          value={discountCode}
+          setValue={setDiscountCode}
+          validation={{
+            match: /^[a-zA-Z0-9]*$/
+          }}
+        />
         <View style={[Layout.rowVCenter, { marginBottom: 10 }]}>
           <CheckBox
             tintColors={{ true: Colors.primary }}
@@ -27,7 +60,7 @@ const SBooking3 = () => {
               setToggleCheckBoxGoBackLocation(newValue)
             }
           />
-          <Text style={Fonts.textRegular}>Quay lại điểm giao hàng</Text>
+          <Text style={Fonts.textRegular}>Quay lại điểm nhận hàng</Text>
         </View>
       </View>
       <View style={Layout.colVCenter}>

@@ -8,7 +8,7 @@ type RootStackParamList = {
   SForgotPassword: undefined;
   SEnterOTP: undefined;
   
-  //MainNavigation: undefined;
+  MainNavigation: undefined;
 
   //Profile: undefined;
   SProfile: undefined;
@@ -20,11 +20,13 @@ type RootStackParamList = {
 
   SHome: undefined;
   SBooking1: undefined
+  SEnterLocation: undefined
   SBooking2: undefined
   SBooking3: undefined
   SOrderReview: undefined
   SListDeliver: undefined
   SOrderResult: undefined
+  SSavedAddress: undefined
 
   //Order: undefined
   SOrder: undefined;

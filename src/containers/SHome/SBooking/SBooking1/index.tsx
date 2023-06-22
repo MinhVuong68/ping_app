@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View, Text, Dimensions } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, { useState,useEffect } from 'react';
+import { ScrollView, StyleSheet, View, Text, Dimensions,Pressable } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
-import { Header, Icon, Input, InputAddressAutoComplete } from '../../../../components';
+import { Header, Icon, Input, InputPressable } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
+import { useNavigation } from '@react-navigation/native';
+import { setInfoOrder } from '../../../../redux/slices/orderSlice';
+import { LocationType } from '../../../../redux/type';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
@@ -16,26 +19,53 @@ export type CoordinateType = {
 
 export type AddressType = {
   address: string,
-  coordinates: CoordinateType
+  coordinate: CoordinateType
 }
 
 
 const SBooking1 = () => {
   const currentUser = useSelector((state: any) => state.user);
+  const dispatch = useDispatch()
 
   //Information of the sending point
-  const [addressSender,setAddressSender] = useState<AddressType|undefined>(undefined)
+  const [locationSender,setLocationSender] = useState<LocationType|null>({
+    address: "158 Dương Quảng Hàm, Phường 5, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam",
+    coordinate: {
+      latitude: 10.827021107344015,
+      longitude: 106.69178473806281
+    }
+  })
   const [nameSender, setNameSender] = useState(currentUser.name);
   const [phoneContactSender,setPhoneContactSender] = useState(currentUser.phoneContact)
 
   //Information of the receiving point
-  const [addressReceiver,setAddressReceiver] = useState<AddressType|undefined>(undefined)
-  const [nameReceiver, setNameReceiver] = useState('');
-  const [phoneContactReceiver,setPhoneContactReceiver] = useState('')
-  
+  const [locationReceiver,setLocationReceiver] = useState<LocationType|null>(
+    {
+      address: "158 Tân Kỳ Tân Quý, Sơn Kỳ, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+      coordinate: {
+        latitude: 10.803476696459134,
+        longitude: 106.63118383629549
+      }
+    })
+  const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh');
+  const [phoneContactReceiver,setPhoneContactReceiver] = useState('0325632125')
 
-  console.log('sender',addressSender);
-  
+   console.log('sender',locationSender);
+   console.log('receiver',locationReceiver);
+
+  const setInfoOrdera = () => {
+    dispatch(setInfoOrder({
+      customerId: currentUser.id,
+      nameSender: nameSender,
+      phoneSender: phoneContactSender,
+      locationSender: locationSender,
+      nameReceiver: nameReceiver,
+      phoneReceiver: phoneContactReceiver,
+      locationReceiver: locationReceiver,
+    }))
+    navigate('SBooking2')
+  }
+
   return (
     <>
       <Header title="Thông tin đơn hàng" />
@@ -72,8 +102,7 @@ const SBooking1 = () => {
                 role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
               }}
             />
-            {/* <Input label="Địa chỉ:" style={{}}/> */}
-            <InputAddressAutoComplete label="Địa chỉ:" setValue={setAddressSender} value={addressSender?.address}/>
+            <InputPressable label='Địa chỉ' onPress={() => navigate('SEnterLocation',{setValue: setLocationSender})} value={locationSender?.address}/>
           </View>
           <View style={[styles.viewChooseAddess]}>
             <View style={[Layout.row, { marginBottom: 10 }]}>
@@ -106,15 +135,12 @@ const SBooking1 = () => {
                 role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
               }}
             />
-            {/* <Input label="Địa chỉ:" /> */}
-            <InputAddressAutoComplete label="Địa chỉ:"/>
+            <InputPressable label='Địa chỉ' onPress={() => navigate('SEnterLocation',{setValue: setLocationReceiver})} value={locationReceiver?.address}/>
           </View>
           <View style={Layout.rowCenter}>
             <Button
               title="Tiếp tục"
-              onPress={() => {
-                navigate('SBooking2');
-              }}
+              onPress={setInfoOrdera}
               style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
               styleTitle={{ color: Colors.white }}
             />

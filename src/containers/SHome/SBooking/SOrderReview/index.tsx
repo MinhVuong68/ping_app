@@ -1,12 +1,26 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import { Colors, Layout } from '../../../../theme';
 import { Header } from '../../../../components';
 import ItemInfo from '../../components/ItemInfo';
+import { useSelector } from 'react-redux';
+import axiosClient from '../../../../configs/axiosClient';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 const SOrderReview = () => {
+
+  const orderReview = useSelector((state:any) => state.order)
+  const [vehicle,setVehicle] = useState<any>({})
+
+  useEffect(() => {
+    const getVehicle = async (id:number) => {
+      const result = await axiosClient.get(`/vehicle/${orderReview.vehicleId}`)
+      setVehicle(result)
+    }
+    getVehicle(orderReview.vehicleId)
+  },[])
+
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
@@ -15,44 +29,48 @@ const SOrderReview = () => {
           <Text>Bên giao hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.primary }}
-            text="Nguyễn Minh Vương"
+            text={orderReview.nameSender}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.primary }}
-            text="0899306681"
+            text={orderReview.phoneSender}
           />
           <ItemInfo
             icon={{ type: 'FontAwesome', name: 'bullseye', color: 'green' }}
-            text="158/7 Tân Sơn Nhì, phường Tân Sơn Nhì, Tân Phú, Hồ Chí Minh"
+            text={orderReview.locationSender.address}
           />
         </View>
         <View style={styles.box}>
           <Text>Bên nhận hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.blue }}
-            text="Nguyễn Văn Nam"
+            text={orderReview.nameReceiver}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.blue }}
-            text="0797002411"
+            text={orderReview.phoneReceiver}
           />
           <ItemInfo
             icon={{ type: 'Entypo', name: 'location-pin', color: 'red' }}
-            text="143 Lý Thường Kiệt, Quận 11, Thành Phố Hồ Chí Minh"
+            text={orderReview.locationReceiver.address}
           />
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text="Xe tải 1000 Kg"
+          text={`${vehicle.nameVehicle} ${vehicle.weight} Kg`}
         />
-        <ItemInfo
+        {orderReview.note && <ItemInfo
+          icon={{ type: 'MaterialCommunityIcons', name: 'note-edit-outline', color: Colors.primary }}
+          text={orderReview.note}
+        />}
+        {orderReview.rollBack && <ItemInfo
           icon={{
             type: 'MaterialIcons',
             name: 'published-with-changes',
             color: Colors.primary,
           }}
           text="Quay lại điểm nhận hàng"
-        />
+        />}
       </View>
     </View>
   );

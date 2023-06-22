@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 import { Header } from '../../../../components';
 import { Fonts, Layout } from '../../../../theme';
@@ -11,6 +12,9 @@ import axiosClient from '../../../../configs/axiosClient';
 const SBooking2 = () => {
   const [vehicles, setVehicles] = useState<any>([]);
 
+  const orderksk = useSelector((state: any) => state.order);
+  console.log(orderksk);
+  
   useEffect(() => {
     const fetchVehicle = async () => {
       const response = await axiosClient.get('/vehicle');
