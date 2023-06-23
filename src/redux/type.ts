@@ -11,6 +11,7 @@ export type OrderType = {
     discountCode: string,
     rollBack: boolean,
     driverId: number|null,
+    isWho: 'sender'|'resceiver'
 }
 
 export type LocationType = {

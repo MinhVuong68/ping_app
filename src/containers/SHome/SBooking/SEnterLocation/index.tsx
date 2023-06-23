@@ -13,14 +13,20 @@ import { useDebounce } from '../../../../hooks';
 import { getAddressFromText } from '../../../../utils/map';
 import styles from './styles';
 import { navigate } from '../../../../navigators/utils';
-import Color from '../../../../theme/Colors';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setLocationReceiver,
+  setLocationSender,
+} from '../../../../redux/slices/orderSlice';
 
 const SEnterLocation = (params: any) => {
+  const dispatch = useDispatch();
+  const order = useSelector((state: any) => state.order);
+
   const [txtLocation, setTxtLocation] = useState('');
   const [searchResult, setSearchResult] = useState<any>([]);
-  const debouncedValue = useDebounce(txtLocation, 500);
+  const debouncedValue = useDebounce(txtLocation, 5000);
 
-  const setValue = params.route.params.setValue;
   const handleChangeTxt = (value: string) => {
     setTxtLocation(value);
   };
@@ -36,13 +42,23 @@ const SEnterLocation = (params: any) => {
   // }, [debouncedValue]);
 
   const handleChosseResultSerch = (result: any) => {
-    setValue({
-      address: result.address,
-      coordinate: {
-        latitude: result.location.lat,
-        longitude: result.location.lng,
-      },
-    });
+    if (order.isWho == 'sender') {
+      dispatch(
+        setLocationSender({
+          address: result.address,
+          latitude: result.location.lat,
+          longitude: result.location.lng,
+        }),
+      );
+    } else if (order.isWho == 'receiver') {
+      dispatch(
+        setLocationReceiver({
+          address: result.address,
+          latitude: result.location.lat,
+          longitude: result.location.lng,
+        }),
+      );
+    }
     navigate('SBooking1');
   };
 

@@ -5,7 +5,7 @@ import axiosClient from "../configs/axiosClient";
 const MAP_4D_KEY ="677223fd5b8bebf586b738af42c3cb15"
 
 export const getAddressFromLocation = async (location:any) => {
-  console.log(1235);
+  console.log(1237);
     const locationStr = location.latitude + ',' + location.longitude;
     const url = `https://api.map4d.vn/sdk/v2/geocode?key=${MAP_4D_KEY}&location=${locationStr}`;
     const result = await axiosClient.get(url);

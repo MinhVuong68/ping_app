@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OrderType } from '../type';
+import { string } from 'yup';
 
 const initialState: OrderType = {
 customerId: '',
@@ -26,6 +27,7 @@ customerId: '',
   discountCode: '',
   rollBack: false,
   driverId: null,
+  isWho: 'sender',
 };
 
 const orderSlice = createSlice({
@@ -57,10 +59,28 @@ const orderSlice = createSlice({
       state.note = action.payload.note,
       state.discountCode = action.payload.discountCode,
       state.rollBack = action.payload.rollBack
-    }
+    },
+    setIsWho(state,action){
+      state.isWho = action.payload.isWho
+    },
+    setLocationSender(state,action){
+      (state.locationSender.address = action.payload.address),
+      (state.locationSender.coordinate.latitude =
+        action.payload.latitude),
+      (state.locationSender.coordinate.longitude =
+        action.payload.longitude)
+    },
+    setLocationReceiver(state,action){
+      (state.locationReceiver.address =
+        action.payload.address),
+      (state.locationReceiver.coordinate.latitude =
+        action.payload.latitude),
+      (state.locationReceiver.coordinate.longitude =
+        action.payload.longitude)
+    },
   },
 });
 
-export const { setInfoOrder,setVehicle,setAdditionalOrder } = orderSlice.actions
+export const { setInfoOrder,setVehicle,setAdditionalOrder,setIsWho,setLocationSender,setLocationReceiver } = orderSlice.actions
 
 export default orderSlice.reducer;

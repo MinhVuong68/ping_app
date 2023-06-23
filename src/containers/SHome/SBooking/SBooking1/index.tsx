@@ -1,70 +1,79 @@
-import React, { useState,useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Text, Dimensions,Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Pressable,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
 import { Header, Icon, Input, InputPressable } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
-import { useNavigation } from '@react-navigation/native';
-import { setInfoOrder } from '../../../../redux/slices/orderSlice';
+import { setInfoOrder, setIsWho } from '../../../../redux/slices/orderSlice';
 import { LocationType } from '../../../../redux/type';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
 export type CoordinateType = {
-  latitude: number,
-  longitude: number
-}
+  latitude: number;
+  longitude: number;
+};
 
 export type AddressType = {
-  address: string,
-  coordinate: CoordinateType
-}
-
+  address: string;
+  coordinate: CoordinateType;
+};
 
 const SBooking1 = () => {
   const currentUser = useSelector((state: any) => state.user);
-  const dispatch = useDispatch()
+
+  const order = useSelector((state: any) => state.order);
+
+  useEffect(() => {
+    setLocationReceiver(order.locationReceiver);
+    setLocationSender(order.locationSender);
+  }, []);
+
+  const dispatch = useDispatch();
 
   //Information of the sending point
-  const [locationSender,setLocationSender] = useState<LocationType|null>({
-    address: "158 Dương Quảng Hàm, Phường 5, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam",
-    coordinate: {
-      latitude: 10.827021107344015,
-      longitude: 106.69178473806281
-    }
-  })
+  const [locationSender, setLocationSender] = useState<LocationType | null>(
+    order.locationSender,
+  );
   const [nameSender, setNameSender] = useState(currentUser.name);
-  const [phoneContactSender,setPhoneContactSender] = useState(currentUser.phoneContact)
+  const [phoneContactSender, setPhoneContactSender] = useState(
+    currentUser.phoneContact,
+  );
 
   //Information of the receiving point
-  const [locationReceiver,setLocationReceiver] = useState<LocationType|null>(
-    {
-      address: "158 Tân Kỳ Tân Quý, Sơn Kỳ, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
-      coordinate: {
-        latitude: 10.803476696459134,
-        longitude: 106.63118383629549
-      }
-    })
+  const [locationReceiver, setLocationReceiver] = useState<LocationType | null>(
+    order.locationReceiver,
+  );
   const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh');
-  const [phoneContactReceiver,setPhoneContactReceiver] = useState('0325632125')
-
-   console.log('sender',locationSender);
-   console.log('receiver',locationReceiver);
+  const [phoneContactReceiver, setPhoneContactReceiver] =
+    useState('0325632125');
+  // console.log('sender', locationSender);
+  // console.log('receiver', locationReceiver);
+  console.log(order);
 
   const setInfoOrdera = () => {
-    dispatch(setInfoOrder({
-      customerId: currentUser.id,
-      nameSender: nameSender,
-      phoneSender: phoneContactSender,
-      locationSender: locationSender,
-      nameReceiver: nameReceiver,
-      phoneReceiver: phoneContactReceiver,
-      locationReceiver: locationReceiver,
-    }))
-    navigate('SBooking2')
-  }
+    dispatch(
+      setInfoOrder({
+        customerId: currentUser.id,
+        nameSender: nameSender,
+        phoneSender: phoneContactSender,
+        locationSender: order.locationSender,
+        nameReceiver: nameReceiver,
+        phoneReceiver: phoneContactReceiver,
+        locationReceiver: order.locationReceiver,
+      }),
+    );
+    navigate('SBooking2');
+  };
 
   return (
     <>
@@ -93,7 +102,8 @@ const SBooking1 = () => {
                 role: 'Tên phải có ít nhất 2 ký tự',
               }}
             />
-            <Input label="Số điện thoại người gửi:"
+            <Input
+              label="Số điện thoại người gửi:"
               value={phoneContactSender}
               setValue={setPhoneContactSender}
               validation={{
@@ -102,7 +112,14 @@ const SBooking1 = () => {
                 role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
               }}
             />
-            <InputPressable label='Địa chỉ' onPress={() => navigate('SEnterLocation',{setValue: setLocationSender})} value={locationSender?.address}/>
+            <InputPressable
+              label="Địa chỉ"
+              onPress={() => {
+                dispatch(setIsWho({ isWho: 'sender' }));
+                navigate('SEnterLocation');
+              }}
+              value={order.locationSender.address}
+            />
           </View>
           <View style={[styles.viewChooseAddess]}>
             <View style={[Layout.row, { marginBottom: 10 }]}>
@@ -126,7 +143,8 @@ const SBooking1 = () => {
                 role: 'Tên phải có ít nhất 2 ký tự',
               }}
             />
-            <Input label="Số điện thoại người nhận:"
+            <Input
+              label="Số điện thoại người nhận:"
               value={phoneContactReceiver}
               setValue={setPhoneContactReceiver}
               validation={{
@@ -135,7 +153,14 @@ const SBooking1 = () => {
                 role: 'Số điện thoại bao gồm 9 số và bắt đầu bằng số 0',
               }}
             />
-            <InputPressable label='Địa chỉ' onPress={() => navigate('SEnterLocation',{setValue: setLocationReceiver})} value={locationReceiver?.address}/>
+            <InputPressable
+              label="Địa chỉ"
+              onPress={() => {
+                dispatch(setIsWho({ isWho: 'receiver' }));
+                navigate('SEnterLocation', { setValue: setLocationReceiver });
+              }}
+              value={order.locationReceiver.address}
+            />
           </View>
           <View style={Layout.rowCenter}>
             <Button
