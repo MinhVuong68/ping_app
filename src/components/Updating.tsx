@@ -10,7 +10,7 @@ const Updating = () => {
         style={styles.img}
         source={require('../assets/images/updating.png')}
       />
-      <Text style={Fonts.textLargeBold}>Chưc năng hiện tại đang cập nhật</Text>
+      <Text style={Fonts.textLargeBold}>Chức năng hiện tại đang cập nhật</Text>
     </View>
   );
 };

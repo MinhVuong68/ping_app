@@ -39,8 +39,13 @@ const SBooking3 = () => {
           input={{ multiline: true, numberOfLines: 5 }}
           value={note}
           setValue={setNote}
-            validation={{
-              match: /^[\p{L} ]*$/u
+            validation={{  
+              // a-z và A-Z là các ký tự từ a đến z và A đến Z.
+              // 0-9 là các số từ 0 đến 9.
+              // \u00C0-\u017F là các ký tự Unicode tiếng Việt bắt đầu từ U+00C0 (À) đến U+017F (ſ).
+              // \s đại diện cho khoảng trắng (space).
+              // \W đại diện cho tất cả các ký tự đặc biệt.
+              match: /^[a-zA-Z0-9\u00C0-\u017F\s\W]+$/
             }}
         />
         <Input

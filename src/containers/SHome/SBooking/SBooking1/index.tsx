@@ -157,7 +157,7 @@ const SBooking1 = () => {
               label="Địa chỉ"
               onPress={() => {
                 dispatch(setIsWho({ isWho: 'receiver' }));
-                navigate('SEnterLocation', { setValue: setLocationReceiver });
+                navigate('SEnterLocation');
               }}
               value={order.locationReceiver.address}
             />
