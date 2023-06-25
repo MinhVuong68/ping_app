@@ -13,7 +13,7 @@ const SBooking2 = () => {
   const [vehicles, setVehicles] = useState<any>([]);
 
   const orderksk = useSelector((state: any) => state.order);
-  console.log(orderksk);
+  //console.log(orderksk);
   
   useEffect(() => {
     const fetchVehicle = async () => {

@@ -7,9 +7,13 @@ import ItemInfo from '../../components/ItemInfo';
 import ItemPayment from '../../components/ItemPayment';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
+import { useSelector } from 'react-redux';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 const SOrderResult = () => {
+
+  const order = useSelector((state:any) => state.order)
+
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
@@ -18,44 +22,45 @@ const SOrderResult = () => {
           <Text>Bên giao hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.primary }}
-            text="Nguyễn Minh Vương"
+            text={order.nameSender}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.primary }}
-            text="0899306681"
+            text={order.phoneSender}
           />
           <ItemInfo
             icon={{ type: 'FontAwesome', name: 'bullseye', color: 'green' }}
-            text="158/7 Tân Sơn Nhì, phường Tân Sơn Nhì, Tân Phú, Hồ Chí Minh"
+            text={order.locationSender.address}
           />
         </View>
         <View style={styles.box}>
           <Text>Bên nhận hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.blue }}
-            text="Nguyễn Văn Nam"
+            text={order.nameReceiver}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.blue }}
-            text="0797002411"
+            text={order.phoneReceiver}
           />
           <ItemInfo
             icon={{ type: 'Entypo', name: 'location-pin', color: 'red' }}
-            text="143 Lý Thường Kiệt, Quận 11, Thành Phố Hồ Chí Minh"
+            text={order.locationReceiver.address}
           />
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
           text="Xe tải 1000 Kg"
         />
-        <ItemInfo
+
+        {order.rollBack && <ItemInfo
           icon={{
             type: 'MaterialIcons',
             name: 'published-with-changes',
             color: Colors.primary,
           }}
           text="Quay lại điểm nhận hàng"
-        />
+        />}
         <ItemPayment/>
         
       </View>

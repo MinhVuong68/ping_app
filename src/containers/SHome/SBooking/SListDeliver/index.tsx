@@ -6,6 +6,8 @@ import ItemDelivery, { ItemDeliveryProps } from '../../components/ItemDelivery';
 import { Layout } from '../../../../theme';
 import axiosClient from '../../../../configs/axiosClient';
 import { useSelector } from 'react-redux';
+import { calcDistance2Location } from '../../../../utils/map';
+import { convertMeterToKilometer } from '../../../../utils';
 
 const SListDeliver = () => {
   const order = useSelector((state: any) => state.order);
@@ -18,7 +20,20 @@ const SListDeliver = () => {
       const res: any = await axiosClient.get(
         `/driver/online/${order.vehicleId}`,
       );
-      setLsDriver(res);
+
+      for(let i = 0;i<res.length;i++){
+        const locationSender = order.locationSender.coordinate;
+        const locationDriver = {latitude: res[i].latitude, longitude: res[i].longitude}
+
+        const coordinateSender = locationSender.latitude+','+locationSender.longitude
+        const coordinateDriver = locationDriver.latitude+','+locationDriver.longitude
+
+        const rs:any = await calcDistance2Location(coordinateSender,coordinateDriver)
+        const distanceKm = convertMeterToKilometer(rs.result.routeRows[0].elements[0]?.distance?.value)
+        
+        setLsDriver((prevLsDriver:any) => [...prevLsDriver,{...res[i],distance: distanceKm}])
+      }
+
       setShowNoDriver(res.length == 0);
     };
     getLsDriver();
@@ -38,10 +53,10 @@ const SListDeliver = () => {
                 name={item.fullName}
                 carNumberPlate={item.licensePlate}
                 vote={item.reviewRate}
-                distance={4}
+                distance={item.distance}
               />
             )}
-            //keyExtractor={item => item.id}
+            keyExtractor={item => item.id}
           />
         </View>
       ) : (

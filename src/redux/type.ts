@@ -11,6 +11,9 @@ export type OrderType = {
     discountCode: string,
     rollBack: boolean,
     driverId: number|null,
+    price: number,
+    discount: number,
+    totalPrice: number,
     isWho: 'sender'|'resceiver'
 }
 
