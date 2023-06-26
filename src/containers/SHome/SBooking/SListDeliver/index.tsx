@@ -18,7 +18,7 @@ const SListDeliver = () => {
   useEffect(() => {
     const getLsDriver = async () => {
       const res: any = await axiosClient.get(
-        `/driver/online/${order.vehicleId}`,
+        `/driver/online/${order.vehicle.vehicleId}`,
       );
 
       for(let i = 0;i<res.length;i++){

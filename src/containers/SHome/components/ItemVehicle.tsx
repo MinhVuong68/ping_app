@@ -32,7 +32,9 @@ const ItemVehicle = ({
   const dispatch = useDispatch()
   const handleChooseVehicle = () => {
     dispatch(setVehicle({
-      vehicleId: id
+      vehicleId: id,
+      vehicleName: nameVehicle,
+      weight: weight
     }))
     navigate('SBooking3');
   };

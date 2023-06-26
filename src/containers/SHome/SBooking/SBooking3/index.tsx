@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,27 +8,58 @@ import { Header, Icon, Input } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
 import { setAdditionalOrder } from '../../../../redux/slices/orderSlice';
+import axiosClient from '../../../../configs/axiosClient';
 
 const SBooking3 = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const order = useSelector((state: any) => state.order);
 
   const [note, setNote] = useState('Không');
   const [discountCode, setDiscountCode] = useState('');
   const [toggleCheckBoxGoBackLocation, setToggleCheckBoxGoBackLocation] =
     useState(false);
 
-    useEffect(() => {
-      dispatch(setAdditionalOrder({
-        note: note,
-        discountCode: discountCode,
-        rollBack: toggleCheckBoxGoBackLocation,
-      }))
-    },[note,discountCode,toggleCheckBoxGoBackLocation])
-    
-    const orderksk = useSelector((state: any) => state.order);
-  console.log(orderksk);
-    
+  console.log(order);
+
+  useEffect(() => {
+    dispatch(setAdditionalOrder({
+      note: note,
+      rollBack: toggleCheckBoxGoBackLocation,
+      discountCode: discountCode,
+      discountId: null,
+      discountPercentage: null,
+    }))
+  },[note,toggleCheckBoxGoBackLocation,discountCode])
+  const onGoSListDeliver = async () => {
+    if(discountCode==='') {
+      navigate('SListDeliver')
+      return;
+    }
+    const res: any = await axiosClient.get(`/discount/${discountCode}`);
+    if (res?.message === 'Discount code does not exist!'){
+      Alert.alert('Mã giám giá không tồn tại!');
+      return;
+    }
+    else if (res.message === 'Discount code already used!') {
+      Alert.alert('Mã giảm giá đã được sử dụng!');
+      return;
+    }
+    else {
+      dispatch(
+        setAdditionalOrder({
+          note: note,
+          discountCode: res.code,
+          discountId: res.id,
+          discountPercentage: res.percentageDiscount,
+          rollBack: toggleCheckBoxGoBackLocation,
+        }),
+      );
+      navigate('SListDeliver')
+    }
+  };
+
+  //.log(orderksk);
+
   return (
     <View style={Layout.full}>
       <Header title="Bổ sung chi tiết" />
@@ -39,21 +70,21 @@ const SBooking3 = () => {
           input={{ multiline: true, numberOfLines: 5 }}
           value={note}
           setValue={setNote}
-            validation={{  
-              // a-z và A-Z là các ký tự từ a đến z và A đến Z.
-              // 0-9 là các số từ 0 đến 9.
-              // \u00C0-\u017F là các ký tự Unicode tiếng Việt bắt đầu từ U+00C0 (À) đến U+017F (ſ).
-              // \s đại diện cho khoảng trắng (space).
-              // \W đại diện cho tất cả các ký tự đặc biệt.
-              match: /^[a-zA-Z0-9\u00C0-\u017F\s\W]+$/
-            }}
+          validation={{
+            // a-z và A-Z là các ký tự từ a đến z và A đến Z.
+            // 0-9 là các số từ 0 đến 9.
+            // \u00C0-\u017F là các ký tự Unicode tiếng Việt bắt đầu từ U+00C0 (À) đến U+017F (ſ).
+            // \s đại diện cho khoảng trắng (space).
+            // \W đại diện cho tất cả các ký tự đặc biệt.
+            match: /^[a-zA-Z0-9\u00C0-\u017F\s\W]+$/,
+          }}
         />
         <Input
           label="Mã giảm giá (Nếu có):"
           value={discountCode}
           setValue={setDiscountCode}
           validation={{
-            match: /^[a-zA-Z0-9]*$/
+            match: /^[a-zA-Z0-9]*$/,
           }}
         />
         <View style={[Layout.rowVCenter, { marginBottom: 10 }]}>
@@ -71,9 +102,7 @@ const SBooking3 = () => {
       <View style={Layout.colVCenter}>
         <Button
           title="Tiếp tục"
-          onPress={() => {
-            navigate('SListDeliver');
-          }}
+          onPress={onGoSListDeliver}
           style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
           styleTitle={{ color: Colors.white }}
         />

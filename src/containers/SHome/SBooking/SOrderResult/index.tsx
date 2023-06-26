@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import { Colors, Layout } from '../../../../theme';
@@ -13,6 +13,7 @@ const WIDTH_SCREEN = Dimensions.get('window').width;
 const SOrderResult = () => {
 
   const order = useSelector((state:any) => state.order)
+
 
   return (
     <View style={Layout.full}>
@@ -50,7 +51,7 @@ const SOrderResult = () => {
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text="Xe tải 1000 Kg"
+          text={`Xe ${order.vehicle.vehicleName} ${order.vehicle.weight} Kg`}
         />
 
         {order.rollBack && <ItemInfo

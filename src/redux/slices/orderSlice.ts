@@ -22,13 +22,20 @@ const initialState: OrderType = {
       longitude: null,
     },
   },
-  vehicleId: null,
+  vehicle: {
+    vehicleId: null,
+    vehicleName: '',
+    weight: null,
+  },
   note: '',
-  discountCode: '',
   rollBack: false,
-  driverId: null,
+  discount: {
+    discountId: null,
+    discountCode: '',
+    discountPercentage: 0,
+  },
   price: 0,
-  discount: 0,
+  driverId: null,
   totalPrice: 0,
   isWho: 'sender',
 };
@@ -56,12 +63,16 @@ const orderSlice = createSlice({
           action.payload.locationReceiver.coordinate.longitude);
     },
     setVehicle(state, action) {
-      state.vehicleId = action.payload.vehicleId;
+      state.vehicle.vehicleId = action.payload.vehicleId;
+      state.vehicle.vehicleName = action.payload.vehicleName;
+      state.vehicle.weight = action.payload.weight;
     },
     setAdditionalOrder(state, action) {
       (state.note = action.payload.note),
-        (state.discountCode = action.payload.discountCode),
-        (state.rollBack = action.payload.rollBack);
+        (state.discount.discountCode = action.payload.discountCode),
+        (state.discount.discountId = action.payload.discountId),
+        (state.discount.discountPercentage = action.payload.discountPercentage),
+          (state.rollBack = action.payload.rollBack)
     },
     setIsWho(state, action) {
       state.isWho = action.payload.isWho;

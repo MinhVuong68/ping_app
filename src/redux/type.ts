@@ -6,13 +6,12 @@ export type OrderType = {
     nameReceiver: string,
     phoneReceiver: string,
     locationReceiver: LocationType,
-    vehicleId: number|null,
+    vehicle: VehicleType,
     note: string,
-    discountCode: string,
     rollBack: boolean,
     driverId: number|null,
     price: number,
-    discount: number,
+    discount: DiscountType,
     totalPrice: number,
     isWho: 'sender'|'resceiver'
 }
@@ -23,4 +22,16 @@ export type LocationType = {
         latitude: number|null,
         longitude: number|null
     }
+}
+
+export type VehicleType = {
+    vehicleId: number|null,
+    vehicleName: string,
+    weight: number|null,
+}
+
+export type DiscountType = {
+    discountId: number|null,
+    discountCode: string,
+    discountPercentage: number|null
 }

@@ -13,13 +13,6 @@ const SOrderReview = () => {
   const orderReview = useSelector((state:any) => state.order)
   const [vehicle,setVehicle] = useState<any>({})
 
-  useEffect(() => {
-    const getVehicle = async (id:number) => {
-      const result = await axiosClient.get(`/vehicle/${orderReview.vehicleId}`)
-      setVehicle(result)
-    }
-    getVehicle(orderReview.vehicleId)
-  },[])
 
   return (
     <View style={Layout.full}>
@@ -57,7 +50,7 @@ const SOrderReview = () => {
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text={`${vehicle.nameVehicle} ${vehicle.weight} Kg`}
+          text={`${orderReview.vehicle.vehicleName} ${orderReview.vehicle.weight} Kg`}
         />
         {orderReview.note && <ItemInfo
           icon={{ type: 'MaterialCommunityIcons', name: 'note-edit-outline', color: Colors.primary }}

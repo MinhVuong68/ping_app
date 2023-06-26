@@ -6,6 +6,7 @@ import {
   Text,
   Dimensions,
   Pressable,
+  Alert
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -56,9 +57,8 @@ const SBooking1 = () => {
   const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh');
   const [phoneContactReceiver, setPhoneContactReceiver] =
     useState('0325632125');
-  // console.log('sender', locationSender);
-  // console.log('receiver', locationReceiver);
-  console.log(order);
+
+  //console.log(order);
 
   const setInfoOrdera = () => {
     dispatch(
@@ -72,7 +72,18 @@ const SBooking1 = () => {
         locationReceiver: order.locationReceiver,
       }),
     );
-    navigate('SBooking2');
+    if (
+      order.nameSender === '' ||
+      order.phoneSender ==='' ||
+      order.locationSender.address === '' ||
+      order.nameReceiver === '' ||
+      order.phoneReceiver === '' ||
+      order.locationReceiver.address == ''
+      ) {
+        Alert.alert("Vui lòng nhập đầy đủ thông tin")
+        return ;
+      }
+    navigate('SBooking2')
   };
 
   return (

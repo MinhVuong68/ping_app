@@ -47,6 +47,7 @@ const Input = (props: InputProps) => {
     if (txtIpt === '') {
       setError(validation.require);
       setFormError(false);
+      setValue(txtIpt)
     } else if (!validation?.match?.test(txtIpt)) {
       setFormError(false);
       setError(validation.role);
