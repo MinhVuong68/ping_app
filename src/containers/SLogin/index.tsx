@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Text, View, Pressable,Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Layout } from '../../theme';
 import { Header, Input, InputPassword, Loading } from '../../components';
@@ -9,7 +8,6 @@ import styles from './styles/SLoginStyle';
 import Button from './components/Button';
 import { navigate } from '../../navigators/utils';
 import axiosClient from '../../configs/axiosClient';
-import store from '../../redux/store';
 import { login, setCurrentUser } from '../../redux/slices/userSlice';
 
 const SLogin = () => {
@@ -22,7 +20,6 @@ const SLogin = () => {
 
 
   const onLogin = async () => {
-    //console.log({phoneNumber: phoneNumber, password: password});
     const accoutLogin = {phoneNumber: phoneNumber, password: password}
     setLoading(true);
     try {

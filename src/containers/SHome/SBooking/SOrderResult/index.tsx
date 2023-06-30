@@ -51,7 +51,7 @@ const SOrderResult = () => {
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text={`Xe ${order.vehicle.vehicleName} ${order.vehicle.weight} Kg`}
+          text={`${order.vehicle.vehicleName} ${order.vehicle.weight} Kg`}
         />
 
         {order.rollBack && <ItemInfo
@@ -62,7 +62,10 @@ const SOrderResult = () => {
           }}
           text="Quay lại điểm nhận hàng"
         />}
-        <ItemPayment/>
+        <ItemPayment
+          price={order.price}
+          discountMoney={order.discount.discountPercentage/100 * order.price}
+        />
         
       </View>
       <View style={Layout.rowCenter}>

@@ -4,17 +4,22 @@ import { Fonts } from '../../../theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTotalPrice } from '../../../redux/slices/orderSlice';
 
-const ItemPayment = () => {
+interface ItemPaymentProps {
+  price?: number,
+  discountMoney?:number
+}
+
+const ItemPayment = ({price=0,discountMoney=0}: ItemPaymentProps) => {
   const order = useSelector((state: any) => state.order);
  
   const dispatch = useDispatch();
 
-  const ref = useRef(order.price*order.discount.discountPercentage/100)
+  //const ref = useRef(price*order.discount.discountPercentage/100)
  
   console.log(order);
   
   useEffect(() => {
-    dispatch(setTotalPrice({ totalPrice: order.price - ref.current }));
+    dispatch(setTotalPrice({ totalPrice: price - discountMoney }));
   }, []);
 
   return (
@@ -22,12 +27,12 @@ const ItemPayment = () => {
       <View style={styles.row}>
         <Text style={Fonts.textLargeBold}>Phí cước:</Text>
         <Text style={Fonts.textLargeBold}>
-          {order.price.toLocaleString('vi-VN')} vnđ
+          {price.toLocaleString('vi-VN')} vnđ
         </Text>
       </View>
       <View style={styles.row}>
         <Text style={Fonts.textLargeBold}>Giảm giá:</Text>
-        <Text style={Fonts.textLargeBold}>{ref.current.toLocaleString('vi-VN')} vnđ</Text>
+        <Text style={Fonts.textLargeBold}>{discountMoney.toLocaleString('vi-VN')} vnđ</Text>
       </View>
       <View
         style={{

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import apiConfig from './api.config';
+import apiConfig from './apiConfig';
 
 const axiosClient = axios.create({
-  baseURL: apiConfig.baseUrl,
+  baseURL: apiConfig.API_URL,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

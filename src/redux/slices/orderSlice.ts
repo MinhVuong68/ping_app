@@ -33,6 +33,7 @@ const initialState: OrderType = {
     discountId: null,
     discountCode: '',
     discountPercentage: 0,
+    discountMoney: 0,
   },
   price: 0,
   driverId: null,
