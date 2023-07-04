@@ -28,11 +28,11 @@ type RootStackParamList = {
   SOrderResult: undefined
   SSavedAddress: undefined
 
-  //Order: undefined
+//Order: undefined
   SOrder: undefined;
   SDelivering: undefined;
   SDeliverd: undefined
-  SOrderDetail: undefined
+  SOrderDetail: undefined  
   SDeliveryTracking: undefined;
 };
 

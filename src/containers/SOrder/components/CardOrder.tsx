@@ -1,14 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
 import { navigate } from '../../../navigators/utils';
-const CardOrder = () => {
+import { formatCurrency } from '../../../utils';
+
+type CardOrderProps = {
+  id: number;
+  date: string;
+  time: string;
+  fromAddress: string;
+  toAddress: string;
+  totalPrice: number;
+};
+
+const CardOrder = ({
+  id,
+  date,
+  time,
+  fromAddress,
+  toAddress,
+  totalPrice,
+}: CardOrderProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.4} style={styles.container} onPress={() => navigate('SOrderDetail')}>
+    <TouchableOpacity
+      activeOpacity={0.4}
+      style={styles.container}
+      onPress={() => navigate('SOrderDetail', { id: id })}>
       <View>
-        <Text>23-05-2023 | 05:06</Text>
+        <Text>{`${date} | ${time}`}</Text>
         <View style={styles.viewLocation}>
           <View style={Layout.rowVCenter}>
             <Icon
@@ -18,7 +39,7 @@ const CardOrder = () => {
               size={22}
             />
             <Text style={[Fonts.textRegular, { marginLeft: 10 }]}>
-              158/7 Tân Sơn Nhì, Tân Phú, Hồ Chí Minh
+              {fromAddress}
             </Text>
           </View>
           <Icon type="Entypo" name="dots-three-vertical" size={22} />
@@ -35,12 +56,15 @@ const CardOrder = () => {
                 Layout.rowVCenter,
                 { marginLeft: 10 },
               ]}>
-              147 Lý Thường Kiệt, quận 11, Thành phố Hồ Chí Minh
+              {toAddress}
             </Text>
           </View>
         </View>
-        <View style={{ marginVertical: 10 }}>
-          <Text style={Fonts.textLargeBold}>Đơn giá: 190.000 vnđ</Text>
+        <View style={[Layout.rowVCenter, { marginVertical: 10 }]}>
+          <Image source={require('../../../assets/images/money.png')} />
+          <Text style={[Fonts.textLargeBold, { marginLeft: 10 }]}>
+            {formatCurrency(totalPrice)}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -55,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderBottom,
     borderRadius: 8,
     padding: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   viewLocation: {
     paddingVertical: 10,

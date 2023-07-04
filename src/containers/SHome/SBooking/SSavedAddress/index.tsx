@@ -31,7 +31,7 @@ type SavedAddressType = {
   address: string;
   latitude: number;
   longitude: number;
-  customerId?: number
+  customerId?: number;
 };
 
 const SSavedAddress = () => {
@@ -46,22 +46,22 @@ const SSavedAddress = () => {
   const [placeName, setPlaceName] = useState('');
   const [txtLocation, setTxtLocation] = useState('');
   const [searchResult, setSearchResult] = useState<any>([]);
-  const [location,setLocation] = useState<LocationType|null>(null)
+  const [location, setLocation] = useState<LocationType | null>(null);
   const debouncedValue = useDebounce(txtLocation, 5000);
 
   const handleChangeTxt = (value: string) => {
     setTxtLocation(value);
   };
 
-  // useEffect(() => {
-  //   const getAddress = async () => {
-  //     let listAddress = await getAddressFromText(txtLocation);
-  //     if (listAddress === null) setSearchResult([]);
-  //     else setSearchResult([...listAddress]);
-  //   };
-  //   getAddress();
-  //   //if(searchResult.length === 0) return ;
-  // }, [debouncedValue]);
+  useEffect(() => {
+    const getAddress = async () => {
+      let listAddress = await getAddressFromText(txtLocation);
+      if (listAddress === null) setSearchResult([]);
+      else setSearchResult([...listAddress]);
+    };
+    getAddress();
+    //if(searchResult.length === 0) return ;
+  }, [debouncedValue]);
   useEffect(() => {
     const getAllSaveAddress = async () => {
       setLoading(true);
@@ -97,28 +97,28 @@ const SSavedAddress = () => {
   };
 
   const handleChosseResultSearch = (result: any) => {
-    setTxtLocation(result.address)
+    setTxtLocation(result.address);
     setLocation({
       address: result.address,
       coordinate: {
         latitude: result.location.lat,
         longitude: result.location.lng,
-      }
-    })
-    setSearchResult([])
+      },
+    });
+    setSearchResult([]);
   };
 
   const onSave = async () => {
-    const res:SavedAddressType = await axiosClient.post("/place-saved",{
+    const res: SavedAddressType = await axiosClient.post('/place-saved', {
       placeName: placeName,
       address: location?.address,
       latitude: location?.coordinate.latitude,
       longitude: location?.coordinate.longitude,
-      customerId: currentUser.id
-    })
-    setSavedAddress([...savedAddress,res])
-    setModalVisible(false)
-  }
+      customerId: currentUser.id,
+    });
+    setSavedAddress([...savedAddress, res]);
+    setModalVisible(false);
+  };
   const _renderItem = ({ item }: { item: SavedAddressType; index: number }) => {
     return (
       <View style={[Layout.rowVCenter, { height: 60 }]}>

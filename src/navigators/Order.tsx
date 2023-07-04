@@ -10,8 +10,7 @@ const Stack = createStackNavigator();
 const OrderNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="SOrder"
-      screenOptions={{ headerShown: false, animationEnabled: false }}>
+      screenOptions={{ headerShown: false}}>
       <Stack.Screen name="SOrder" component={SOrder} />
       <Stack.Screen name="SOrderDetail" component={SOrderDetail} />
       <Stack.Screen name="SDeliveryTracking" component={SDeliveryTracking} />

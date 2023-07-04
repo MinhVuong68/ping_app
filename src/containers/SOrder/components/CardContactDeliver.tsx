@@ -5,46 +5,58 @@ import { Icon } from '../../../components';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
-const CardContactDeliver = ({status}:any) => {
+type CardContactDeliverProps = {
+  linkAvatar: string;
+  name: string;
+  licensePlate: string;
+  reviewRate: number;
+  status?: any;
+};
+
+const CardContactDeliver = ({
+  linkAvatar,
+  name,
+  licensePlate,
+  reviewRate,
+  status,
+}: CardContactDeliverProps) => {
   return (
     <View style={styles.container}>
       <View style={Layout.row}>
-        <Image
-          source={{
-            uri: 'https://firebasestorage.googleapis.com/v0/b/ping-5ccd1.appspot.com/o/images%2Fmira2.jfif?alt=media&token=e71ba464-3a86-406a-9d96-0496ea55fdc0',
-          }}
-          style={styles.image}
-        />
+        {linkAvatar && (
+          <Image
+            source={{
+              uri: linkAvatar,
+            }}
+            style={styles.image}
+          />
+        )}
         <View style={[Layout.col, { marginLeft: 10 }]}>
-          <Text style={Fonts.textRegularBold}>Mira</Text>
-          <Text>Biển số: 62L1 08976</Text>
-          <Text>Đánh giá: 4.8/5</Text>
+          <Text style={Fonts.textRegularBold}>{name}</Text>
+          <Text>Biển số: {licensePlate}</Text>
+          <Text>Đánh giá: {reviewRate}/5</Text>
         </View>
-        {
-            !status && (
-                <View style={[Layout.full,Layout.rowEnd]}>
-          <View style={styles.wrapperIcon}>
-            <Icon
-              type="MaterialCommunityIcons"
-              name="chat-processing-outline"
-              size={30}
-              color={Colors.white}
-            />
+        {!status && (
+          <View style={[Layout.full, Layout.rowEnd]}>
+            <View style={styles.wrapperIcon}>
+              <Icon
+                type="MaterialCommunityIcons"
+                name="chat-processing-outline"
+                size={30}
+                color={Colors.white}
+              />
+            </View>
+            <View style={styles.wrapperIcon}>
+              <Icon
+                type="MaterialCommunityIcons"
+                name="phone"
+                size={30}
+                color={Colors.white}
+              />
+            </View>
           </View>
-          <View style={styles.wrapperIcon}>
-            <Icon
-              type="MaterialCommunityIcons"
-              name="phone"
-              size={30}
-              color={Colors.white}
-            />
-          </View>
-        </View>
-            )
-        }
-        
+        )}
       </View>
-      
     </View>
   );
 };
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 40,
-    marginHorizontal: 5
+    marginHorizontal: 5,
   },
 });
 

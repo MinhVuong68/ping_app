@@ -10,7 +10,7 @@ const SDelivering = () => {
     <View style={Layout.full}>
       <View style={styles.contents}>
         {/* code when have in list delivered not empty */}
-        <ScrollView>
+        {/* <ScrollView>
           <CardOrder />
           <CardOrder />
           <CardOrder />
@@ -18,9 +18,9 @@ const SDelivering = () => {
           <CardOrder />
           <CardOrder />
           <CardOrder />
-        </ScrollView>
+        </ScrollView> */}
       </View>
-      {/* <NotOrderAvailable /> */}
+      <NotOrderAvailable />
     </View>
   );
 };
