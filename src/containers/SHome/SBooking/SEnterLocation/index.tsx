@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  PermissionsAndroid,
+  Alert,
 } from 'react-native';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
@@ -62,6 +64,21 @@ const SEnterLocation = (params: any) => {
     navigate('SBooking1');
   };
 
+  const handleChooseCurrentLocation = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Alert.alert('You can use the location');
+      } else {
+        Alert.alert('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   return (
     <View style={Layout.full}>
       <Header title="Nhập địa chỉ" />
@@ -69,8 +86,7 @@ const SEnterLocation = (params: any) => {
         <View style={styles.options}>
           <TouchableOpacity
             style={[styles.btn, styles.btn.btnRadius]}
-            //onPress={handleChooseCurrentLocation}
-          >
+            onPress={handleChooseCurrentLocation}>
             <Icon
               type="MaterialIcons"
               name="my-location"

@@ -25,8 +25,6 @@ const SOrderDetail = ({ route }: any) => {
     getOrderDetail();
   }, []);
 
-  console.log(orderDetail);
-
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
@@ -43,6 +41,7 @@ const SOrderDetail = ({ route }: any) => {
           licensePlate={orderDetail?.driver?.licensePlate}
           reviewRate={orderDetail?.driver?.reviewRate}
           status={false}
+          phoneContact={orderDetail?.driver?.phoneNumber}
         />
         <View style={styles.viewLocation}>
           <View style={Layout.rowVCenter}>
@@ -89,14 +88,23 @@ const SOrderDetail = ({ route }: any) => {
             text="Quay lại điểm nhận hàng"
           />
         )}
+        {!!orderDetail.customerNote && (
+          <ItemInfo
+            icon={{
+              type: 'MaterialCommunityIcons',
+              name: 'note-edit-outline',
+              color: Colors.primary,
+            }}
+            text={orderDetail.customerNote}
+          />
+        )}
         <ItemPayment
           price={orderDetail?.price}
           discountMoney={orderDetail?.priceDiscount}
           totalPrice={orderDetail?.totalPrice}
         />
         <View style={Layout.colVCenter}>
-          <Vote />
-          {orderDetail.orderStatus !== 'COMPLETED' && (
+          {orderDetail.orderStatus !== 'COMPLETED' ? (
             <Button
               title="Theo dõi giao hàng"
               onPress={() => {
@@ -105,6 +113,8 @@ const SOrderDetail = ({ route }: any) => {
               style={{ backgroundColor: Colors.blue, marginTop: 30 }}
               styleTitle={{ color: Colors.white }}
             />
+          ) : (
+            <Vote />
           )}
         </View>
       </View>

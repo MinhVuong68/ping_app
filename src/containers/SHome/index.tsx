@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Dimensions, Image, FlatList } from 'react-native';
 
 import Button from '../SIntro/components/Button';
@@ -6,6 +6,7 @@ import { navigate } from '../../navigators/utils';
 import { Colors, Layout } from '../../theme';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
+const HEIGHT_SCREEN = Dimensions.get('window').width;
 
 const SHome = () => {
   const imagesIntroHome = [
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   viewImage: {
     width: WIDTH_SCREEN * 0.9,
-    height: 200,
+    height: HEIGHT_SCREEN * 0.5,
     backgroundColor: '#ccc',
     marginBottom: 12,
     borderRadius: 10,

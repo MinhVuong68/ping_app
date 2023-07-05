@@ -34,6 +34,7 @@ type RootStackParamList = {
   SDeliverd: undefined
   SOrderDetail: undefined  
   SDeliveryTracking: undefined;
+  SChat: undefined;
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();

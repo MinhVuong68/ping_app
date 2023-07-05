@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View,StyleSheet, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { Layout } from '../../../theme';
 import CardOrder from '../components/CardOrder';
 import NotOrderAvailable from '../components/NotOrderAvailable';
-import { useSelector } from 'react-redux';
 import axiosClient from '../../../configs/axiosClient';
 
 const SDeliverd = () => {
@@ -12,7 +12,6 @@ const SDeliverd = () => {
   const currentUser = useSelector((state: any) => state.user);
 
   useEffect(() => {
-    console.log(123);
     const getOrdersCompleted = async () => {
       const rs: any = await axiosClient(
         `/order/orders?status=${'COMPLETED'}&id=${currentUser.id}`,
@@ -23,23 +22,25 @@ const SDeliverd = () => {
   }, []);
   return (
     <View style={Layout.full}>
-      <View style={styles.contents}>
-        <FlatList
-          data={ordersCompleted}
-          renderItem={({ item }:any) => (
-            <CardOrder
-              id = {item?.id}
-              time={item?.requireAt.time}
-              date={item?.requireAt.date}
-              fromAddress={item?.fromLocation.address}
-              toAddress={item?.toLocation.address}
-              totalPrice={item?.totalPrice}
-            />
-          )}
-          //keyExtractor={item => item.id}
-        />
-      </View>
-      {/* <NotOrderAvailable /> */}
+      {ordersCompleted.length ? (
+        <View style={styles.contents}>
+          <FlatList
+            data={ordersCompleted}
+            renderItem={({ item }: any) => (
+              <CardOrder
+                id={item?.id}
+                time={item?.requireAt.time}
+                date={item?.requireAt.date}
+                fromAddress={item?.fromLocation.address}
+                toAddress={item?.toLocation.address}
+                totalPrice={item?.totalPrice}
+              />
+            )}
+          />
+        </View>
+      ) : (
+        <NotOrderAvailable />
+      )}
     </View>
   );
 };

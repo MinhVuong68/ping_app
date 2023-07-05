@@ -1,7 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Image, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
+import { callNumber } from '../../../utils/call';
+import { navigate } from '../../../navigators/utils';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
@@ -11,6 +20,7 @@ type CardContactDeliverProps = {
   licensePlate: string;
   reviewRate: number;
   status?: any;
+  phoneContact?: string;
 };
 
 const CardContactDeliver = ({
@@ -19,6 +29,7 @@ const CardContactDeliver = ({
   licensePlate,
   reviewRate,
   status,
+  phoneContact = '',
 }: CardContactDeliverProps) => {
   return (
     <View style={styles.container}>
@@ -38,22 +49,24 @@ const CardContactDeliver = ({
         </View>
         {!status && (
           <View style={[Layout.full, Layout.rowEnd]}>
-            <View style={styles.wrapperIcon}>
+            <TouchableOpacity style={styles.wrapperIcon} onPress={() => navigate('SChat')}>
               <Icon
                 type="MaterialCommunityIcons"
                 name="chat-processing-outline"
                 size={30}
                 color={Colors.white}
               />
-            </View>
-            <View style={styles.wrapperIcon}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.wrapperIcon}
+              onPress={() => callNumber(phoneContact)}>
               <Icon
                 type="MaterialCommunityIcons"
                 name="phone"
                 size={30}
                 color={Colors.white}
               />
-            </View>
+            </TouchableOpacity>
           </View>
         )}
       </View>
