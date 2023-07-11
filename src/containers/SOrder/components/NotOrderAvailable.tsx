@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 
-import { Fonts, Layout } from '../../../theme';
+import { Fonts, Images, Layout } from '@/theme';
 
 const NotOrderAvailable = () => {
   return (
     <View style={[Layout.full, styles.container]}>
       <Image
         style={styles.img}
-        source={require('../../../assets/images/not-order-available.png')}
+        source={Images.notOrder}
       />
       <Text style={Fonts.textLargeBold}>Chưa có đơn hàng ở trạng thái này</Text>
     </View>

@@ -6,10 +6,11 @@ import { Layout } from '../../../theme';
 import CardOrder from '../components/CardOrder';
 import NotOrderAvailable from '../components/NotOrderAvailable';
 import axiosClient from '../../../configs/axiosClient';
+import { RootState } from '@/redux/store';
 
 const SDeliverd = () => {
   const [ordersCompleted, setOrdersCompleted] = useState([]);
-  const currentUser = useSelector((state: any) => state.user);
+  const currentUser = useSelector((state:RootState) => state.user);
 
   useEffect(() => {
     const getOrdersCompleted = async () => {

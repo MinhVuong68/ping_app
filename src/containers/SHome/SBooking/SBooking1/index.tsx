@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   ScrollView,
   StyleSheet,
@@ -6,57 +6,56 @@ import {
   Text,
   Dimensions,
   Pressable,
-  Alert
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+  Alert,
+} from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Colors, Fonts, Layout } from '../../../../theme';
-import { Header, Icon, Input, InputPressable } from '../../../../components';
-import Button from '../../../SIntro/components/Button';
-import { navigate } from '../../../../navigators/utils';
-import { setInfoOrder, setIsWho } from '../../../../redux/slices/orderSlice';
-import { LocationType } from '../../../../redux/type';
+import { Colors, Fonts, Layout } from '../../../../theme'
+import { Header, Icon, Input, InputPressable } from '../../../../components'
+import Button from '../../../SIntro/components/Button'
+import { navigate } from '../../../../navigators/utils'
+import { setInfoOrder, setIsWho } from '../../../../redux/slices/orderSlice'
+import { LocationType } from '../../../../redux/type'
 
-const WIDTH_SCREEN = Dimensions.get('window').width;
+const WIDTH_SCREEN = Dimensions.get('window').width
 
 export type CoordinateType = {
-  latitude: number;
-  longitude: number;
-};
+  latitude: number
+  longitude: number
+}
 
 export type AddressType = {
-  address: string;
-  coordinate: CoordinateType;
-};
+  address: string
+  coordinate: CoordinateType
+}
 
 const SBooking1 = () => {
-  const currentUser = useSelector((state: any) => state.user);
+  const currentUser = useSelector((state: any) => state.user)
 
-  const order = useSelector((state: any) => state.order);
+  const order = useSelector((state: any) => state.order)
 
   useEffect(() => {
-    setLocationReceiver(order.locationReceiver);
-    setLocationSender(order.locationSender);
-  }, []);
+    setLocationReceiver(order.locationReceiver)
+    setLocationSender(order.locationSender)
+  }, [])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   //Information of the sending point
   const [locationSender, setLocationSender] = useState<LocationType | null>(
     order.locationSender,
-  );
-  const [nameSender, setNameSender] = useState(currentUser.name);
+  )
+  const [nameSender, setNameSender] = useState(currentUser.name)
   const [phoneContactSender, setPhoneContactSender] = useState(
     currentUser.phoneContact,
-  );
+  )
 
   //Information of the receiving point
   const [locationReceiver, setLocationReceiver] = useState<LocationType | null>(
     order.locationReceiver,
-  );
-  const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh');
-  const [phoneContactReceiver, setPhoneContactReceiver] =
-    useState('0325632125');
+  )
+  const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh')
+  const [phoneContactReceiver, setPhoneContactReceiver] = useState('0325632125')
 
   //console.log(order);
 
@@ -71,20 +70,20 @@ const SBooking1 = () => {
         phoneReceiver: phoneContactReceiver,
         locationReceiver: order.locationReceiver,
       }),
-    );
+    )
     if (
       order.nameSender === '' ||
-      order.phoneSender ==='' ||
+      order.phoneSender === '' ||
       order.locationSender.address === '' ||
       order.nameReceiver === '' ||
       order.phoneReceiver === '' ||
       order.locationReceiver.address == ''
-      ) {
-        Alert.alert("Vui lòng nhập đầy đủ thông tin")
-        return ;
-      }
+    ) {
+      Alert.alert('Vui lòng nhập đầy đủ thông tin')
+      return
+    }
     navigate('SBooking2')
-  };
+  }
 
   return (
     <>
@@ -126,8 +125,8 @@ const SBooking1 = () => {
             <InputPressable
               label="Địa chỉ"
               onPress={() => {
-                dispatch(setIsWho({ isWho: 'sender' }));
-                navigate('SEnterLocation');
+                dispatch(setIsWho({ isWho: 'sender' }))
+                navigate('SEnterLocation')
               }}
               value={order.locationSender.address}
             />
@@ -167,8 +166,8 @@ const SBooking1 = () => {
             <InputPressable
               label="Địa chỉ"
               onPress={() => {
-                dispatch(setIsWho({ isWho: 'receiver' }));
-                navigate('SEnterLocation');
+                dispatch(setIsWho({ isWho: 'receiver' }))
+                navigate('SEnterLocation')
               }}
               value={order.locationReceiver.address}
             />
@@ -184,8 +183,8 @@ const SBooking1 = () => {
         </View>
       </ScrollView>
     </>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -208,6 +207,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     padding: 10,
   },
-});
+})
 
-export default SBooking1;
+export default SBooking1

@@ -1,81 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Pressable, ToastAndroid } from 'react-native';
-import { useSelector } from 'react-redux';
-import storage from '@react-native-firebase/storage';
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, Pressable, ToastAndroid } from 'react-native'
+import { useSelector } from 'react-redux'
+import storage from '@react-native-firebase/storage'
 import {
   Asset,
   ImageLibraryOptions,
   launchImageLibrary,
-} from 'react-native-image-picker';
-import { useDispatch } from 'react-redux';
+} from 'react-native-image-picker'
 
-import { Colors, Layout } from '../../../theme';
-import { Header, Icon, ImageAvatar, Input, Loading } from '../../../components';
-import Button from '../../SIntro/components/Button';
-import axiosClient from '../../../configs/axiosClient';
-import { setCurrentUser } from '../../../redux/slices/userSlice';
+import { Colors, Layout } from '../../../theme'
+import { Header, Icon, ImageAvatar, Input, Loading } from '../../../components'
+import Button from '../../SIntro/components/Button'
+import { updateProfile } from '../../../redux/user/userSlice'
+import { useAppDispatch } from '@/redux/store'
 
 const SEditProfile = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
+  const currentUser = useSelector((state: any) => state.user.currentUser)
 
-  const currentUser = useSelector((state: any) => state.user);
+  const [avatar, setAvatar] = useState(currentUser.avatar)
+  const [name, setName] = useState(currentUser.name)
+  const [phoneContact, setPhoneContact] = useState(currentUser.phoneContact)
 
-  const [avatar, setAvatar] = useState(currentUser.avatar);
-  const [name, setName] = useState(currentUser.name);
-  const [phoneContact, setPhoneContact] = useState(currentUser.phoneContact);
-
-  const [loading, setLoading] = useState(false);
-
-  console.log(name);
+  const [loading, setLoading] = useState(false)
 
   const handleImageUpload = () => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
-    };
+    }
 
     launchImageLibrary(options, response => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        console.log('User cancelled image picker')
       } else {
-        const { assets } = response;
+        const { assets } = response
         if (assets && assets.length > 0) {
-          const { uri, fileName } = assets[0] as Asset;
-          const storageRef = storage().ref(`images/${fileName}`);
-          if (uri == undefined) return;
-          const task = storageRef.putFile(uri);
+          const { uri, fileName } = assets[0] as Asset
+          const storageRef = storage().ref(`images/${fileName}`)
+          if (uri == undefined) return
+          const task = storageRef.putFile(uri)
 
           task.on(
             'state_changed',
             snapshot => {
               const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log(`Upload is ${progress}% complete`);
-              setAvatar(uri);
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              console.log(`Upload is ${progress}% complete`)
+              setAvatar(uri)
             },
             error => {
-              console.error('Image upload error:', error);
+              console.error('Image upload error:', error)
             },
-          );
+          )
         }
       }
-    });
-  };
+    })
+  }
 
   const onChange = async () => {
-    setLoading(true);
-    const userChange = await axiosClient.put(`/customer/${currentUser.id}`, {
-      name,
-      avatar,
-      phoneContact,
-    });
-    dispatch(setCurrentUser(userChange));
-    setLoading(false);
+    setLoading(true)
+    const userUpdate = {
+      id: currentUser.id,
+      name: name,
+      avatar: avatar,
+      phoneContact: phoneContact,
+    }
+    await dispatch(updateProfile(userUpdate)).unwrap()
+    setLoading(false)
     ToastAndroid.showWithGravity(
       'Cập nhật thông tin thành công',
       ToastAndroid.LONG,
       ToastAndroid.CENTER,
-    );
-  };
+    )
+  }
 
   return (
     <View style={Layout.full}>
@@ -86,13 +83,13 @@ const SEditProfile = () => {
           <ImageAvatar uri={avatar} />
           <Icon name="camerao" />
         </Pressable>
-        <Text style={{ color: Colors.text, fontSize: 20,fontWeight: 'bold' }}>
+        <Text style={{ color: Colors.text, fontSize: 20, fontWeight: 'bold' }}>
           {currentUser.name}
         </Text>
       </View>
       <View style={styles.viewFormUpdate}>
         <Input
-          label='Tên của bạn:'
+          label="Tên của bạn:"
           input={{ placeholder: 'Tên' }}
           value={name}
           setValue={setName}
@@ -103,7 +100,7 @@ const SEditProfile = () => {
           }}
         />
         <Input
-        label="Số điện thoại liên hệ:"
+          label="Số điện thoại liên hệ:"
           input={{ placeholder: 'Số điện thoại liên hệ' }}
           validation={{
             match: /^[0-9]{10}$/,
@@ -113,7 +110,7 @@ const SEditProfile = () => {
           value={phoneContact}
           setValue={setPhoneContact}
         />
-        <Input input={{ placeholder: 'Địa chỉ' }} label='Địa chỉ đã lưu:'/>
+        <Input input={{ placeholder: 'Địa chỉ' }} label="Địa chỉ đã lưu:" />
       </View>
       <View style={Layout.rowCenter}>
         <Button
@@ -124,8 +121,8 @@ const SEditProfile = () => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   viewInfo: {
@@ -142,6 +139,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginBottom: 12,
   },
-});
+})
 
-export default SEditProfile;
+export default SEditProfile

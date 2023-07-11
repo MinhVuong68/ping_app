@@ -1,20 +1,17 @@
-import React from 'react';
-import { View, StyleSheet, Dimensions, Image, FlatList } from 'react-native';
+import React from 'react'
+import { View, StyleSheet, Dimensions, Image, FlatList } from 'react-native'
 
-import Button from '../SIntro/components/Button';
-import { navigate } from '../../navigators/utils';
-import { Colors, Layout } from '../../theme';
+import Button from '../SIntro/components/Button'
+import { navigate } from '../../navigators/utils'
+import { Colors, Images, Layout } from '@/theme'
 
-const WIDTH_SCREEN = Dimensions.get('window').width;
-const HEIGHT_SCREEN = Dimensions.get('window').width;
+const WIDTH_SCREEN = Dimensions.get('window').width
+const HEIGHT_SCREEN = Dimensions.get('window').width
 
 const SHome = () => {
-  const imagesIntroHome = [
-    require('../../assets/images/home2.jpg'),
-    require('../../assets/images/home3.jpg'),
-    require('../../assets/images/home1.jpg'),
-  ];
 
+  const imagesIntroHome = [Images.home1, Images.home2, Images.home3]
+  
   return (
     <View style={[Layout.colVCenter, styles.container]}>
       <FlatList
@@ -24,7 +21,7 @@ const SHome = () => {
             <View style={styles.viewImage}>
               <Image source={item} style={styles.image} />
             </View>
-          );
+          )
         }}
         //keyExtractor={item => item.id}
       />
@@ -32,14 +29,14 @@ const SHome = () => {
       <Button
         title="Lên đơn hàng"
         onPress={() => {
-          navigate('SBooking1');
+          navigate('SBooking1')
         }}
         style={{ backgroundColor: Colors.primary }}
         styleTitle={{ color: Colors.white }}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -58,6 +55,6 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-});
+})
 
-export default SHome;
+export default SHome

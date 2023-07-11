@@ -8,7 +8,7 @@ import styles from '../SEnterName/styles/SEnterNameStyle';
 import Button from '../../SLogin/components/Button';
 import { navigate } from '../../../navigators/utils';
 import store from '../../../redux/store';
-import { updatePhoneNumber } from '../../../redux/slices/userSlice';
+import { updatePhoneNumber } from '../../../redux/user/userSlice';
 import firebaseConfig from '../../../configs/firebase.config';
 
 const SEnterPhoneNumber = () => {

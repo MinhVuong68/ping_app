@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Text, View, Pressable,Alert } from 'react-native';
+import React, { useState } from 'react'
+import { Text, View, Pressable, Alert } from 'react-native'
 
-import { Layout } from '../../theme';
-import { Header, Input, InputPassword, Loading } from '../../components';
-import styles from './styles/SLoginStyle';
-import Button from './components/Button';
-import { navigate } from '../../navigators/utils';
-import axiosClient from '../../configs/axiosClient';
-import { login, setCurrentUser } from '../../redux/slices/userSlice';
+import { Layout } from '../../theme'
+import { Header, Input, InputPassword, Loading } from '../../components'
+import styles from './styles/SLoginStyle'
+import Button from './components/Button'
+import { navigate } from '../../navigators/utils'
+import { login } from '../../redux/user/userSlice'
+import { useAppDispatch } from '@/redux/store'
 
 const SLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [phoneNumber,setPhoneNumber] = useState('')
-  const [password,setPassword] = useState('')
-  const [valid,setValid] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [password, setPassword] = useState('')
+  const [valid, setValid] = useState(false)
 
-  const dispatch = useDispatch()
-
-
+  const dispatch = useAppDispatch()
   const onLogin = async () => {
-    const accoutLogin = {phoneNumber: phoneNumber, password: password}
-    setLoading(true);
+    const accoutLogin = { phoneNumber: phoneNumber, password: password }
+    setLoading(true)
     try {
-      const userLogin = await axiosClient.post('/customer/login',{
-        phoneNumber,
-        password
-      });
-      dispatch(setCurrentUser(userLogin))
-      //dispatch(login(accoutLogin))
-      navigate('MainNavigation');
+      await dispatch(login(accoutLogin)).unwrap()
+      navigate('MainNavigation')
     } catch (error) {
+      Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không chính xác!')
       setLoading(false)
-      Alert.alert("Thông báo","Tên đăng nhập hoặc mật khẩu không chính xác!");
     }
-    
-  };
+    // dispatch(login(accoutLogin))
+    //   .unwrap()
+    //   .then(res => {
+    //     navigate('MainNavigation')
+    //   })
+    //   .catch(error => {
+    //     Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không chính xác!')
+    //     setLoading(false)
+    //   })
+  }
   return (
     <View style={Layout.full}>
       <Loading isLoading={loading} backBtn={setLoading} />
@@ -73,13 +73,14 @@ const SLogin = () => {
         </View>
         <View style={styles.viewButtonGo}>
           {!!phoneNumber && !!password && valid ? (
-            <Button onPress={onLogin}/>) : (
-            <Button onPress={onLogin} disable={true} type='disable'/>
+            <Button onPress={onLogin} />
+          ) : (
+            <Button onPress={onLogin} disable={true} type="disable" />
           )}
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default SLogin;
+export default SLogin

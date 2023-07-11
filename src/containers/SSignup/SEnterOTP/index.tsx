@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 import { Text, View, Alert } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { Layout } from '../../../theme';
 import { Header, Icon, InputOTP, Loading } from '../../../components';
 import styles from './styles/SEnterOTPStyle';
 import Color from '../../../theme/Colors';
-import store from '../../../redux/store';
+import store, { useAppDispatch } from '../../../redux/store';
 import Button from '../../SLogin/components/Button';
 import firebaseConfig from '../../../configs/firebase.config';
 import axiosClient from '../../../configs/axiosClient';
 import { navigate } from '../../../navigators/utils';
-import { setCurrentUser } from '../../../redux/slices/userSlice';
+import { signup } from '@/redux/user/userSlice';
 
 const SEnterOTP = ({ route }: any) => {
   const { auth,firebase } = firebaseConfig();
   const [loading,setLoading] = useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const { verificationId } = route.params;
   const handlea = async () => {
@@ -26,11 +25,11 @@ const SEnterOTP = ({ route }: any) => {
       setLoading(true);
       await auth().signInWithCredential(credential);
       try {
-        const userLogin = await axiosClient.post('/customer/register',{
-          name: store.getState().user.name,
-          phoneNumber: store.getState().user.phoneNumber
-        });
-        dispatch(setCurrentUser(userLogin))
+        const userLogin = {
+          name: store.getState().user.currentUser.name,
+          phoneNumber: store.getState().user.currentUser.phoneNumber
+        }
+        dispatch(signup(userLogin))
         setLoading(false)
         navigate('MainNavigation')
       } catch (error) {

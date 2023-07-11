@@ -16,7 +16,7 @@ import { navigate } from '../../navigators/utils';
 import styles from './styles/SProfileStyle';
 
 const SProfile = () => {
-  const currentUser = useSelector((state: any) => state.user);
+  const currentUser = useSelector((state: any) => state.user.currentUser);
 
   const onLogout = () => {
     Alert.alert(

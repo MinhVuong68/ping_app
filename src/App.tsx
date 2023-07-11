@@ -19,16 +19,6 @@ function App(): JSX.Element {
     SplashScreen.hide();
   }, []);
 
-  // const checkLoginStatus = async () => {
-  //   const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-  //   // Kiểm tra giá trị của isLoggedIn để xác định trạng thái đăng nhập
-  //   // Ví dụ:
-  //   if (isLoggedIn === 'true') {
-  //     navigate('MainNavigation')
-  //   } else {
-  //     navigate('SLogin')
-  //   }
-  // };
   return (
     <Provider store={store}>
       <ApplicationNavigator />

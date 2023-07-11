@@ -6,7 +6,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import Button from './components/Button';
 import Intro from './components/Intro';
 import styles from './styles/SIntroStyle';
-import { Colors, Layout } from '../../theme';
+import { Colors, Images, Layout } from '../../theme';
 import Languages from './components/Languages';
 import { navigate } from '../../navigators/utils';
 
@@ -23,18 +23,18 @@ const SIntro = () => {
 
   const images: Array<CarouselItemType> = [
     {
-      imgLink: require('../../assets/images/intro1.png'),
+      imgLink: Images.intro1,
       title: 'Giao hàng nhanh chóng',
       content: 'Hãy để chúng tôi mang đến cho bạn trải nghiệm giao hàng nhanh chóng nhất!',
     },
     {
-      imgLink: require('../../assets/images/intro2.png'),
+      imgLink: Images.intro2,
       title: 'Giao hàng tận nơi',
       content:
         'Không cần lo lắng về việc nhận hàng, chúng tôi sẽ đến tận nơi mang đến sự tiện lợi cho bạn!',
     },
     {
-      imgLink: require('../../assets/images/intro3.png'),
+      imgLink: Images.intro3,
       title: 'Giao hàng mọi nơi',
       content:
         'Chinh phục mọi khoảng cách - Giao hàng đến mọi ngõ ngách, không giới hạn!',

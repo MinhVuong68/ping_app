@@ -4,6 +4,7 @@ import apiConfig from './apiConfig';
 
 const axiosClient = axios.create({
   baseURL: apiConfig.API_URL,
+  timeout: apiConfig.API_TIMEOUT_MS,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -9,11 +10,16 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+    }
   },
   "exclude": [
     "node_modules",
     "babel.config.js",
-    "metro.config.js"
+    "metro.config.js",
+    "jest.config.js"
   ]
 }

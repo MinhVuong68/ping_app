@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 import { OrderType } from '../type';
-import { string } from 'yup';
 
 const initialState: OrderType = {
   customerId: '',
@@ -45,7 +44,7 @@ const orderSlice = createSlice({
   name: 'order',
   initialState: initialState,
   reducers: {
-    setInfoOrder(state, action) {
+    setInfoOrder(state, action: PayloadAction<OrderType>) {
       (state.customerId = action.payload.customerId),
         (state.nameSender = action.payload.nameSender),
         (state.phoneSender = action.payload.phoneSender),

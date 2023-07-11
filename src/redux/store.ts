@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import otpSlice from "./slices/otpSlice";
-import userSlice from "./slices/userSlice";
+import userSlice from "./user/userSlice";
 import orderSlice from "./slices/orderSlice";
+import { useDispatch } from "react-redux";
 
 const store = configureStore({
     reducer: {
@@ -10,5 +11,12 @@ const store = configureStore({
         order: orderSlice,
     }
 })
+
+// get RootState and AppDitpatch from your store
+export type RootState = ReturnType<typeof store.getState>
+
+export type AppDispatch = typeof store.dispatch
+
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export default store

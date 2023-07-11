@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
 import { navigate } from '../../../navigators/utils';
 import { formatCurrency } from '../../../utils';
+import { Colors, Fonts, Images, Layout } from '@/theme';
 
 type CardOrderProps = {
   id: number;
@@ -61,7 +61,7 @@ const CardOrder = ({
           </View>
         </View>
         <View style={[Layout.rowVCenter, { marginVertical: 10 }]}>
-          <Image source={require('../../../assets/images/money.png')} />
+          <Image source={Images.money} />
           <Text style={[Fonts.textLargeBold, { marginLeft: 10 }]}>
             {formatCurrency(totalPrice)}
           </Text>

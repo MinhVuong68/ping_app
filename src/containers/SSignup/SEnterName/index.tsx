@@ -7,7 +7,7 @@ import { Header, Input } from '../../../components';
 import styles from './styles/SEnterNameStyle';
 import Button from '../../SLogin/components/Button';
 import { navigate } from '../../../navigators/utils';
-import { updateName } from '../../../redux/slices/userSlice';
+import { updateName } from '../../../redux/user/userSlice';
 
 const SEnterName = () => {
   const [name, setName] = useState('');

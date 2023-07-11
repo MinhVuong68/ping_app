@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
-import { Fonts, Layout } from '../theme';
 
+import { Fonts, Images, Layout } from '@/theme';
 
 const Updating = () => {
   return (
     <View style={[Layout.full, styles.container]}>
       <Image
         style={styles.img}
-        source={require('../assets/images/updating.png')}
+        source={Images.updating}
       />
       <Text style={Fonts.textLargeBold}>Chức năng hiện tại đang cập nhật</Text>
     </View>
