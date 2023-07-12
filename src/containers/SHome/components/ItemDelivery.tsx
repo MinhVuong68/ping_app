@@ -10,9 +10,10 @@ import {
 import { Colors, Fonts, Layout } from '../../../theme';
 import { navigate } from '../../../navigators/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDriver, setPrice } from '../../../redux/slices/orderSlice';
 import { calcDistance2Location } from '../../../utils/map';
 import { convertMeterToKilometer } from '../../../utils';
+import { setDriver, setPrice } from '@/redux/booking/orderBookingSlice';
+import { RootState, useAppDispatch } from '@/redux/store';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
@@ -33,27 +34,27 @@ const ItemDelivery = ({
   vote,
   distance,
 }: ItemDeliveryProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const order = useSelector((state: any) => state.order);
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
 
   const handleChooseDriver = async () => {
     dispatch(setDriver({ driverId: id }));
 
     const coordinateSender =
-      order.locationSender.coordinate.latitude +
+      orderBooking.locationSender.coordinate.latitude +
       ',' +
-      order.locationSender.coordinate.longitude;
+      orderBooking.locationSender.coordinate.longitude;
     const coordinateReceiver =
-      order.locationReceiver.coordinate.latitude +
+      orderBooking.locationReceiver.coordinate.latitude +
       ',' +
-      order.locationReceiver.coordinate.longitude;
+      orderBooking.locationReceiver.coordinate.longitude;
 
       const rs:any = await calcDistance2Location(coordinateSender,coordinateReceiver)
-      const distanceKm = convertMeterToKilometer(rs.result.routeRows[0].elements[0]?.distance?.value)
+      const distanceKm = convertMeterToKilometer(rs?.result.routeRows[0].elements[0]?.distance?.value)
 
       let price = distanceKm * 500000
-      if(order.rollBack) {
+      if(orderBooking.rollBack) {
         price = price + price*20/100
       }
 

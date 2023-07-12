@@ -5,17 +5,17 @@ import {
   View,
   Text,
   Dimensions,
-  Pressable,
   Alert,
 } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { Colors, Fonts, Layout } from '../../../../theme'
 import { Header, Icon, Input, InputPressable } from '../../../../components'
 import Button from '../../../SIntro/components/Button'
 import { navigate } from '../../../../navigators/utils'
-import { setInfoOrder, setIsWho } from '../../../../redux/slices/orderSlice'
 import { LocationType } from '../../../../redux/type'
+import { RootState, useAppDispatch } from '@/redux/store'
+import { setInfoOrder, setIsWho } from '@/redux/booking/orderBookingSlice'
 
 const WIDTH_SCREEN = Dimensions.get('window').width
 
@@ -30,20 +30,20 @@ export type AddressType = {
 }
 
 const SBooking1 = () => {
-  const currentUser = useSelector((state: any) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
 
-  const order = useSelector((state: any) => state.order)
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking)
 
   useEffect(() => {
-    setLocationReceiver(order.locationReceiver)
-    setLocationSender(order.locationSender)
+    setLocationReceiver(orderBooking.locationReceiver)
+    setLocationSender(orderBooking.locationSender)
   }, [])
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   //Information of the sending point
   const [locationSender, setLocationSender] = useState<LocationType | null>(
-    order.locationSender,
+    orderBooking.locationSender,
   )
   const [nameSender, setNameSender] = useState(currentUser.name)
   const [phoneContactSender, setPhoneContactSender] = useState(
@@ -52,12 +52,10 @@ const SBooking1 = () => {
 
   //Information of the receiving point
   const [locationReceiver, setLocationReceiver] = useState<LocationType | null>(
-    order.locationReceiver,
+    orderBooking.locationReceiver,
   )
   const [nameReceiver, setNameReceiver] = useState('NGuyễn Văn Trinh')
   const [phoneContactReceiver, setPhoneContactReceiver] = useState('0325632125')
-
-  //console.log(order);
 
   const setInfoOrdera = () => {
     dispatch(
@@ -65,19 +63,19 @@ const SBooking1 = () => {
         customerId: currentUser.id,
         nameSender: nameSender,
         phoneSender: phoneContactSender,
-        locationSender: order.locationSender,
+        locationSender: orderBooking.locationSender,
         nameReceiver: nameReceiver,
         phoneReceiver: phoneContactReceiver,
-        locationReceiver: order.locationReceiver,
+        locationReceiver: orderBooking.locationReceiver,
       }),
     )
     if (
-      order.nameSender === '' ||
-      order.phoneSender === '' ||
-      order.locationSender.address === '' ||
-      order.nameReceiver === '' ||
-      order.phoneReceiver === '' ||
-      order.locationReceiver.address == ''
+      orderBooking.nameSender === '' ||
+      orderBooking.phoneSender === '' ||
+      orderBooking.locationSender.address === '' ||
+      orderBooking.nameReceiver === '' ||
+      orderBooking.phoneReceiver === '' ||
+      orderBooking.locationReceiver.address == ''
     ) {
       Alert.alert('Vui lòng nhập đầy đủ thông tin')
       return
@@ -128,7 +126,7 @@ const SBooking1 = () => {
                 dispatch(setIsWho({ isWho: 'sender' }))
                 navigate('SEnterLocation')
               }}
-              value={order.locationSender.address}
+              value={orderBooking.locationSender.address}
             />
           </View>
           <View style={[styles.viewChooseAddess]}>
@@ -169,7 +167,7 @@ const SBooking1 = () => {
                 dispatch(setIsWho({ isWho: 'receiver' }))
                 navigate('SEnterLocation')
               }}
-              value={order.locationReceiver.address}
+              value={orderBooking.locationReceiver.address}
             />
           </View>
           <View style={Layout.rowCenter}>

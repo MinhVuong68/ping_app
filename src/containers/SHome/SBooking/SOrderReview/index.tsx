@@ -6,14 +6,12 @@ import { Header } from '../../../../components';
 import ItemInfo from '../../components/ItemInfo';
 import { useSelector } from 'react-redux';
 import axiosClient from '../../../../configs/axiosClient';
+import { RootState } from '@/redux/store';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 const SOrderReview = () => {
 
-  const orderReview = useSelector((state:any) => state.order)
-  const [vehicle,setVehicle] = useState<any>({})
-
-
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
@@ -22,41 +20,41 @@ const SOrderReview = () => {
           <Text>Bên giao hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.primary }}
-            text={orderReview.nameSender}
+            text={orderBooking.nameSender}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.primary }}
-            text={orderReview.phoneSender}
+            text={orderBooking.phoneSender}
           />
           <ItemInfo
             icon={{ type: 'FontAwesome', name: 'bullseye', color: 'green' }}
-            text={orderReview.locationSender.address}
+            text={orderBooking.locationSender.address}
           />
         </View>
         <View style={styles.box}>
           <Text>Bên nhận hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.blue }}
-            text={orderReview.nameReceiver}
+            text={orderBooking.nameReceiver}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.blue }}
-            text={orderReview.phoneReceiver}
+            text={orderBooking.phoneReceiver}
           />
           <ItemInfo
             icon={{ type: 'Entypo', name: 'location-pin', color: 'red' }}
-            text={orderReview.locationReceiver.address}
+            text={orderBooking.locationReceiver.address}
           />
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text={`${orderReview.vehicle.vehicleName} ${orderReview.vehicle.weight} Kg`}
+          text={`${orderBooking.vehicle.vehicleName} ${orderBooking.vehicle.weight} Kg`}
         />
-        {orderReview.note && <ItemInfo
+        {orderBooking.note && <ItemInfo
           icon={{ type: 'MaterialCommunityIcons', name: 'note-edit-outline', color: Colors.primary }}
-          text={orderReview.note}
+          text={orderBooking.note}
         />}
-        {orderReview.rollBack && <ItemInfo
+        {orderBooking.rollBack && <ItemInfo
           icon={{
             type: 'MaterialIcons',
             name: 'published-with-changes',

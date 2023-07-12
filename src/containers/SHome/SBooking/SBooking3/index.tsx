@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Colors, Fonts, Layout } from '../../../../theme';
-import { Header, Icon, Input } from '../../../../components';
+import { Header, Input } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
 import { setAdditionalOrder } from '../../../../redux/slices/orderSlice';
 import axiosClient from '../../../../configs/axiosClient';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { setAdditionalOrderBooking } from '@/redux/booking/orderBookingSlice';
 
 const SBooking3 = () => {
-  const dispatch = useDispatch();
-  const order = useSelector((state: any) => state.order);
-
+  const dispatch = useAppDispatch();
+  
   const [note, setNote] = useState('Không');
   const [discountCode, setDiscountCode] = useState('');
   const [toggleCheckBoxGoBackLocation, setToggleCheckBoxGoBackLocation] =
     useState(false);
 
-  console.log(order);
-
   useEffect(() => {
-    dispatch(setAdditionalOrder({
+    dispatch(setAdditionalOrderBooking({
       note: note,
       rollBack: toggleCheckBoxGoBackLocation,
       discountCode: discountCode,

@@ -15,17 +15,16 @@ import { Colors, Fonts, Layout } from '../../../../theme';
 import { Header, Icon, Input } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import axiosClient from '../../../../configs/axiosClient';
-import {
-  setLocationReceiver,
-  setLocationSender,
-} from '../../../../redux/slices/orderSlice';
 import { navigate } from '../../../../navigators/utils';
 import { useDebounce } from '../../../../hooks';
 import { getAddressFromText } from '../../../../utils/map';
 import { AddressType } from '../SBooking1';
 import { LocationType } from '../../../../redux/type';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { setLocationReceiver, setLocationSender } from '@/redux/booking/orderBookingSlice';
+import { getPlaceSaved } from '@/redux/user/userSlice';
 
-type SavedAddressType = {
+export type SavedAddressType = {
   id: number;
   placeName: string;
   address: string;
@@ -35,9 +34,9 @@ type SavedAddressType = {
 };
 
 const SSavedAddress = () => {
-  const dispatch = useDispatch();
-  const currentUser = useSelector((state: any) => state.user);
-  const order = useSelector((state: any) => state.order);
+  const dispatch = useAppDispatch();
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
 
   const [loading, setLoading] = useState(false);
   const [savedAddress, setSavedAddress] = useState<Array<SavedAddressType>>([]);
@@ -53,21 +52,18 @@ const SSavedAddress = () => {
     setTxtLocation(value);
   };
 
-  useEffect(() => {
-    const getAddress = async () => {
-      let listAddress = await getAddressFromText(txtLocation);
-      if (listAddress === null) setSearchResult([]);
-      else setSearchResult([...listAddress]);
-    };
-    getAddress();
-    //if(searchResult.length === 0) return ;
-  }, [debouncedValue]);
+  // useEffect(() => {
+  //   const getAddress = async () => {
+  //     let listAddress = await getAddressFromText(txtLocation);
+  //     if (listAddress === null) setSearchResult([]);
+  //     else setSearchResult([...listAddress]);
+  //   };
+  //   getAddress();
+  // }, [debouncedValue]);
   useEffect(() => {
     const getAllSaveAddress = async () => {
       setLoading(true);
-      const placeSaved: Array<SavedAddressType> = await axiosClient.get(
-        `/place-saved/${currentUser.id}`,
-      );
+      const placeSaved:any = await dispatch(getPlaceSaved((currentUser.id))).unwrap()
       setSavedAddress(placeSaved);
       setLoading(false);
     };
@@ -75,7 +71,7 @@ const SSavedAddress = () => {
   }, []);
 
   const handleChoosePlaceSaved = (item: any) => {
-    if (order.isWho === 'sender') {
+    if (orderBooking.isWho === 'sender') {
       dispatch(
         setLocationSender({
           address: item.address,
@@ -84,7 +80,7 @@ const SSavedAddress = () => {
         }),
       );
       navigate('SBooking1');
-    } else if (order.isWho === 'receiver') {
+    } else if (orderBooking.isWho === 'receiver') {
       dispatch(
         setLocationReceiver({
           address: item.address,
@@ -202,7 +198,7 @@ const SSavedAddress = () => {
             <View style={Layout.rowHCenter}>
               <Button
                 title="Lưu"
-                //onPress={setInfoOrdera}
+                //onPress={+}
                 style={{ backgroundColor: Colors.primary, marginTop: 15 }}
                 styleTitle={{ color: Colors.white }}
                 onPress={onSave}

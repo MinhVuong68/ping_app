@@ -1,13 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import axiosClient from '../../configs/axiosClient'
-import { CurrentUserType, UserLoginPayload, UserSignupPayload } from './type'
-import userAPI from '@/services/api'
-import { AxiosResponse } from 'axios'
+import {
+  CurrentUserType,
+  UserChangePasswordPayload,
+  UserLoginPayload,
+  UserSignupPayload,
+} from './type'
+import { userAPI } from '@/services/api'
 
-const initialState = {
+interface InitialState {
+  currentUser: CurrentUserType
+}
+
+const initialState: InitialState = {
   currentUser: {
-    id: '',
+    id: null,
     name: '',
     phoneNumber: '',
     phoneContact: '',
@@ -47,10 +54,7 @@ export const signup = createAsyncThunk(
   'user/signup',
   async (userSignup: UserSignupPayload, thunkAPI) => {
     try {
-      const res: CurrentUserType = await axiosClient.post(
-        '/customer/register',
-        userSignup,
-      )
+      const res: CurrentUserType = await userAPI.signup(userSignup)
       return res
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data)
@@ -62,7 +66,7 @@ export const login = createAsyncThunk(
   'user/login',
   async (accountLogin: UserLoginPayload, thunkAPI) => {
     try {
-      const res: any = await userAPI.login(accountLogin)
+      const res = await userAPI.login(accountLogin)
       return res
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data)
@@ -74,14 +78,37 @@ export const updateProfile = createAsyncThunk(
   'user/updateProfile',
   async (userUpdate: Omit<CurrentUserType, 'phoneNumber'>, thunkAPI) => {
     try {
-      const res: Omit<CurrentUserType, 'phoneNumber'> = await axiosClient.put(
-        `/customer/${userUpdate.id}`,
-        {
+      const res: Omit<CurrentUserType, 'phoneNumber'> =
+        await userAPI.updateProfile({
+          id: userUpdate.id,
           name: userUpdate.name,
           avatar: userUpdate.avatar,
           phoneContact: userUpdate.phoneContact,
-        },
-      )
+        })
+      return res
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  },
+)
+
+export const changePassword = createAsyncThunk(
+  'user/changePassword',
+  async (userChangePassword: UserChangePasswordPayload, thunkAPI) => {
+    try {
+      const res = await userAPI.changePassword(userChangePassword)
+      return res
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  },
+)
+
+export const getPlaceSaved = createAsyncThunk(
+  'user/getPlaceSaved',
+  async (userId: number | null, thunkAPI) => {
+    try {
+      const res = await userAPI.getPlaceSaved(userId)
       return res
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data)

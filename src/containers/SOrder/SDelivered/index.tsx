@@ -10,7 +10,7 @@ import { RootState } from '@/redux/store';
 
 const SDeliverd = () => {
   const [ordersCompleted, setOrdersCompleted] = useState([]);
-  const currentUser = useSelector((state:RootState) => state.user);
+  const currentUser = useSelector((state:RootState) => state.user.currentUser);
 
   useEffect(() => {
     const getOrdersCompleted = async () => {

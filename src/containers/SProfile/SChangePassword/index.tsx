@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { Colors, Layout } from '../../../theme';
 import { Header, InputPassword, Loading } from '../../../components';
 import Button from '../../SIntro/components/Button';
-import axiosClient from '../../../configs/axiosClient';
 import { navigate } from '../../../navigators/utils';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { changePassword } from '@/redux/user/userSlice';
 
 const SChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -15,7 +16,9 @@ const SChangePassword = () => {
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const currentUser = useSelector((state: any) => state.user);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
+  const dispatch = useAppDispatch()
 
   const onChangePassword = async () => {
     if (currentPassword === '' || newPassword === '' || rePassword === '') {
@@ -26,11 +29,11 @@ const SChangePassword = () => {
     else {
       setLoading(true);
       try {
-        await axiosClient.post('/customer/change-password', {
+        await dispatch(changePassword({
           id: currentUser.id,
           oldPassword: currentPassword,
           newPassword: newPassword,
-        });
+        }))
         setLoading(false);
         navigate('SProfile');
         if (Platform.OS === 'android') {

@@ -11,14 +11,14 @@ import { useAppDispatch } from '@/redux/store'
 
 const SLogin = () => {
   const [loading, setLoading] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [password, setPassword] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('0899306681')
+  const [password, setPassword] = useState('$King06082001')
   const [valid, setValid] = useState(false)
 
   const dispatch = useAppDispatch()
   const onLogin = async () => {
-    const accoutLogin = { phoneNumber: phoneNumber, password: password }
     setLoading(true)
+    const accoutLogin = { phoneNumber: phoneNumber, password: password }
     try {
       await dispatch(login(accoutLogin)).unwrap()
       navigate('MainNavigation')
@@ -26,15 +26,6 @@ const SLogin = () => {
       Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không chính xác!')
       setLoading(false)
     }
-    // dispatch(login(accoutLogin))
-    //   .unwrap()
-    //   .then(res => {
-    //     navigate('MainNavigation')
-    //   })
-    //   .catch(error => {
-    //     Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không chính xác!')
-    //     setLoading(false)
-    //   })
   }
   return (
     <View style={Layout.full}>
@@ -55,6 +46,7 @@ const SLogin = () => {
             }}
             setValue={setPhoneNumber}
             setFormError={setValid}
+            value={phoneNumber}
           />
           <InputPassword
             viewPassword
@@ -64,6 +56,7 @@ const SLogin = () => {
               require: 'Mật khẩu không được để trống',
             }}
             setValue={setPassword}
+            value={password}
           />
           <Pressable
             style={styles.btnForgotPassword}

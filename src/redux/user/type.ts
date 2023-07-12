@@ -4,15 +4,20 @@ export interface UserLoginPayload {
 }
 
 export interface UserSignupPayload {
-  name: string,
-  phoneNumber: string,
+  name: string
+  phoneNumber: string
+}
+
+export interface UserChangePasswordPayload {
+  id: number | null
+  oldPassword: string
+  newPassword: string
 }
 
 export interface CurrentUserType {
-  id: string
+  id: number | null
   name: string
   phoneNumber: string
   phoneContact: string
   avatar: string
 }
-

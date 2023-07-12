@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import React from 'react'
+import { Text, View, StyleSheet, Dimensions } from 'react-native'
 
-import { Colors, Layout } from '../../../../theme';
-import { Header } from '../../../../components';
-import ItemInfo from '../../components/ItemInfo';
-import ItemPayment from '../../components/ItemPayment';
-import Button from '../../../SIntro/components/Button';
-import { navigate } from '../../../../navigators/utils';
-import { useSelector } from 'react-redux';
+import { Colors, Layout } from '../../../../theme'
+import { Header } from '../../../../components'
+import ItemInfo from '../../components/ItemInfo'
+import ItemPayment from '../../components/ItemPayment'
+import Button from '../../../SIntro/components/Button'
+import { navigate } from '../../../../navigators/utils'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
-const WIDTH_SCREEN = Dimensions.get('window').width;
+const WIDTH_SCREEN = Dimensions.get('window').width
 const SOrderResult = () => {
+  const orderBooking = useSelector(
+    (state: RootState) => state.orderBooking.orderBooking,
+  )
 
-  const order = useSelector((state:any) => state.order)
-
+  console.log(orderBooking)
 
   return (
     <View style={Layout.full}>
@@ -23,64 +26,70 @@ const SOrderResult = () => {
           <Text>Bên giao hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.primary }}
-            text={order.nameSender}
+            text={orderBooking.nameSender}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.primary }}
-            text={order.phoneSender}
+            text={orderBooking.phoneSender}
           />
           <ItemInfo
             icon={{ type: 'FontAwesome', name: 'bullseye', color: 'green' }}
-            text={order.locationSender.address}
+            text={orderBooking.locationSender.address}
           />
         </View>
         <View style={styles.box}>
           <Text>Bên nhận hàng:</Text>
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'user', color: Colors.blue }}
-            text={order.nameReceiver}
+            text={orderBooking.nameReceiver}
           />
           <ItemInfo
             icon={{ type: 'AntDesign', name: 'phone', color: Colors.blue }}
-            text={order.phoneReceiver}
+            text={orderBooking.phoneReceiver}
           />
           <ItemInfo
             icon={{ type: 'Entypo', name: 'location-pin', color: 'red' }}
-            text={order.locationReceiver.address}
+            text={orderBooking.locationReceiver.address}
           />
         </View>
         <ItemInfo
           icon={{ type: 'FontAwesome', name: 'truck', color: Colors.primary }}
-          text={`${order.vehicle.vehicleName} ${order.vehicle.weight} Kg`}
+          text={`${orderBooking.vehicle.vehicleName} ${orderBooking.vehicle.weight} Kg`}
         />
 
-        {order.rollBack && <ItemInfo
-          icon={{
-            type: 'MaterialIcons',
-            name: 'published-with-changes',
-            color: Colors.primary,
-          }}
-          text="Quay lại điểm nhận hàng"
-        />}
+        {orderBooking.rollBack && (
+          <ItemInfo
+            icon={{
+              type: 'MaterialIcons',
+              name: 'published-with-changes',
+              color: Colors.primary,
+            }}
+            text="Quay lại điểm nhận hàng"
+          />
+        )}
         <ItemPayment
-          price={order.price}
-          discountMoney={order.discount.discountPercentage/100 * order.price}
+          price={orderBooking.price}
+          discountMoney={
+            orderBooking.discount.discountPercentage !== null
+              ? (orderBooking.discount.discountPercentage / 100) *
+                orderBooking.price
+              : 0
+          }
         />
-        
       </View>
       <View style={Layout.rowCenter}>
-      <Button
+        <Button
           title="Đặt đơn"
-          onPress={() => {navigate('SHome')}}
+          onPress={() => {
+            navigate('SHome')
+          }}
           style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
           styleTitle={{ color: Colors.white }}
         />
       </View>
-      
-      
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   content: {
@@ -106,12 +115,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   viewPayment: {
-    marginTop: 20
+    marginTop: 20,
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
-  }
-});
+    justifyContent: 'space-between',
+  },
+})
 
-export default SOrderResult;
+export default SOrderResult

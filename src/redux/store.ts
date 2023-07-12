@@ -3,11 +3,13 @@ import otpSlice from "./slices/otpSlice";
 import userSlice from "./user/userSlice";
 import orderSlice from "./slices/orderSlice";
 import { useDispatch } from "react-redux";
+import orderBookingSlice from "./booking/orderBookingSlice";
 
 const store = configureStore({
     reducer: {
         otp: otpSlice,
         user: userSlice,
+        orderBooking: orderBookingSlice,
         order: orderSlice,
     }
 })

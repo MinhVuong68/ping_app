@@ -5,7 +5,7 @@ import { Colors, Fonts, Layout } from '../../../theme';
 import { Icon } from '../../../components';
 import { navigate } from '../../../navigators/utils';
 import { useDispatch } from 'react-redux';
-import { setVehicle } from '../../../redux/slices/orderSlice';
+import { setVehicle } from '@/redux/booking/orderBookingSlice';
 
 export interface ItemVehicleProps {
   id: number;

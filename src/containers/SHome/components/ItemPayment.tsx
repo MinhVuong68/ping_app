@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Fonts } from '../../../theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTotalPrice } from '../../../redux/slices/orderSlice';
 import { formatCurrency } from '../../../utils';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { setTotalPrice } from '@/redux/booking/orderBookingSlice';
 
 interface ItemPaymentProps {
   price?: number;
@@ -16,13 +17,13 @@ const ItemPayment = ({
   discountMoney = 0,
   totalPrice,
 }: ItemPaymentProps) => {
-  const order = useSelector((state: any) => state.order);
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   //const ref = useRef(price*order.discount.discountPercentage/100)
 
-  console.log(order);
+  //console.log(order);
 
   useEffect(() => {
     dispatch(setTotalPrice({ totalPrice: price - discountMoney }));
@@ -56,7 +57,7 @@ const ItemPayment = ({
           </Text>
         ) : (
           <Text style={Fonts.textLargeBold}>
-            {formatCurrency(order.totalPrice)}
+            {formatCurrency(orderBooking.totalPrice)}
           </Text>
         )}
       </View>

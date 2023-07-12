@@ -4,7 +4,6 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Pressable,
   PermissionsAndroid,
   Alert,
 } from 'react-native';
@@ -15,15 +14,13 @@ import { useDebounce } from '../../../../hooks';
 import { getAddressFromText } from '../../../../utils/map';
 import styles from './styles';
 import { navigate } from '../../../../navigators/utils';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setLocationReceiver,
-  setLocationSender,
-} from '../../../../redux/slices/orderSlice';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { setLocationReceiver, setLocationSender } from '@/redux/booking/orderBookingSlice';
 
 const SEnterLocation = (params: any) => {
-  const dispatch = useDispatch();
-  const order = useSelector((state: any) => state.order);
+  const dispatch = useAppDispatch();
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
 
   const [txtLocation, setTxtLocation] = useState('');
   const [searchResult, setSearchResult] = useState<any>([]);
@@ -44,7 +41,7 @@ const SEnterLocation = (params: any) => {
   // }, [debouncedValue]);
 
   const handleChosseResultSerch = (result: any) => {
-    if (order.isWho == 'sender') {
+    if (orderBooking.isWho == 'sender') {
       dispatch(
         setLocationSender({
           address: result.address,
@@ -52,7 +49,7 @@ const SEnterLocation = (params: any) => {
           longitude: result.location.lng,
         }),
       );
-    } else if (order.isWho == 'receiver') {
+    } else if (orderBooking.isWho == 'receiver') {
       dispatch(
         setLocationReceiver({
           address: result.address,

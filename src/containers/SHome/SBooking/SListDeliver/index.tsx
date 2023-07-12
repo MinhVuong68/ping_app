@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 
 import { Header, NoDriver } from '../../../../components';
-import ItemDelivery, { ItemDeliveryProps } from '../../components/ItemDelivery';
+import ItemDelivery from '../../components/ItemDelivery';
 import { Layout } from '../../../../theme';
-import axiosClient from '../../../../configs/axiosClient';
 import { useSelector } from 'react-redux';
 import { calcDistance2Location } from '../../../../utils/map';
 import { convertMeterToKilometer } from '../../../../utils';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { getAllDriverReady } from '@/redux/booking/orderBookingSlice';
 
 const SListDeliver = () => {
-  const order = useSelector((state: any) => state.order);
+  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
+
+  const dispatch = useAppDispatch()
 
   const [lsDriver, setLsDriver] = useState<any>([]);
   const [showNoDriver, setShowNoDriver] = useState(false);
 
   useEffect(() => {
     const getLsDriver = async () => {
-      const res: any = await axiosClient.get(
-        `/driver/online/${order.vehicle.vehicleId}`,
-      );
+      
+      const res:any = await dispatch(getAllDriverReady(orderBooking.vehicle.vehicleId)).unwrap()
 
       for(let i = 0;i<res.length;i++){
-        const locationSender = order.locationSender.coordinate;
+        const locationSender = orderBooking.locationSender.coordinate;
         const locationDriver = {latitude: res[i].latitude, longitude: res[i].longitude}
 
         const coordinateSender = locationSender.latitude+','+locationSender.longitude

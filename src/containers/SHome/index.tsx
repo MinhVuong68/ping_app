@@ -11,7 +11,6 @@ const HEIGHT_SCREEN = Dimensions.get('window').width
 const SHome = () => {
 
   const imagesIntroHome = [Images.home1, Images.home2, Images.home3]
-  
   return (
     <View style={[Layout.colVCenter, styles.container]}>
       <FlatList
@@ -25,7 +24,6 @@ const SHome = () => {
         }}
         //keyExtractor={item => item.id}
       />
-
       <Button
         title="Lên đơn hàng"
         onPress={() => {
