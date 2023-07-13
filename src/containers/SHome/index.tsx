@@ -4,12 +4,13 @@ import { View, StyleSheet, Dimensions, Image, FlatList } from 'react-native'
 import Button from '../SIntro/components/Button'
 import { navigate } from '../../navigators/utils'
 import { Colors, Images, Layout } from '@/theme'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 const WIDTH_SCREEN = Dimensions.get('window').width
 const HEIGHT_SCREEN = Dimensions.get('window').width
 
 const SHome = () => {
-
   const imagesIntroHome = [Images.home1, Images.home2, Images.home3]
   return (
     <View style={[Layout.colVCenter, styles.container]}>

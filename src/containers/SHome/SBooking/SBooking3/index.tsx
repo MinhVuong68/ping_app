@@ -7,14 +7,14 @@ import { Colors, Fonts, Layout } from '../../../../theme';
 import { Header, Input } from '../../../../components';
 import Button from '../../../SIntro/components/Button';
 import { navigate } from '../../../../navigators/utils';
-import { setAdditionalOrder } from '../../../../redux/slices/orderSlice';
-import axiosClient from '../../../../configs/axiosClient';
 import { RootState, useAppDispatch } from '@/redux/store';
-import { setAdditionalOrderBooking } from '@/redux/booking/orderBookingSlice';
+import { getDiscountByCode, setAdditionalOrderBooking } from '@/redux/booking/orderBookingSlice';
 
 const SBooking3 = () => {
   const dispatch = useAppDispatch();
-  
+
+  const orderBooking = useSelector((state:RootState) => state.orderBooking.orderBooking)
+ 
   const [note, setNote] = useState('Không');
   const [discountCode, setDiscountCode] = useState('');
   const [toggleCheckBoxGoBackLocation, setToggleCheckBoxGoBackLocation] =
@@ -34,7 +34,7 @@ const SBooking3 = () => {
       navigate('SListDeliver')
       return;
     }
-    const res: any = await axiosClient.get(`/discount/${discountCode}`);
+    const res:any = await dispatch(getDiscountByCode(discountCode)).unwrap();
     if (res?.message === 'Discount code does not exist!'){
       Alert.alert('Mã giám giá không tồn tại!');
       return;
@@ -45,7 +45,7 @@ const SBooking3 = () => {
     }
     else {
       dispatch(
-        setAdditionalOrder({
+        setAdditionalOrderBooking({
           note: note,
           discountCode: res.code,
           discountId: res.id,

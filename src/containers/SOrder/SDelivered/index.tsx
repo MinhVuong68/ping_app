@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { View,StyleSheet, FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
 
-import { Layout } from '../../../theme';
-import CardOrder from '../components/CardOrder';
-import NotOrderAvailable from '../components/NotOrderAvailable';
-import axiosClient from '../../../configs/axiosClient';
-import { RootState } from '@/redux/store';
+import { Layout } from '../../../theme'
+import CardOrder from '../components/CardOrder'
+import NotOrderAvailable from '../components/NotOrderAvailable'
+import axiosClient from '../../../configs/axiosClient'
+import { RootState } from '@/redux/store'
 
 const SDeliverd = () => {
-  const [ordersCompleted, setOrdersCompleted] = useState([]);
-  const currentUser = useSelector((state:RootState) => state.user.currentUser);
+  const [ordersCompleted, setOrdersCompleted] = useState([])
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
 
   useEffect(() => {
     const getOrdersCompleted = async () => {
-      const rs: any = await axiosClient(
-        `/order/orders?status=${'COMPLETED'}&id=${currentUser.id}`,
-      );
-      setOrdersCompleted(rs);
-    };
-    getOrdersCompleted();
-  }, []);
+      const rs: any = await axiosClient('/order/orders', {
+        params: {
+          status: 'COMPLETED',
+          customerId: currentUser.id,
+        },
+      })
+      setOrdersCompleted(rs)
+    }
+    getOrdersCompleted()
+  }, [])
   return (
     <View style={Layout.full}>
       {ordersCompleted.length ? (
@@ -43,13 +46,13 @@ const SDeliverd = () => {
         <NotOrderAvailable />
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   contents: {
     padding: 10,
   },
-});
+})
 
-export default SDeliverd;
+export default SDeliverd

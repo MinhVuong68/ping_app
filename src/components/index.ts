@@ -8,3 +8,4 @@ export { default as ImageAvatar } from './ImageAvatar';
 export { default as Updating } from './Updating';
 export { default as InputPressable } from './InputPressable'
 export { default as NoDriver } from './NoDriver'
+export { default as Skeleton } from './Skeleton'

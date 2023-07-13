@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Dimensions } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 
 import { Colors, Layout } from '../../../../theme'
 import { Header } from '../../../../components'
@@ -10,14 +10,10 @@ import { navigate } from '../../../../navigators/utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 
-const WIDTH_SCREEN = Dimensions.get('window').width
 const SOrderResult = () => {
   const orderBooking = useSelector(
     (state: RootState) => state.orderBooking.orderBooking,
   )
-
-  console.log(orderBooking)
-
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
@@ -94,7 +90,6 @@ const SOrderResult = () => {
 const styles = StyleSheet.create({
   content: {
     padding: 10,
-    //alignItems: 'center'
   },
   box: {
     width: '100%',

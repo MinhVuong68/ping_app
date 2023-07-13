@@ -1,5 +1,4 @@
 import axiosClient from '@/configs/axiosClient'
-import { SavedAddressType } from '@/containers/SHome/SBooking/SSavedAddress'
 import {
   CurrentUserType,
   UserChangePasswordPayload,
@@ -27,4 +26,9 @@ export const vehicleAPI = {
 export const driverAPI = {
   getAllReady: (payload: number | null) =>
     axiosClient.get(`/driver/online/${payload}`),
+}
+
+export const discountAPI = {
+  getDiscountByCode: (payload: string) =>
+    axiosClient.get(`/discount/${payload}`),
 }

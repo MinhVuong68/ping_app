@@ -1,7 +1,7 @@
 import { createAsyncThunk, createReducer, createSlice } from '@reduxjs/toolkit'
 
 import { OrderBookingType } from './type'
-import { driverAPI, vehicleAPI } from '@/services/api'
+import { discountAPI, driverAPI, vehicleAPI } from '@/services/api'
 
 interface InitialState {
   orderBooking: OrderBookingType
@@ -85,7 +85,7 @@ const orderBookingSlice = createSlice({
         (state.orderBooking.rollBack = action.payload.rollBack)
     },
     setDriver(state, action) {
-      state.orderBooking.driverId = { ...state.orderBooking, ...action.payload }
+      state.orderBooking = { ...state.orderBooking, ...action.payload }
     },
     setPrice(state, action) {
       state.orderBooking = { ...state.orderBooking, ...action.payload }
@@ -118,6 +118,18 @@ export const getAllDriverReady = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
+)
+
+export const getDiscountByCode = createAsyncThunk(
+  'discount/getDiscountByCode',
+  async (discountCode: string,thunkAPI) => {
+    try {
+      const res = await discountAPI.getDiscountByCode(discountCode)
+      return res
+    } catch (error:any) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
 )
 
 export const {
