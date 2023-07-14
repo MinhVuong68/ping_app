@@ -9,6 +9,7 @@ import { calcDistance2Location } from '../../../../utils/map'
 import { convertMeterToKilometer } from '../../../../utils'
 import { RootState, useAppDispatch } from '@/redux/store'
 import { getAllDriverReady } from '@/redux/booking/orderBookingSlice'
+import SkeletonItemDelivery from '../../components/SkeletonItemDelivery'
 
 const SListDeliver = () => {
   const orderBooking = useSelector(
@@ -17,7 +18,7 @@ const SListDeliver = () => {
   const dispatch = useAppDispatch()
 
   const [lsDriver, setLsDriver] = useState<any>([])
-  const [showNoDriver, setShowNoDriver] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getLsDriver = async () => {
@@ -50,17 +51,26 @@ const SListDeliver = () => {
           { ...res[i], distance: distanceKm },
         ])
       }
-
-      setShowNoDriver(res.length == 0)
+      setLoading(false)
+      return () => res.abort()
     }
     getLsDriver()
+    console.log(lsDriver)
   }, [])
 
   return (
     <View style={Layout.full}>
       <Header title="Nhân viên giao hàng" />
-      {!showNoDriver ? (
-        <View style={styles.contents}>
+
+      <View style={styles.contents}>
+        {loading ? (
+          <>
+            <SkeletonItemDelivery />
+            <SkeletonItemDelivery />
+            <SkeletonItemDelivery />
+            <SkeletonItemDelivery />
+          </>
+        ) : (
           <FlatList
             data={lsDriver}
             renderItem={({ item }) => (
@@ -75,10 +85,9 @@ const SListDeliver = () => {
             )}
             keyExtractor={item => item.id}
           />
-        </View>
-      ) : (
-        <NoDriver />
-      )}
+        )}
+      </View>
+      {!loading && lsDriver.length === 0 && <NoDriver />}
     </View>
   )
 }

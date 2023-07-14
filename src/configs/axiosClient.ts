@@ -1,5 +1,4 @@
 import axios from 'axios';
-import queryString from 'query-string';
 import apiConfig from './apiConfig';
 
 const axiosClient = axios.create({
@@ -11,7 +10,7 @@ const axiosClient = axios.create({
     'Access-Control-Allow-Headers':
       'Content-Type, Origin, X-Auth-Token, Authorization',
   },
-  paramsSerializer: params => queryString.stringify({ ...params }),
+  //paramsSerializer: params => queryString.stringify({ ...params }),
 });
 
 axiosClient.interceptors.request.use(async config => config);

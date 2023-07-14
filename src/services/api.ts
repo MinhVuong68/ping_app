@@ -6,6 +6,14 @@ import {
   UserSignupPayload,
 } from '@/redux/user/type'
 
+const serialize = (params: { [x:string]:any }) => {
+  let result = ''
+  for (let key in params) {
+    result+=`${key}=${params[key]}&`
+  }
+  return `?${result}`
+}
+
 export const userAPI = {
   signup: (payload: UserSignupPayload): any =>
     axiosClient.post('/customer/register', payload),
@@ -31,4 +39,9 @@ export const driverAPI = {
 export const discountAPI = {
   getDiscountByCode: (payload: string) =>
     axiosClient.get(`/discount/${payload}`),
+}
+
+export const orderAPI = {
+  getOrderByStatus: (payload: any) =>
+    axiosClient.get(`/order/orders${serialize(payload)}`)
 }

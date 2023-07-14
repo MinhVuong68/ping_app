@@ -8,23 +8,19 @@ import CardOrder from '../components/CardOrder'
 import axiosClient from '../../../configs/axiosClient'
 import SkeletonCardOrder from '../components/SkeletonCardOrder'
 import { RootState } from '@/redux/store'
+import { orderAPI } from '@/services/api'
 
 const SDelivering = () => {
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
   const [ordersComing, setOrdersComing] = useState([])
   const [loading, setLoading] = useState(true)
-  const currentUser = useSelector((state: RootState) => state.user.currentUser)
 
   console.log(currentUser)
 
   useEffect(() => {
     setLoading(true)
     const getOrdersCompleted = async () => {
-      const rs: any = await axiosClient('/order/orders', {
-        params: {
-          status: 'COMING',
-          customerId: currentUser.id,
-        },
-      })
+      const rs: any = await orderAPI.getOrderByStatus({ status: 'COMING', customerId: currentUser.id })
       setOrdersComing(rs)
       setLoading(false)
     }
