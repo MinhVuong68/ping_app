@@ -5,14 +5,8 @@ import {
   UserLoginPayload,
   UserSignupPayload,
 } from '@/redux/user/type'
+import { serialize } from '@/utils/api'
 
-const serialize = (params: { [x:string]:any }) => {
-  let result = ''
-  for (let key in params) {
-    result+=`${key}=${params[key]}&`
-  }
-  return `?${result}`
-}
 
 export const userAPI = {
   signup: (payload: UserSignupPayload): any =>

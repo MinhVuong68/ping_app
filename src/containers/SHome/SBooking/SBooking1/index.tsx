@@ -32,7 +32,31 @@ export type AddressType = {
 const SBooking1 = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
 
-  const orderBooking = useSelector((state:RootState) => state.orderBooking.orderBooking)
+  const orderBooking = useSelector(
+    (state: RootState) => state.orderBooking.orderBooking,
+  )
+
+  // const [formData,setFormData] = useState({
+  //   locationSender: {
+  //     address: '',
+  //     coordinate: {
+  //       latitude: null,
+  //       longitude: null
+  //     }
+  //   },
+  //   nameSender: currentUser.name,
+  //   phoneContactSender: currentUser.phoneContact,
+  //   locationReceiver: {
+  //     address: '',
+  //     coordinate: {
+  //       latitude: null,
+  //       longitude: null
+  //     }
+  //   },
+  //   nameReceiver: '',
+  //   phoneContactReceiver: ''
+  // })
+
   useEffect(() => {
     setLocationReceiver(orderBooking.locationReceiver)
     setLocationSender(orderBooking.locationSender)

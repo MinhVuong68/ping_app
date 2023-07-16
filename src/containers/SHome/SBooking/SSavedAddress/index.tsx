@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
@@ -7,68 +7,70 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-} from 'react-native';
-import Modal from 'react-native-modal';
-import { useDispatch, useSelector } from 'react-redux';
+} from 'react-native'
+import Modal from 'react-native-modal'
+import { useSelector } from 'react-redux'
 
-import { Colors, Fonts, Layout } from '../../../../theme';
-import { Header, Icon, Input } from '../../../../components';
-import Button from '../../../SIntro/components/Button';
-import axiosClient from '../../../../configs/axiosClient';
-import { navigate } from '../../../../navigators/utils';
-import { useDebounce } from '../../../../hooks';
-import { getAddressFromText } from '../../../../utils/map';
-import { AddressType } from '../SBooking1';
-import { LocationType } from '../../../../redux/type';
-import { RootState, useAppDispatch } from '@/redux/store';
-import { setLocationReceiver, setLocationSender } from '@/redux/booking/orderBookingSlice';
-import { getPlaceSaved } from '@/redux/user/userSlice';
+import { Colors, Fonts, Layout } from '../../../../theme'
+import { Header, Icon, Input } from '../../../../components'
+import Button from '../../../SIntro/components/Button'
+import axiosClient from '../../../../configs/axiosClient'
+import { navigate } from '../../../../navigators/utils'
+import { useDebounce } from '../../../../hooks'
+import { getAddressFromText } from '../../../../utils/map'
+import { AddressType } from '../SBooking1'
+import { LocationType } from '../../../../redux/type'
+import { RootState, useAppDispatch } from '@/redux/store'
+import {
+  setLocationReceiver,
+  setLocationSender,
+} from '@/redux/booking/orderBookingSlice'
+import { useGetAllPlaceSavedByCustomerIdQuery } from '@/services/modules/placeSaved'
 
 export type SavedAddressType = {
-  id: number;
-  placeName: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  customerId?: number;
-};
+  id: number
+  placeName: string
+  address: string
+  latitude: number
+  longitude: number
+  customerId?: number
+}
 
 const SSavedAddress = () => {
-  const dispatch = useAppDispatch();
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
-  const orderBooking = useSelector((state: RootState) => state.orderBooking.orderBooking);
+  const dispatch = useAppDispatch()
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const orderBooking = useSelector(
+    (state: RootState) => state.orderBooking.orderBooking,
+  )
+  const { data, isFetching } = useGetAllPlaceSavedByCustomerIdQuery(
+    currentUser.id,
+  )
 
-  const [loading, setLoading] = useState(false);
-  const [savedAddress, setSavedAddress] = useState<Array<SavedAddressType>>([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  console.log(data)
 
-  const [placeName, setPlaceName] = useState('');
-  const [txtLocation, setTxtLocation] = useState('');
-  const [searchResult, setSearchResult] = useState<any>([]);
-  const [location, setLocation] = useState<LocationType | null>(null);
-  const debouncedValue = useDebounce(txtLocation, 5000);
+  const [savedAddress, setSavedAddress] = useState<SavedAddressType[]>([
+    ...data,
+  ])
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const [placeName, setPlaceName] = useState('')
+  const [txtLocation, setTxtLocation] = useState('')
+  const [searchResult, setSearchResult] = useState<any>([])
+  const [location, setLocation] = useState<LocationType | null>(null)
+  const debouncedValue = useDebounce(txtLocation, 5000)
 
   const handleChangeTxt = (value: string) => {
-    setTxtLocation(value);
-  };
+    setTxtLocation(value)
+  }
 
-  // useEffect(() => {
-  //   const getAddress = async () => {
-  //     let listAddress = await getAddressFromText(txtLocation);
-  //     if (listAddress === null) setSearchResult([]);
-  //     else setSearchResult([...listAddress]);
-  //   };
-  //   getAddress();
-  // }, [debouncedValue]);
   useEffect(() => {
-    const getAllSaveAddress = async () => {
-      setLoading(true);
-      const placeSaved:any = await dispatch(getPlaceSaved((currentUser.id))).unwrap()
-      setSavedAddress(placeSaved);
-      setLoading(false);
-    };
-    getAllSaveAddress();
-  }, []);
+    const getAddress = async () => {
+      let listAddress = await getAddressFromText(txtLocation)
+      if (listAddress === null) setSearchResult([])
+      else setSearchResult([...listAddress])
+    }
+    getAddress()
+  }, [debouncedValue])
 
   const handleChoosePlaceSaved = (item: any) => {
     if (orderBooking.isWho === 'sender') {
@@ -78,8 +80,8 @@ const SSavedAddress = () => {
           latitude: item.latitude,
           longitude: item.longitude,
         }),
-      );
-      navigate('SBooking1');
+      )
+      navigate('SBooking1')
     } else if (orderBooking.isWho === 'receiver') {
       dispatch(
         setLocationReceiver({
@@ -87,22 +89,22 @@ const SSavedAddress = () => {
           latitude: item.latitude,
           longitude: item.longitude,
         }),
-      );
-      navigate('SBooking1');
+      )
+      navigate('SBooking1')
     }
-  };
+  }
 
   const handleChosseResultSearch = (result: any) => {
-    setTxtLocation(result.address);
+    setTxtLocation(result.address)
     setLocation({
       address: result.address,
       coordinate: {
         latitude: result.location.lat,
         longitude: result.location.lng,
       },
-    });
-    setSearchResult([]);
-  };
+    })
+    setSearchResult([])
+  }
 
   const onSave = async () => {
     const res: SavedAddressType = await axiosClient.post('/place-saved', {
@@ -111,10 +113,12 @@ const SSavedAddress = () => {
       latitude: location?.coordinate.latitude,
       longitude: location?.coordinate.longitude,
       customerId: currentUser.id,
-    });
-    setSavedAddress([...savedAddress, res]);
-    setModalVisible(false);
-  };
+    })
+    console.log(res)
+
+    setSavedAddress([...savedAddress, res])
+    setModalVisible(false)
+  }
   const _renderItem = ({ item }: { item: SavedAddressType; index: number }) => {
     return (
       <View style={[Layout.rowVCenter, { height: 60 }]}>
@@ -122,14 +126,14 @@ const SSavedAddress = () => {
         <TouchableOpacity
           style={[styles.btnAddressSave]}
           onPress={() => {
-            handleChoosePlaceSaved(item);
+            handleChoosePlaceSaved(item)
           }}>
           <Text style={Fonts.textRegular}>{item.placeName}</Text>
           <Text>{item.address}</Text>
         </TouchableOpacity>
       </View>
-    );
-  };
+    )
+  }
 
   return (
     <View style={Layout.full}>
@@ -148,11 +152,11 @@ const SSavedAddress = () => {
             <Text style={[Fonts.textRegular]}>Thêm địa chỉ</Text>
           </TouchableOpacity>
         </View>
-        {loading && <ActivityIndicator color={Colors.primary} />}
+        {isFetching && <ActivityIndicator color={Colors.primary} />}
         <FlatList
           data={savedAddress}
           renderItem={_renderItem}
-          //keyExtractor={item => item.id}
+         // keyExtractor={item => item.id}
         />
 
         <Modal
@@ -191,7 +195,7 @@ const SSavedAddress = () => {
                       onPress={() => handleChosseResultSearch(result)}>
                       <Text>{result.address}</Text>
                     </TouchableOpacity>
-                  );
+                  )
                 })}
               </View>
             )}
@@ -208,8 +212,8 @@ const SSavedAddress = () => {
         </Modal>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   contents: {
@@ -249,6 +253,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-});
+})
 
-export default SSavedAddress;
+export default SSavedAddress

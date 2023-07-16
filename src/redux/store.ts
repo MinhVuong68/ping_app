@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import orderBookingSlice from './booking/orderBookingSlice'
 import { vehicleAPI } from '@/services/modules/vehicle'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
+import { orderAPI } from '@/services/modules/order'
+import { placedSavedAPI } from '@/services/modules/placeSaved'
 
 const store = configureStore({
   reducer: {
@@ -14,10 +16,15 @@ const store = configureStore({
     orderBooking: orderBookingSlice,
     order: orderSlice,
     [vehicleAPI.reducerPath]: vehicleAPI.reducer,
+    [orderAPI.reducerPath]: orderAPI.reducer,
+    [placedSavedAPI.reducerPath]: placedSavedAPI.reducer,
   },
 
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(vehicleAPI.middleware),
+    getDefaultMiddleware()
+      .concat(vehicleAPI.middleware)
+      .concat(orderAPI.middleware)
+      .concat(placedSavedAPI.middleware),
 })
 
 setupListeners(store.dispatch)

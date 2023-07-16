@@ -5,34 +5,36 @@ import { useSelector } from 'react-redux'
 import { Layout } from '../../../theme'
 import NotOrderAvailable from '../components/NotOrderAvailable'
 import CardOrder from '../components/CardOrder'
-import axiosClient from '../../../configs/axiosClient'
 import SkeletonCardOrder from '../components/SkeletonCardOrder'
 import { RootState } from '@/redux/store'
 import { orderAPI } from '@/services/api'
+import { useGetOrderByStatusAndCustomerIdQuery } from '@/services/modules/order'
 
 const SDelivering = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
-  const [ordersComing, setOrdersComing] = useState([])
-  const [loading, setLoading] = useState(true)
+  // const [ordersComing, setOrdersComing] = useState([])
+  // const [loading, setLoading] = useState(true)
 
-  console.log(currentUser)
+  //console.log(currentUser)
 
-  useEffect(() => {
-    setLoading(true)
-    const getOrdersCompleted = async () => {
-      const rs: any = await orderAPI.getOrderByStatus({ status: 'COMING', customerId: currentUser.id })
-      setOrdersComing(rs)
-      setLoading(false)
-    }
-    getOrdersCompleted()
-  }, [])
+  const { data,isFetching } = useGetOrderByStatusAndCustomerIdQuery({ status: 'COMING', customerId: currentUser.id })
+
+  // useEffect(() => {
+  //   setLoading(true)
+  //   const getOrdersCompleted = async () => {
+  //     const rs: any = await orderAPI.getOrderByStatus({ status: 'COMING', customerId: currentUser.id })
+  //     setOrdersComing(rs)
+  //     setLoading(false)
+  //   }
+  //   getOrdersCompleted()
+  // }, [])
 
   return (
     <View style={Layout.full}>
       <View style={styles.contents}>
-        {ordersComing.length > 0 && (
+        {data?.length > 0 && (
           <FlatList
-            data={ordersComing}
+            data={data}
             renderItem={({ item }: any) => (
               <CardOrder
                 id={item?.id}
@@ -45,14 +47,14 @@ const SDelivering = () => {
             )}
           />
         )}
-        {loading && (
+        {isFetching && (
           <>
             <SkeletonCardOrder />
             <SkeletonCardOrder />
           </>
         )}
       </View>
-      {!loading && ordersComing.length === 0 && <NotOrderAvailable />}
+      {!isFetching && data?.length === 0 && <NotOrderAvailable />}
     </View>
   )
 }
