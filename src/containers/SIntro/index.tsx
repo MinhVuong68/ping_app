@@ -18,7 +18,6 @@ type CarouselItemType = {
   content: string;
 };
 const SIntro = () => {
-  const navigation = useNavigation();
   const [, setCurrentPage] = useState(1);
 
   const images: Array<CarouselItemType> = [

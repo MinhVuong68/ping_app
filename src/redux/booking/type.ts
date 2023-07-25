@@ -1,5 +1,5 @@
 export type OrderBookingType = {
-    customerId: string;
+    customerId: number | null;
     nameSender: string;
     phoneSender: string;
     locationSender: LocationType;
@@ -36,3 +36,21 @@ export type OrderBookingType = {
     discountPercentage: number | null;
     discountMoney: number | null;
   };
+
+  export type OrderBookingPayload = {
+    fromAddress: string,
+    fromLatitude: number | null,
+    fromLongitude: number | null,
+    toAddress: string,
+    toLatitude: number | null,
+    toLongitude: number | null,
+    customerNote: string,
+    backTo: boolean,
+    distance: number | null,
+    price: number | null,
+    priceDiscount: number | null,
+    totalPrice: number | null,
+    customerId: number | null,
+    driverId: number | null,
+    discountId: number | null,
+  }

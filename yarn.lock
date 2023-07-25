@@ -2129,6 +2129,11 @@
   dependencies:
     plist "^3.0.5"
 
+"@react-native-firebase/firestore@^18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-18.3.0.tgz#b13e053d6029c0a079714d06c9565fdf3d6d83c9"
+  integrity sha512-lf++MjazL+5JH0wvlFb2WFqEtUvULaNy4ahlLYOoNwlCjDyvR3L9mYov6cbBVoSu1AJrQcv9u2aHZApEJKaFZg==
+
 "@react-native-firebase/storage@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-18.0.0.tgz#ebaaa54a560aadece7a5025c17758dba0766c8d5"
@@ -2842,7 +2847,7 @@ babel-plugin-jest-hoist@^29.5.0:
 
 babel-plugin-module-resolver@^5.0.0:
   version "5.0.0"
-  resolved "https://registry.npmjs.org/babel-plugin-module-resolver/-/babel-plugin-module-resolver-5.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/babel-plugin-module-resolver/-/babel-plugin-module-resolver-5.0.0.tgz#2b7fc176bd55da25f516abf96015617b4f70fc73"
   integrity sha512-g0u+/ChLSJ5+PzYwLwP8Rp8Rcfowz58TJNCe+L/ui4rpzE/mg//JVX0EWBUYoxaextqnwuGHzfGp2hh0PPV25Q==
   dependencies:
     find-babel-config "^2.0.0"

@@ -1,22 +1,87 @@
-import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Text, View, StyleSheet, Alert } from 'react-native'
 
 import { Colors, Layout } from '../../../../theme'
-import { Header } from '../../../../components'
+import { Header, Loading } from '../../../../components'
 import ItemInfo from '../../components/ItemInfo'
 import ItemPayment from '../../components/ItemPayment'
 import Button from '../../../SIntro/components/Button'
 import { navigate } from '../../../../navigators/utils'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
+import { RootState, useAppDispatch } from '@/redux/store'
+import orderBookingSlice, {
+  initialState,
+  requireOrderBooking,
+  setDiscountMoney,
+} from '@/redux/booking/orderBookingSlice'
+import { message } from '@/utils/message'
+import { addDocument } from '@/firebase/services'
 
 const SOrderResult = () => {
+  const dispatch = useAppDispatch()
+  const [loading, setLoading] = useState(false)
+
   const orderBooking = useSelector(
     (state: RootState) => state.orderBooking.orderBooking,
   )
+  console.log(orderBooking)
+
+  useEffect(() => {
+    if (orderBooking.discount.discountPercentage !== null) {
+      dispatch(
+        setDiscountMoney(
+          (orderBooking.discount.discountPercentage / 100) * orderBooking.price,
+        ),
+      )
+    }
+  }, [])
+
+  const handleRequireOrder = async () => {
+    setLoading(true)
+    try {
+      dispatch(
+        requireOrderBooking({
+          fromAddress: orderBooking.locationSender.address,
+          fromLatitude: orderBooking.locationSender.coordinate.latitude,
+          fromLongitude: orderBooking.locationSender.coordinate.longitude,
+          toAddress: orderBooking.locationReceiver.address,
+          toLatitude: orderBooking.locationReceiver.coordinate.latitude,
+          toLongitude: orderBooking.locationReceiver.coordinate.longitude,
+          customerNote: orderBooking.note,
+          backTo: orderBooking.rollBack,
+          distance: 0,
+          price: orderBooking.price,
+          priceDiscount: orderBooking.discount.discountMoney,
+          totalPrice: orderBooking.totalPrice,
+          customerId: orderBooking.customerId,
+          driverId: orderBooking.driverId,
+          discountId: orderBooking.discount.discountId,
+        }),
+      ).unwrap()
+      addDocument('orders', {
+        fromAddress: orderBooking.locationSender.address,
+        fromLatitude: orderBooking.locationSender.coordinate.latitude,
+        fromLongitude: orderBooking.locationSender.coordinate.longitude,
+        toAddress: orderBooking.locationReceiver.address,
+        toLatitude: orderBooking.locationReceiver.coordinate.latitude,
+        toLongitude: orderBooking.locationReceiver.coordinate.longitude,
+        customerId: orderBooking.customerId,
+        driverId: orderBooking.driverId,
+        isAccept: null
+      })
+      setLoading(false)
+      message('Đơn hàng được gửi yêu cầu thành công')
+      //dispatch(setInitialState(initialState))
+      navigate('SHome')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <View style={Layout.full}>
       <Header title="Chi tiết đơn hàng" />
+      <Loading isLoading={loading} backBtn={setLoading} />
       <View style={styles.content}>
         <View style={styles.box}>
           <Text>Bên giao hàng:</Text>
@@ -76,9 +141,7 @@ const SOrderResult = () => {
       <View style={Layout.rowCenter}>
         <Button
           title="Đặt đơn"
-          onPress={() => {
-            navigate('SHome')
-          }}
+          onPress={handleRequireOrder}
           style={{ backgroundColor: Colors.primary, marginBottom: 15 }}
           styleTitle={{ color: Colors.white }}
         />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
 import { Layout } from '../../../theme'
@@ -12,12 +13,26 @@ import { useGetOrderByStatusAndCustomerIdQuery } from '@/services/modules/order'
 
 const SDelivering = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
-  // const [ordersComing, setOrdersComing] = useState([])
-  // const [loading, setLoading] = useState(true)
+  const [ordersComing, setOrdersComing] = useState([])
+  const [loading, setLoading] = useState(true)
 
   //console.log(currentUser)
 
-  const { data,isFetching } = useGetOrderByStatusAndCustomerIdQuery({ status: 'COMING', customerId: currentUser.id })
+  useFocusEffect(
+    React.useCallback(() => {
+      const getOrdersCompleted = async () => {
+        const rs: any = await orderAPI.getOrderByStatus({
+          status: 'COMING',
+          customerId: currentUser.id,
+        })
+        setOrdersComing(rs)
+        setLoading(false)
+      }
+      getOrdersCompleted()
+    }, []),
+  )
+
+  //const { data,isFetching } = useGetOrderByStatusAndCustomerIdQuery({ status: 'COMING', customerId: currentUser.id })
 
   // useEffect(() => {
   //   setLoading(true)
@@ -32,9 +47,9 @@ const SDelivering = () => {
   return (
     <View style={Layout.full}>
       <View style={styles.contents}>
-        {data?.length > 0 && (
+        {ordersComing?.length > 0 && (
           <FlatList
-            data={data}
+            data={ordersComing}
             renderItem={({ item }: any) => (
               <CardOrder
                 id={item?.id}
@@ -47,14 +62,14 @@ const SDelivering = () => {
             )}
           />
         )}
-        {isFetching && (
+        {loading && (
           <>
             <SkeletonCardOrder />
             <SkeletonCardOrder />
           </>
         )}
       </View>
-      {!isFetching && data?.length === 0 && <NotOrderAvailable />}
+      {!loading && ordersComing?.length === 0 && <NotOrderAvailable />}
     </View>
   )
 }

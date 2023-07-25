@@ -7,7 +7,6 @@ import {
 } from '@/redux/user/type'
 import { serialize } from '@/utils/api'
 
-
 export const userAPI = {
   signup: (payload: UserSignupPayload): any =>
     axiosClient.post('/customer/register', payload),
@@ -37,5 +36,8 @@ export const discountAPI = {
 
 export const orderAPI = {
   getOrderByStatus: (payload: any) =>
-    axiosClient.get(`/order/orders${serialize(payload)}`)
+    axiosClient.get(`/order/orders${serialize(payload)}`),
+  requireOrderBooking: (payload: any) => {
+    axiosClient.post('/order', payload)
+  },
 }

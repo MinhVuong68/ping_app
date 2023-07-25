@@ -12,7 +12,6 @@ import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 
 import store from './redux/store';
-import { navigate } from './navigators/utils';
 
 function App(): JSX.Element {
   useEffect(() => {

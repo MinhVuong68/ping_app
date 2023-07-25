@@ -43,14 +43,10 @@ const SSavedAddress = () => {
     (state: RootState) => state.orderBooking.orderBooking,
   )
   const { data, isFetching } = useGetAllPlaceSavedByCustomerIdQuery(
-    currentUser.id,
+    currentUser.id, 
   )
 
-  console.log(data)
-
-  const [savedAddress, setSavedAddress] = useState<SavedAddressType[]>([
-    ...data,
-  ])
+  const [savedAddress, setSavedAddress] = useState<Array<SavedAddressType>>([])
   const [modalVisible, setModalVisible] = useState(false)
 
   const [placeName, setPlaceName] = useState('')
@@ -63,14 +59,18 @@ const SSavedAddress = () => {
     setTxtLocation(value)
   }
 
+
   useEffect(() => {
-    const getAddress = async () => {
-      let listAddress = await getAddressFromText(txtLocation)
-      if (listAddress === null) setSearchResult([])
-      else setSearchResult([...listAddress])
-    }
-    getAddress()
-  }, [debouncedValue])
+    setSavedAddress(data)
+  },[data])
+  // useEffect(() => {
+  //   const getAddress = async () => {
+  //     let listAddress = await getAddressFromText(txtLocation)
+  //     if (listAddress === null) setSearchResult([])
+  //     else setSearchResult([...listAddress])
+  //   }
+  //   getAddress()
+  // }, [debouncedValue])
 
   const handleChoosePlaceSaved = (item: any) => {
     if (orderBooking.isWho === 'sender') {
@@ -114,8 +114,6 @@ const SSavedAddress = () => {
       longitude: location?.coordinate.longitude,
       customerId: currentUser.id,
     })
-    console.log(res)
-
     setSavedAddress([...savedAddress, res])
     setModalVisible(false)
   }
@@ -202,7 +200,6 @@ const SSavedAddress = () => {
             <View style={Layout.rowHCenter}>
               <Button
                 title="Lưu"
-                //onPress={+}
                 style={{ backgroundColor: Colors.primary, marginTop: 15 }}
                 styleTitle={{ color: Colors.white }}
                 onPress={onSave}

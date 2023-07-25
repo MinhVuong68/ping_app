@@ -36,26 +36,9 @@ const SBooking1 = () => {
     (state: RootState) => state.orderBooking.orderBooking,
   )
 
-  // const [formData,setFormData] = useState({
-  //   locationSender: {
-  //     address: '',
-  //     coordinate: {
-  //       latitude: null,
-  //       longitude: null
-  //     }
-  //   },
-  //   nameSender: currentUser.name,
-  //   phoneContactSender: currentUser.phoneContact,
-  //   locationReceiver: {
-  //     address: '',
-  //     coordinate: {
-  //       latitude: null,
-  //       longitude: null
-  //     }
-  //   },
-  //   nameReceiver: '',
-  //   phoneContactReceiver: ''
-  // })
+  console.log('1',orderBooking);
+  
+
 
   useEffect(() => {
     setLocationReceiver(orderBooking.locationReceiver)
@@ -149,7 +132,7 @@ const SBooking1 = () => {
                 dispatch(setIsWho({ isWho: 'sender' }))
                 navigate('SEnterLocation')
               }}
-              value={orderBooking.locationSender.address}
+              value={orderBooking?.locationSender?.address}
             />
           </View>
           <View style={[styles.viewChooseAddess]}>
@@ -190,7 +173,7 @@ const SBooking1 = () => {
                 dispatch(setIsWho({ isWho: 'receiver' }))
                 navigate('SEnterLocation')
               }}
-              value={orderBooking.locationReceiver.address}
+              value={orderBooking?.locationReceiver?.address}
             />
           </View>
           <View style={Layout.rowCenter}>

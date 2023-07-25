@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { initializeApp } from "firebase/app";
+
 import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
-import { getDatabase } from "firebase/database";
+
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBbp05ZsqE2Apt3qP6tkTAT3pIVx9AYKIs',
@@ -20,8 +22,8 @@ if (!firebase.apps.length) {
 }
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app)
+const firestore = getFirestore(app);
 
 export default () => {
-  return { firebase, auth,database };
+  return { firebase, auth,firestore};
 };

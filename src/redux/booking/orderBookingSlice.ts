@@ -1,15 +1,15 @@
 import { createAsyncThunk, createReducer, createSlice } from '@reduxjs/toolkit'
 
-import { OrderBookingType } from './type'
-import { discountAPI, driverAPI, vehicleAPI } from '@/services/api'
+import { OrderBookingPayload, OrderBookingType } from './type'
+import { discountAPI, driverAPI, orderAPI, vehicleAPI } from '@/services/api'
 
 interface InitialState {
   orderBooking: OrderBookingType
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   orderBooking: {
-    customerId: '',
+    customerId: null,
     nameSender: '',
     phoneSender: '',
     locationSender: {
@@ -93,6 +93,12 @@ const orderBookingSlice = createSlice({
     setTotalPrice(state, action) {
       state.orderBooking.totalPrice = action.payload.totalPrice
     },
+    setDiscountMoney(state,action) {
+      state.orderBooking.discount.discountMoney = action.payload
+    },
+    setInitialState(state,action) {
+      state.orderBooking = action.payload
+    }
   },
 })
 
@@ -122,14 +128,26 @@ export const getAllDriverReady = createAsyncThunk(
 
 export const getDiscountByCode = createAsyncThunk(
   'discount/getDiscountByCode',
-  async (discountCode: string,thunkAPI) => {
+  async (discountCode: string, thunkAPI) => {
     try {
       const res = await discountAPI.getDiscountByCode(discountCode)
       return res
-    } catch (error:any) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  }
+  },
+)
+
+export const requireOrderBooking = createAsyncThunk(
+  'order/requireOrder',
+  async (orderBookingPayload: OrderBookingPayload, thunkAPI) => {
+    try {
+      const res = await orderAPI.requireOrderBooking(orderBookingPayload)
+      return res
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.data.response)
+    }
+  },
 )
 
 export const {
@@ -142,5 +160,7 @@ export const {
   setDriver,
   setPrice,
   setTotalPrice,
+  setDiscountMoney,
+  setInitialState
 } = orderBookingSlice.actions
 export default orderBookingSlice.reducer
