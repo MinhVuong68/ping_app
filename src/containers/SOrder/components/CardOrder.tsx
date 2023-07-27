@@ -29,7 +29,7 @@ const CardOrder = ({
       style={styles.container}
       onPress={() => navigate('SOrderDetail', { id: id })}>
       <View>
-        <Text>{`${date} | ${time}`}</Text>
+       < Text>{`${date} | ${time}`}</Text>
         <View style={styles.viewLocation}>
           <View style={Layout.rowVCenter}>
             <Icon

@@ -16,6 +16,7 @@ import orderBookingSlice, {
 } from '@/redux/booking/orderBookingSlice'
 import { message } from '@/utils/message'
 import { addDocument } from '@/firebase/services'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 const SOrderResult = () => {
   const dispatch = useAppDispatch()
@@ -39,7 +40,7 @@ const SOrderResult = () => {
   const handleRequireOrder = async () => {
     setLoading(true)
     try {
-      dispatch(
+      const res: any = await dispatch(
         requireOrderBooking({
           fromAddress: orderBooking.locationSender.address,
           fromLatitude: orderBooking.locationSender.coordinate.latitude,
@@ -58,16 +59,23 @@ const SOrderResult = () => {
           discountId: orderBooking.discount.discountId,
         }),
       ).unwrap()
+      //const res:any = unwrapResult(actionResult)
+      //console.log('123',res);
+
       addDocument('orders', {
-        fromAddress: orderBooking.locationSender.address,
-        fromLatitude: orderBooking.locationSender.coordinate.latitude,
-        fromLongitude: orderBooking.locationSender.coordinate.longitude,
-        toAddress: orderBooking.locationReceiver.address,
-        toLatitude: orderBooking.locationReceiver.coordinate.latitude,
-        toLongitude: orderBooking.locationReceiver.coordinate.longitude,
-        customerId: orderBooking.customerId,
-        driverId: orderBooking.driverId,
-        isAccept: null
+        orderId: res.id,
+        fromAddress: res.fromAddress,
+        fromLatitude: res.fromLatitude,
+        fromLongitude: res.fromLongitude,
+        toAddress: res.toAddress,
+        toLatitude: res.toLatitude,
+        toLongitude: res.toLongitude,
+        totalPrice: res.totalPrice,
+        customerId: res.customer.id,
+        avatarCustomer: res.customer.avatar,
+        customerName: res.customer.name,
+        driverId: res.driver.id,
+        orderStatus: 'DRIVER_ACCEPT_PENDING',
       })
       setLoading(false)
       message('Đơn hàng được gửi yêu cầu thành công')

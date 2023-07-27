@@ -8,11 +8,6 @@ import { navigate } from '../../navigators/utils'
 import { Colors, Images, Layout } from '@/theme'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import firebaseConfig from '@/configs/firebase.config'
-import { collection, getDocs } from 'firebase/firestore'
-
-
-
 
 const WIDTH_SCREEN = Dimensions.get('window').width
 const HEIGHT_SCREEN = Dimensions.get('window').width
@@ -26,18 +21,15 @@ const SHome = () => {
     .collection('orders')
     .where('customerId','==',currentUser.id)
     .onSnapshot(querySnapshot => {
-      querySnapshot.forEach(documentSnapshot => {
-        const userData = documentSnapshot.data();
-        // Kiểm tra và thực hiện hành động khi trường isAccept thay đổi
-        if (userData && userData.isAccept) {
-          // Thực hiện các hành động khi isAccept là true
-          console.log('isAccept changed to true');
-          Alert.alert(`Đơn hang chap nhan đi ${userData.toAddress} đã được chấp nhận`)
-          // Ví dụ: Hiển thị thông báo, gửi notification, vv.
-        } else if (userData && !userData.isAccept) {
-          // Thực hiện các hành động khi isAccept là false
-          console.log('isAccept changed to false');
-          Alert.alert(`Đơn hang tu choi đi ${userData.toAddress} đã bị từ chối chấp nhận`)
+      querySnapshot.docChanges().forEach((change) => {
+        const orderData = change.doc.data();
+        // Kiểm tra xem trường "orderStatus" có thay đổi không
+        if (change.type === 'modified' && orderData.hasOwnProperty('orderStatus')) {
+          if(orderData.orderStatus === 'COMING') {
+            Alert.alert('Thông báo', `Đơn hàng giao đến  ${orderData.toAddress } đã được chập nhận, nhân viên giao hàng đang đến`);
+          } else if (orderData.orderStatus === 'DENY') {
+            Alert.alert('Thông báo', `Đơn hàng giao đến  ${orderData.toAddress } đã bị từ chối`);
+          }
         }
       });
     });

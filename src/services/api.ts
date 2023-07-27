@@ -37,7 +37,6 @@ export const discountAPI = {
 export const orderAPI = {
   getOrderByStatus: (payload: any) =>
     axiosClient.get(`/order/orders${serialize(payload)}`),
-  requireOrderBooking: (payload: any) => {
+  requireOrderBooking: (payload: any) => 
     axiosClient.post('/order', payload)
-  },
 }
