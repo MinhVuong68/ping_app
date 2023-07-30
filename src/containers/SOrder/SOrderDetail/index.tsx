@@ -15,7 +15,7 @@ const SOrderDetail = ({ route }: any) => {
   const orderId = route.params.id;
   const [orderDetail, setOrderDetail] = useState<any>({});
 
-  console.log(orderId);
+  //console.log(orderDetail);
 
   useEffect(() => {
     const getOrderDetail = async () => {
@@ -24,6 +24,8 @@ const SOrderDetail = ({ route }: any) => {
     };
     getOrderDetail();
   }, []);
+  //console.log(orderDetail.driver);
+  
 
   return (
     <View style={Layout.full}>
@@ -36,6 +38,7 @@ const SOrderDetail = ({ route }: any) => {
           #{orderDetail?.id}
         </Text>
         <CardContactDeliver
+          driverId={orderDetail?.driver?.id}
           linkAvatar={orderDetail?.driver?.avatar}
           name={orderDetail?.driver?.fullName}
           licensePlate={orderDetail?.driver?.licensePlate}

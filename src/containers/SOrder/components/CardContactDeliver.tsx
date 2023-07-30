@@ -15,6 +15,7 @@ import { navigate } from '../../../navigators/utils';
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
 type CardContactDeliverProps = {
+  driverId: number
   linkAvatar: string;
   name: string;
   licensePlate: string;
@@ -24,6 +25,7 @@ type CardContactDeliverProps = {
 };
 
 const CardContactDeliver = ({
+  driverId,
   linkAvatar,
   name,
   licensePlate,
@@ -49,7 +51,10 @@ const CardContactDeliver = ({
         </View>
         {!status && (
           <View style={[Layout.full, Layout.rowEnd]}>
-            <TouchableOpacity style={styles.wrapperIcon} onPress={() => navigate('SChat')}>
+            <TouchableOpacity style={styles.wrapperIcon} onPress={() => navigate('SChat',{
+              driverId: driverId,
+              driverName: name,
+            })}>
               <Icon
                 type="MaterialCommunityIcons"
                 name="chat-processing-outline"

@@ -76,6 +76,7 @@ const SOrderResult = () => {
         customerName: res.customer.name,
         driverId: res.driver.id,
         orderStatus: 'DRIVER_ACCEPT_PENDING',
+        chat: []
       })
       setLoading(false)
       message('Đơn hàng được gửi yêu cầu thành công')
