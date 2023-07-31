@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 import { Colors } from '@/theme'
@@ -12,24 +12,22 @@ interface ChatContentProps {
 
 const ChatContent = ({ userId, chat }: ChatContentProps) => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
-  switch (currentUser.id) {
-    case userId:
-      return (
-        <View
-          style={[
-            styles.container,
-            { backgroundColor: Colors.primary, alignSelf: 'flex-end' },
-          ]}>
-          <Text style={styles.text}>{chat}</Text>
-        </View>
-      )
-    default:
-      return (
-        <View style={styles.container}>
-          <Text style={styles.text}>{chat}</Text>
-        </View>
-      )
-  }
+  const [customStyle, setCustomStyle] = useState({})
+  useEffect(() => {
+    switch (currentUser.id) {
+        case userId:
+          setCustomStyle({
+            backgroundColor: Colors.primary,
+            alignSelf: 'flex-end',
+          })
+      }
+  },[currentUser.id,userId])
+  
+  return (
+    <View style={[styles.container, customStyle]}>
+      <Text style={styles.text}>{chat}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

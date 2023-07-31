@@ -16,6 +16,7 @@ import { Colors, Images, Layout } from '@/theme'
 import { RootState } from '@/redux/store'
 import {
   BOOKING_STATE_COMING,
+  BOOKING_STATE_COMPLETE,
   BOOKING_STATE_REJECTED,
 } from '@/configs/constants'
 
@@ -33,21 +34,31 @@ const SHome = () => {
       .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
           const orderData = change.doc.data()
-          // Kiểm tra xem trường "orderStatus" có thay đổi không
           if (
             change.type === 'modified' &&
-            orderData.hasOwnProperty('orderStatus') &&
-            !orderData.hasOwnProperty('chat')
+            orderData.hasOwnProperty('orderStatus')
           ) {
-            if (orderData.orderStatus === BOOKING_STATE_COMING) {
+            if (
+              orderData.orderStatus === BOOKING_STATE_COMING &&
+              orderData.chat.length == 0
+            ) {
               Alert.alert(
                 'Thông báo',
                 `Đơn hàng giao đến  ${orderData.toAddress} đã được chập nhận, nhân viên giao hàng đang đến`,
               )
-            } else if (orderData.orderStatus === BOOKING_STATE_REJECTED) {
+            } else if (
+              orderData.orderStatus === BOOKING_STATE_REJECTED &&
+              orderData.chat.length == 0
+            ) {
               Alert.alert(
                 'Thông báo',
                 `Đơn hàng giao đến  ${orderData.toAddress} đã bị từ chối`,
+              )
+            } else if (orderData.orderStatus === BOOKING_STATE_COMPLETE) {
+              navigate('SHome')
+              Alert.alert(
+                'Thông báo',
+                `Đơn hàng giao đến  ${orderData.toAddress} đã hoàn thành, cảm ơn bạn `,
               )
             }
           }

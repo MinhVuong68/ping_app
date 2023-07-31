@@ -43,7 +43,7 @@ const SOrderDetail = ({ route }: any) => {
           name={orderDetail?.driver?.fullName}
           licensePlate={orderDetail?.driver?.licensePlate}
           reviewRate={orderDetail?.driver?.reviewRate}
-          status={false}
+          status={orderDetail?.orderStatus}
           phoneContact={orderDetail?.driver?.phoneNumber}
         />
         <View style={styles.viewLocation}>
